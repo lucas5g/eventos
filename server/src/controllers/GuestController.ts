@@ -28,4 +28,9 @@ export class GuestController {
 
         res.json(guests)
     }
+
+
+    static async test(){
+        console.log('test')
+    }
 }
