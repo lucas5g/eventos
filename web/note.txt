@@ -1,0 +1,4 @@
+select mother, father, GROUP_CONCAT(name) as students from students GROUP by mother order by mother asc;
+ALTER TABLE t1
+ADD COLUMN createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
