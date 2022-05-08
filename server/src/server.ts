@@ -9,5 +9,11 @@ app.use(cors())
 
 app.use('/api', routes)
 
+app.get('/', (req, res) => {
+    res.json({
+        api: 'Api de eventos'
+    })
+})
+
 
 app.listen(process.env.PORT || 8000, (() => console.log(`Server run http://localhost:8000`)))
