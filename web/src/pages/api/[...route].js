@@ -1,4 +1,4 @@
-import { ResponsibleController } from "../../../backend/controllers/ResponsibleController.mjs"
+// import { ResponsibleController } from "../../../backend/controllers/ResponsibleController.mjs"
 
 
 export default async function routes(req, res) {
@@ -12,7 +12,7 @@ export default async function routes(req, res) {
     if (controller === 'responsaveis') {
 
         if (method === 'GET') {
-            ResponsibleController.index(req, res)
+            // ResponsibleController.index(req, res)
             return
 
         }
