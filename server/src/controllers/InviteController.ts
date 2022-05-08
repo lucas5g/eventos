@@ -2,6 +2,7 @@ import {Request, Response} from 'express'
 
 export class InviteController {
     static async index(req: Request, res: Response) {
+        console.log('send')
 
         res.send('enviar convite')
       

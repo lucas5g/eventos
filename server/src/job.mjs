@@ -11,20 +11,5 @@ dotenv.config();
 (async() => {
 
     AuthController.login()
-        // StudentController.test()
-        // UserController.index()
-        // console.log(InviteController.index())
-        // const token = jwt.sign({
-        //     email: 'lucas@mail.com'
-        // }, process.env.TOKEN_SECRET)
-
-    // const decoded = jwt.verify(token, process.env.TOKEN_SECRET)
-    // console.log({
-    //     token,
-    //     decoded
-
-    // })
-
-    // console.log(process.env.TOKEN_SECRET)
 
 })()
