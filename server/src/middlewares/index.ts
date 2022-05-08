@@ -34,7 +34,6 @@ export function permit(profile: string) {
     return (req: Request, res: Response, next: NextFunction) => {
         //@ts-ignore
         const { auth } = req
-        console.log({ auth, profile})
         if (auth && auth.profile === profile) {
             next()
         } else {

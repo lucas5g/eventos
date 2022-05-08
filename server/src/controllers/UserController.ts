@@ -9,6 +9,7 @@ export class UserController {
 
         const users = await prisma.user.findMany({
             select: {
+                id: true,
                 name: true,
                 email: true,
                 profile: true,
@@ -29,6 +30,7 @@ export class UserController {
                 id: Number(id)
             },
             select: {
+                id: true,
                 name: true,
                 email: true,
                 profile: true,
@@ -75,6 +77,7 @@ export class UserController {
                 unity
             },
             select: {
+                id: true,
                 name: true,
                 email: true,
                 profile: true,
@@ -105,7 +108,7 @@ export class UserController {
                 data: {
                     name,
                     email,
-                    // password: await bcrypt.hash(password, salt),
+                    password: await bcrypt.hash(password, salt),
                     profile,
                     unity,
                 },

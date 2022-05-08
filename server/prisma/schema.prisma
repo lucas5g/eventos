@@ -35,7 +35,7 @@ model User {
     @@map("events_users")
 }
 
-model Responsible {
+model Guest {
     id             Int      @id @default(autoincrement())
     financial      String
     financialEmail String
@@ -52,5 +52,5 @@ model Responsible {
     createdAt      DateTime @default(now())
     updatedAt      DateTime @default(now()) @updatedAt
 
-    @@map("events_responsibles")
+    @@map("events_guests")
 }

@@ -1,13 +1,12 @@
 import express from 'express'
-import { UserController } from './controllers/UserController'
+import cors from 'cors'
+import { routes } from './routes'
+
 const app = express()
 
-import { routes } from './routes'
-// readExcel()
-
-
-
 app.use(express.json())
+app.use(cors())
+
 app.use('/api', routes)
 
 

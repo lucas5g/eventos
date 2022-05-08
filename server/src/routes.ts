@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { ResponsibleController } from './controllers/ResponsibleController'
+import { GuestController } from './controllers/GuestController'
 import { StudentController } from './controllers/StudentController'
 import { UserController } from './controllers/UserController'
 import { AuthController } from './controllers/AuthController'
@@ -31,8 +31,8 @@ routes.put('/users/:id', UserController.update)
 
 
 /**
- *  Responsibles
+ *  Guests
  */
-routes.get('/responsibles', ResponsibleController.index)
+routes.get('/guests', GuestController.index)
 
 

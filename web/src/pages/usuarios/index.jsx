@@ -2,13 +2,13 @@ import Link from 'next/link'
 import { useFetch } from '../../hooks/useFetch'
 export default function Users() {
 
-    const { data: users, error } = useFetch('/usuarios')
+    const { data: users, error } = useFetch('/users')
 
     if (error) {
         // return <div>failed to load</div>
-        localStorage.clear()
-        window.location.href = '/'
-
+        // localStorage.clear()
+        // window.location.href = '/'
+        console.log({error})
     }
 
     if (!users) {
@@ -37,16 +37,17 @@ export default function Users() {
                         >
                             <div className="row">
 
-                                <div className="col-lg-4 col-9">
+                                <div className="col-lg-3 col-9">
                                     {user.name}
-                                    {/* <br />
-                                {user.email}  */}
                                 </div>
-                                <div className="col-lg-4 col">
+                                <div className="col-lg-3 col">
                                     {user.email}
                                 </div>
-                                <div className="col-lg-4 col" style={{ textAlign: 'right' }}>
-                                    {user.profile.name}
+                                <div className="col-lg-3 col">
+                                    {user.unity}
+                                </div>
+                                <div className="col-lg-3 col" style={{ textAlign: 'right' }}>
+                                    {user.profile}
                                 </div>
                             </div>
                         </a>

@@ -2,7 +2,6 @@ import { Request, Response } from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { prisma } from '../config/prisma'
-import { stringify } from 'querystring'
 
 export class AuthController {
     static async login(req: Request, res: Response) {
@@ -10,7 +9,7 @@ export class AuthController {
 
         if (!email || !password) {
             res.status(401).json({
-                msg: 'Todos os campos são obrigatórios'
+                msg: 'Todos os campos são obrigatórios!'
             })
             return
         }
@@ -24,13 +23,14 @@ export class AuthController {
         
          if(!user || !await bcrypt.compare(password, user.password)){
             res.status(401).json({
-                'msg':'E-mail ou Senha incorreto'
+                'msg':'E-mail ou Senha incorreto!'
             })
             return
         }
 
         const TOKEN_KEY = process.env.TOKEN_KEY || ''
         const token = jwt.sign({
+            name: user.name,
             email:  user.email,
             profile: user.profile,
             unity: user.unity,

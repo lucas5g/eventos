@@ -53,12 +53,12 @@ export function Navbar() {
                             </Link>
                         } */}
                         {user &&
-                            <Link href='/responsaveis'>
-                                <a className="nav-link text-white" >Responsáveis</a>
+                            <Link href='/convidados'>
+                                <a className="nav-link text-white" >Convidados</a>
                             </Link>
                         }
 
-                        {user.profileId === 1 &&
+                        {user.profile === 'Admin' &&
                             <Link href='/usuarios'>
                                 <a className="nav-link text-white" >Usuários</a>
                             </Link>

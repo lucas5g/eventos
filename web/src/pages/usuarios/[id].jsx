@@ -7,11 +7,12 @@ export default function UserForm() {
 
     const { id } = useRouter().query
     const router = useRouter()
+    const [isSendData, setIsSendData] = useState(false)
 
     // const { data } = useFetch(`/usuarios/${id}`)
     const [user, setUser] = useState({
         name: '',
-        profileId: '',
+        profile: '',
         email: '',
         password: '',
     })
@@ -26,7 +27,7 @@ export default function UserForm() {
         }
         (async () => {
 
-            const { data } = await api.get(`/usuarios/${id}`)
+            const { data } = await api.get(`/users/${id}`)
             // console.log(data)
             setUser(data)
 
@@ -41,13 +42,14 @@ export default function UserForm() {
         if (id === 'criar') {
 
             try {
-                const { data } = await api.post(`/usuarios`, user)
+                setIsSendData(true)
+                const { data } = await api.post(`/users`, user)
                 setAlertResult({
                     msg: 'Criado com sucesso.',
                     type: 'success'
                 })
-                console.log(data)
-
+                setIsSendData(false)
+                
                 setTimeout(() => {
                     console.log('vai')
                     router.push(`/usuarios/${data.id}`)
@@ -61,6 +63,7 @@ export default function UserForm() {
                     msg: error.response.data.msg,
                     type: 'warning'
                 })
+                setIsSendData(false)
 
                 setTimeout(() => {
                     setAlertResult(false)
@@ -70,7 +73,7 @@ export default function UserForm() {
         }
 
         try {
-            const { data } = await api.put(`/usuarios/${id}`, user)
+            const { data } = await api.put(`/users/${id}`, user)
             setAlertResult({
                 msg: 'Atualizado com sucesso.',
                 type: 'success'
@@ -140,27 +143,42 @@ export default function UserForm() {
                     <div className="form-group mb-4">
                         {/* <label  htmlFor="form4Example1">Name</label> */}
                         <select
-                            name="profileId"
-                            id="profileId"
+                            name="profile"
+                            id="profile"
                             className="select form-control"
                             onChange={handleChange}
-                            value={user.profileId}
+                            value={user.profile}
+                            required
                         >
 
-                            <option value="">Selecione</option>
-                            <option value="2">Operador</option>
-                            <option value="1">Admin</option>
+                            <option value="">Perfil</option>
+                            <option value="Operador">Operador</option>
+                            <option value="Admin">Admin</option>
 
                         </select>
-                        {/* <input
-                            type="text"
-                            id="profileId"
-                            className="form-control"
-                            value={user.profileId}
-                            name="profileId"
+                    </div>
+
+                    <div className="form-group mb-4">
+
+                        <select
+                            name="unity"
+                            id="unity"
+                            className="select form-control"
                             onChange={handleChange}
-                            placeholder="Perfil"
-                        /> */}
+                            value={user.unity}
+                            required
+                        >
+
+                            <option value="">Unidade</option>
+                            <option value="BH">BH</option>
+                            <option value="Contagem">Contagem</option>
+                            <option value="NovaLima">NovaLima</option>
+                            <option value="Gutierrez">Gutierrez</option>
+                            
+
+                        </select>
+
+
                     </div>
                     <div className="form-group mb-4">
                         {/* <label  htmlFor="form4Example1">Name</label> */}
@@ -190,8 +208,10 @@ export default function UserForm() {
 
                     <button
                         type="submit"
-                        className="btn btn-primary btn-block mb-4">
-                        {id === 'criar' ? 'Criar' : 'Atualizar'}
+                        className="btn btn-primary btn-block mb-4"
+                        disabled={isSendData}
+                        >
+                        {isSendData ? 'Carregando ...' : 'Salvar'}
                     </button>
                 </form>
             </div>

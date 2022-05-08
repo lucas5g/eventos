@@ -6,9 +6,9 @@ import { api } from "../services/api"
 export default function Convidados() {
 
     const [search, setSearch] = useState('')
-    const [responsible, setResponsible] = useState('')
+    const [guest, setGuest] = useState('')
     // const [students, setStudents] = useState([])
-    const [responsibles, setResponsibles] = useState([])
+    const [guests, setGuests] = useState([])
     const [loading, setLoading] = useState(false)
     const [loadPage, setLoadPage] = useState('')
 
@@ -21,9 +21,9 @@ export default function Convidados() {
             try {
                 setLoading(true)
                 // await sleep(3000)
-                const { data } = await api.get(`/responsaveis?search=${search}`)
-                // console.log(data)
-                setResponsibles(data)
+                const { data } = await api.get(`/convidados?search=${search}`)
+                console.log(data)
+                setGuests(data)
                 setLoading(false)
                 // setLoadPage(false)
             } catch (error) {
@@ -72,7 +72,6 @@ export default function Convidados() {
 
     }
 
-
     return (
         <div>
             <h1>Convidados</h1>
@@ -85,11 +84,11 @@ export default function Convidados() {
 
             />
 
-            {responsibles.length === 0 && loading &&
+            {guests.length === 0 && loading &&
                 <h2 className="mt-5">Carregando ...</h2>
 
             }
-            {responsibles.length === 0 && search.length > 3 && !loading &&
+            {guests.length === 0 && search.length > 3 && !loading &&
 
                 <h2 className="mt-5">Nada encontrado :(</h2>
 
@@ -97,7 +96,7 @@ export default function Convidados() {
             }
             <ul className="list-group">
 
-                {responsibles.map((responsible, index) => (
+                {guests.map((guest, index) => (
                     <li className="list-group-item pt-4" key={index}>
 
 
@@ -106,20 +105,20 @@ export default function Convidados() {
                             <div className="col-12 col-md-4 mb-3">
                                 <h5>Responsáveis</h5>
                                 <small>
-                                    {responsible.mother}
+                                    {guest.mother}
                                     <br />
-                                    {responsible.father}
+                                    {guest.father}
                                 </small>
                             </div>
                             <div className="col-md-5">
-                                {responsible.students.length > 1 ?
+                                {guest.students.length > 1 ?
                                     <h5>Estudantes</h5>
                                     :
                                     <h5>Estudante</h5>
                                 }
                                 <ul className="list-group">
 
-                                    {responsible.students.map(student => (
+                                    {guest.students.map(student => (
                                         <li key={student.ra} className="list-group">
                                             <small>
                                                 {student.name} - {student.course}
@@ -132,16 +131,16 @@ export default function Convidados() {
                             <div className="col-md-3 d-flex align-items-center justify-content-end mt-2">
 
                                 <button
-                                    onClick={() => setResponsible(responsible)}
-                                    className={`btn bg-${responsible.have_invitation ? 'danger' : 'success'}   p-2 text-white rounded fs-3 d-flex align-items-center `}
-                                    title={responsible.have_invitation ? 'Gerenciar Retorno do Convite' : 'Gerenciar Envio de Convite'}
+                                    onClick={() => setGuest(guest)}
+                                    className={`btn bg-${guest.have_invitation ? 'danger' : 'success'}   p-2 text-white rounded fs-3 d-flex align-items-center `}
+                                    title={guest.have_invitation ? 'Gerenciar Retorno do Convite' : 'Gerenciar Envio de Convite'}
                                     role="button"
                                     data-mdb-toggle="modal"
                                     data-mdb-target="#exampleModal"
 
                                 >
-                                    {!responsible.have_invitation == true && <FaArrowRight />}
-                                    {responsible.have_invitation == true && <FaArrowLeft />}
+                                    {!guest.have_invitation == true && <FaArrowRight />}
+                                    {guest.have_invitation == true && <FaArrowLeft />}
 
 
                                 </button>
@@ -154,12 +153,12 @@ export default function Convidados() {
                 ))}
             </ul>
 
-            <Modal responsible={responsible} />
+            <Modal guest={guest} />
         </div>
     )
 }
 
-function Modal({ responsible }) {
+function Modal({ guest }) {
 
 
     async function handleInvitation() {
@@ -195,19 +194,19 @@ function Modal({ responsible }) {
                         <div className="row">
                             <div className="col-lg-6 mb-3">
                                 <h5>Responsáveis</h5>
-                                {responsible.mother} <br />
-                                {responsible.father}
+                                {guest.mother} <br />
+                                {guest.father}
 
                             </div>
                             <div className="col-lg-6">
 
-                                {responsible.students?.length > 1 ?
+                                {guest.students?.length > 1 ?
                                     <h5>Estudantes</h5>
                                     :
                                     <h5>Estudante</h5>
                                 }
 
-                                {responsible.students?.map(student => (
+                                {guest.students?.map(student => (
                                     <span key={student.ra} >
                                         {student.name} <br />
                                     </span>
@@ -233,17 +232,17 @@ function Modal({ responsible }) {
                                     <span
                                         className="text-lowercase"
                                         title="Clique para copiar" >
-                                        {responsible.motherEmail}
+                                        {guest.email_mother}
                                         <br />
                                     </span>
                                     <span
                                         className="text-lowercase"
                                         title="Clique para copiar"
                                     >
-                                        {responsible.fatherEmail}
+                                        {guest.email_father}
                                         <br />
                                     </span>
-                                    {responsible.students?.map(student => (
+                                    {guest.students?.map(student => (
                                         <span key={student.ra}
                                             className="text-lowercase"
                                             title="Clique para copiar"
@@ -275,7 +274,7 @@ function Modal({ responsible }) {
                             onClick={() => {
                                 alert('Aqui vai confirmar o envio do convite')
                             }}>
-                            Salvar
+                            Enviar
                         </button>
                         <button type="button" className="btn btn-secondary" data-mdb-dismiss="modal">Cancelar</button>
                     </div>
