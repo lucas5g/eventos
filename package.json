@@ -12,7 +12,8 @@
         "test": "cypress open",
         "test:run": "cypress run",
         "commit": "node auto/commit.mjs",
-        "commit:dev": "auto/commit.sh"
+        "commit:dev": "auto/commit.sh",
+        "postinstall": "prisma generate"
     },
     "dependencies": {
         "@prisma/client": "^3.13.0",
@@ -36,6 +37,7 @@
         "eslint": "8.11.0",
         "eslint-config-next": "12.1.0",
         "nodemon": "^2.0.15",
+        "prisma": "^3.13.0",
         "ts-node-dev": "^1.1.8",
         "typescript": "^4.6.3"
     }
