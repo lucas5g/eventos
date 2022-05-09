@@ -2,12 +2,10 @@ import Link from 'next/link'
 import { useFetch } from '../../hooks/useFetch'
 export default function Users() {
 
-    const { data: users, error } = useFetch('/users')
+    const { data: users, error } = useFetch('/usuarios')
 
     if (error) {
-        // return <div>failed to load</div>
-        // localStorage.clear()
-        // window.location.href = '/'
+      
         console.log({error})
     }
 

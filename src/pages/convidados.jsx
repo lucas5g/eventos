@@ -21,7 +21,7 @@ export default function Convidados() {
             try {
                 setLoading(true)
                 // await sleep(3000)
-                const { data } = await api.get(`/guests?search=${search}`)
+                const { data } = await api.get(`/convidados?search=${search}`)
                 // console.log(data)
                 setResponsibles(data)
                 setLoading(false)

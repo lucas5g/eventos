@@ -27,7 +27,7 @@ export default function UserForm() {
         }
         (async () => {
 
-            const { data } = await api.get(`/users/${id}`)
+            const { data } = await api.get(`/usuarios/${id}`)
             // console.log(data)
             setUser(data)
 
@@ -43,7 +43,7 @@ export default function UserForm() {
 
             try {
                 setIsSendData(true)
-                const { data } = await api.post(`/users`, user)
+                const { data } = await api.post(`/usuarios`, user)
                 setAlertResult({
                     msg: 'Criado com sucesso.',
                     type: 'success'
@@ -73,7 +73,7 @@ export default function UserForm() {
         }
 
         try {
-            const { data } = await api.put(`/users/${id}`, user)
+            const { data } = await api.put(`/usuarios/${id}`, user)
             setAlertResult({
                 msg: 'Atualizado com sucesso.',
                 type: 'success'
