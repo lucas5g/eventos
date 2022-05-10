@@ -20,7 +20,7 @@ if [ $status -eq 1 ]; then
 fi
 
 
-yarn test:run
+yarn test
 status=$?
 
 ##Se a saida for 5, o teste está errado
