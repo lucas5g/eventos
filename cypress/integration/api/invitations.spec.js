@@ -5,7 +5,7 @@ const invitation = {
     status: true
 }
 
-describe('Crud invitations', () => {
+describe.skip('Crud invitations', () => {
 
     it('Create invitation', () => {
 

@@ -7,7 +7,7 @@ normal=$(tput sgr0)
 yarn build
 status=$?
 echo $status
-#Se a saida for 1, teve erro na copilão do código
+# #Se a saida for 1, teve erro na copilão do código
 if [ $status -eq 1 ]; then
     echo ""
     echo "########################"
@@ -22,9 +22,9 @@ fi
 
 yarn test
 status=$?
-
+echo $status
 ##Se a saida for 5, o teste está errado
-if [ $status -eq 5 ]; then
+if [ $status -eq  5 ] || [ $status -eq 1 ]; then
     echo ""
     echo "###################"
     echo "#                 #"
@@ -34,6 +34,8 @@ if [ $status -eq 5 ]; then
     echo ""
     exit 0
 fi
+
+# exit 0
 
 #Pode dar o push
 git add .
