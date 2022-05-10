@@ -39,7 +39,9 @@ yarn-error.log*
 *.tsbuildinfo
 
 
+#cypress
 cypress.json
+cypress/screenshots/*
 
 *.XLSX
 *.sql

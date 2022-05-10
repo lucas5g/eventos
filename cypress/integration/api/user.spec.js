@@ -6,13 +6,13 @@ describe('Crud users', () => {
             name: 'admin',
             email: 'admintestcy@mail.com',
             password: 'qweqwe',
-            profileId: 1,
+            profile: 'Admin',
+            unity: 'BH',
             id: 113,
-            unityId: 1
 
         }
         // let token
-    let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkxVQ0FTIERFIFNPVVNBIEFTU1VOw4fDg08iLCJlbWFpbCI6Imx1Y2FzZGVzb3VzYTE5QGhvdG1haWwuY29tIiwicHJvZmlsZUlkIjoxLCJwcm9maWxlIjoiQWRtaW4iLCJpYXQiOjE2NTE1NDYyMjAsImV4cCI6MTY1MTU3NTAyMH0.zSc0Oyd7CjPMhqTZN1BfGgkSWP9KtFZeySZ3tcVvblY'
+    let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6InNlZWQ0MyIsImVtYWlsIjoic2VlZEBtYWlsLmNvbSIsInByb2ZpbGUiOiJBZG1pbiIsInVuaXR5IjoiQ29udGFnZW0iLCJpYXQiOjE2NTIxNTYyMjEsImV4cCI6MTY1MjE4NTAyMX0.dNG5t85oCaYi0uLqPnfKL3zJhM4-xitPGPpGD2lkkpE'
 
 
     it('Login get token', () => {
@@ -32,7 +32,7 @@ describe('Crud users', () => {
         }).then(res => {
             cy.log(res.body)
 
-            expect(res.body.length).greaterThan(2)
+            expect(res.body.length).greaterThan(1)
         })
 
     })
@@ -45,11 +45,10 @@ describe('Crud users', () => {
             url: '/api/usuarios',
             body: {
                 email: user.email,
-                // email: `mail${new Date().getTime()}`,
                 password: user.password,
                 name: user.name,
-                profileId: user.profileId,
-                unityId: user.unityId
+                profile: user.profile,
+                unity: user.unity
             },
             headers: {
                 Authorization: token
@@ -57,7 +56,7 @@ describe('Crud users', () => {
         }).then(res => {
             const { body } = res
             // expect(duration).exist
-            expect(body).to.have.all.keys('id', 'name', 'email', 'profileId', 'unityId', 'createdAt', 'updatedAt')
+            expect(body).to.have.all.keys('id', 'name', 'email', 'profile', 'unity')
             expect(body.id).exist
             user.id = body.id
             cy.log(body)
@@ -93,8 +92,8 @@ describe('Crud users', () => {
             body: {
                 name: `${user.name}-update`,
                 email: user.email,
-                profileId: user.profileId,
-                unityId: user.unityId
+                profile: user.profile,
+                unity: user.unity
             },
             headers: {
                 Authorization: token
@@ -113,9 +112,9 @@ describe('Crud users', () => {
             body: {
                 name: `${user.name}-update`,
                 email: user.email,
-                profileId: user.profileId,
                 password: 'newsenha',
-                unityId: user.unityId
+                profile: user.profile,
+                unity: user.unity
             },
             headers: {
                 Authorization: token
@@ -155,6 +154,7 @@ describe('Crud users', () => {
             }
         }).then(res => {
             cy.log(res.body)
+            expect(res.body.msg).equal('User deleted')
         })
     })
 })

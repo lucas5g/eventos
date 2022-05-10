@@ -4,9 +4,21 @@ import bcrypt from 'bcryptjs'
 import { prisma } from '../../../config/prisma'
 import { auth } from '../../../middleware/auth'
 
+interface Authenticated {
+    profile: string
+}
+
 export default async function users(req: NextApiRequest, res: NextApiResponse) {
 
-    auth(req, res)
+    // console.log(auth(req, res))
+    //@ts-ignore
+    if (auth(req, res).profile !== 'Admin') {
+        res
+            .status(401)
+            .json({ msg: 'Sem permissão' })
+
+        return
+    }
 
     if (req.method === 'GET') {
         const { id } = req.query
@@ -80,5 +92,24 @@ export default async function users(req: NextApiRequest, res: NextApiResponse) {
         })
 
         return res.json(user)
+    }
+
+    /**
+     * Evitar utilizar está funcçao
+     */
+    if (req.method === 'DELETE') {
+
+        const user = await prisma.user.delete({
+            where: {
+                id: Number(req.query.id)
+            }
+        })
+
+
+        res.json({
+            msg: 'User deleted',
+            user
+        })
+
     }
 }

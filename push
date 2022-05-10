@@ -12,7 +12,7 @@ if [ $status -eq 1 ]; then
     echo ""
     echo "########################"
     echo "#                      #"
-    echo "# Erro na copilação :( #"
+    echo "# Erro na compilação :( #"
     echo "#                      #"
     echo "########################"
     echo ""

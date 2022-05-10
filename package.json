@@ -9,8 +9,8 @@
         "start": "next start",
         "lint": "next lint",
         "server": "nodemon backend/server.mjs",
-        "test": "cypress open",
-        "test:run": "cypress run",
+        "test:open": "cypress open",
+        "test": "cypress run",
         "commit": "node auto/commit.mjs",
         "commit:dev": "auto/commit.sh",
         "postinstall": "prisma generate"
