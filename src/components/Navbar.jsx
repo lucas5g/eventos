@@ -1,13 +1,11 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import jwt from 'jwt-decode'
-import { useRouter } from 'next/router'
+
 export function Navbar() {
 
-    // const [token, setToken] = useState('')
     const [user, setUser] = useState('')
 
-    // const decoded = jwt(token)
 
     useEffect(() => {
 
@@ -44,14 +42,7 @@ export function Navbar() {
 
                     </div>
                     <div className="navbar-nav text-white ms-auto">
-                        {/* <Link href="/">
-                            <a className="nav-link text-white active" aria-current="page">Home</a>
-                        </Link> */}
-                        {/* {user &&
-                            <Link href='/alunos'>
-                                <a className="nav-link text-white" >Alunos</a>
-                            </Link>
-                        } */}
+             
                         {user &&
                             <Link href='/convidados'>
                                 <a className="nav-link text-white" >Convidados</a>

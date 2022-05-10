@@ -32,6 +32,7 @@ export default async function guests(req: NextApiRequest, res: NextApiResponse) 
 
     const TOKEN_KEY = process.env.TOKEN_KEY || ''
     const token = jwt.sign({
+        id: user.id,
         name: user.name,
         email: user.email,
         profile: user.profile,

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 
 export function Alert({ message, loading }) {
 
-console.log('tes')
 
     return (
         <>

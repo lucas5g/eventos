@@ -1,5 +1,7 @@
+import jwtDecode from "jwt-decode"
 import { useEffect, useState } from "react"
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
+import { Catch } from "../components/Catch"
 import { api } from "../services/api"
 
 // export default withPageAuthRequired(function Alunos() {
@@ -29,9 +31,7 @@ export default function Convidados() {
             } catch (error) {
 
                 console.log(error.response.data)
-                return
-                localStorage.clear()
-                window.location.href = '/'
+                Catch()
             }
 
         })()
@@ -48,31 +48,6 @@ export default function Convidados() {
 
 
     }, [])
-
-
-    async function handleSendInvite(students) {
-
-        // alert('Agora tem q enviar convite para todos os filhos')
-        console.log(students)
-        return
-        api.put(`/alunos/${ra}`, {
-            have_invitation: !haveInvitation
-        })
-            .catch(err => {
-                alert('Erro na api')
-            })
-
-        const updateStudents = students.map(student => {
-            if (student.ra === ra) {
-                student.have_invitation = !haveInvitation
-            }
-            return student
-        })
-        setStudents(updateStudents)
-
-    }
-
-
     return (
         <div>
             <h1>Convidados</h1>
@@ -162,8 +137,33 @@ export default function Convidados() {
 function Modal({ responsible }) {
 
 
+    const [email, setEmail] = useState('')
+    const [numberGuests, setNumberGuests] = useState(0)
+    const [kgFood, setKgFood] = useState(0)
+    const [user, setUser] = useState({})
+
+    useEffect(() => {
+        const token = localStorage.getItem('eventos-token')
+
+        setUser(jwtDecode(token))
+        setEmail('')
+        setNumberGuests(5)
+
+        
+
+    }, [responsible])
     async function handleInvitation() {
         console.log("enviar convite")
+        console.log({
+            email,
+            numberGuests,
+            students: responsible.students.map( student => student.ra )
+        })
+
+        const data = { email, numberGuests, 
+            students: responsible.students.map( student => student.ra )
+        }
+        alert('Informações enviadas no servidor\n\n' + JSON.stringify(data, 1,7))
     }
 
     return (
@@ -180,13 +180,16 @@ function Modal({ responsible }) {
         >
             <div
                 className="modal-dialog modal-lg"
+                // style={{ maxWidth: '930px' }}
             >
                 <div className="modal-content">
                     <div className="modal-header">
                         <h4 className="modal-title" id="exampleModalLabel">
                             Gerenciar Convite
                         </h4>
-                        <button type="button" className="btn-close" data-mdb-dismiss="modal" aria-label="Close" title="Cancelar">
+                        <button type="button" className="btn-close" data-mdb-dismiss="modal" aria-label="Close" title="Cancelar"
+
+                        >
 
                         </button>
                     </div>
@@ -213,17 +216,71 @@ function Modal({ responsible }) {
                                     </span>
                                 ))}
                             </div>
+
                         </div>
                         <hr />
                         <div className="row">
-                            <div className="col-lg-12">
-                                <div className="d-flex justify-content-between ">
+                            <div className="col-lg-6">
 
+                                <h5>Informações de Registro</h5>
+                                <form action="">
+
+                                    <div className="form-group mb-3">
+                                        <label htmlFor="email" className="small">
+                                            E-mail
+                                        </label>
+
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            className="form-control text-lowercase"
+                                            name="email"
+                                            value={email}
+                                            onChange={() => setEmail(event.target.value)}
+                                            placeholder="E-mail"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group mb-3">
+                                        <label htmlFor="numberGuests" className="small">
+                                            N° Convites
+                                        </label>
+
+                                        <input
+                                            type="number"
+                                            name="numberGuests"
+                                            id="numGuests"
+                                            className="form-control text-lowercase"
+                                            value={numberGuests}
+                                            onChange={() => setNumberGuests(event.target.value)}
+                                            placeholder="Quantidade Convites"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="form-group mb-3">
+                                        <label htmlFor="numberGuests" className="small">
+                                            Operador
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            name="numberGuests"
+                                            id="numGuests"
+                                            className="form-control text-lowercase"
+                                            disabled
+                                            value={user.name || ''}
+                                        />
+                                    </div>
+                                </form>
+                            </div>
+                            <div className="col-lg-6">
+                                <div className="d-flex justify-content-between"
+                                    style={{ marginBottom: '1.1em' }}
+                                >
                                     <h5>E-mails</h5>
-
                                     <small
                                         className="text-right font-weight-bold"
-                                        style={{ fontSize: 12 }}>
+                                        style={{ fontSize: 10 }}>
                                         * Clique em algum e-mail para copiar
                                     </small>
 
@@ -232,13 +289,18 @@ function Modal({ responsible }) {
 
                                     <span
                                         className="text-lowercase"
-                                        title="Clique para copiar" >
+                                        title="Clique para copiar"
+                                        onClick={() => setEmail(responsible.motherEmail)}
+
+                                    >
                                         {responsible.motherEmail}
                                         <br />
                                     </span>
                                     <span
                                         className="text-lowercase"
                                         title="Clique para copiar"
+                                        onClick={() => setEmail(responsible.fatherEmail)}
+
                                     >
                                         {responsible.fatherEmail}
                                         <br />
@@ -247,37 +309,31 @@ function Modal({ responsible }) {
                                         <span key={student.ra}
                                             className="text-lowercase"
                                             title="Clique para copiar"
+                                            onClick={() => setEmail(student.email)}
                                         >
                                             {student.email} <br />
                                         </span>
                                     ))}
                                 </div>
-
                             </div>
 
-                        </div>
-                        <hr />
-                        <div className="row">
-                            <h5>Informações</h5>
-                            <div className="col">
-                                Qtd de convites dispoiníveis 5
-
-                            </div>
 
                         </div>
-
 
                     </div>
                     <div className="modal-footer">
+                        
                         <button
                             type="button"
                             className="btn btn-primary"
-                            onClick={() => {
-                                alert('Aqui vai confirmar o envio do convite')
-                            }}>
+                            onClick={handleInvitation}>
                             Salvar
                         </button>
-                        <button type="button" className="btn btn-secondary" data-mdb-dismiss="modal">Cancelar</button>
+                        <button type="button"
+                            className="btn btn-secondary"
+                            data-mdb-dismiss="modal">
+                            Cancelar
+                        </button>
                     </div>
                 </div>
             </div>
