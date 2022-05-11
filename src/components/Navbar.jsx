@@ -9,8 +9,8 @@ export function Navbar() {
 
     useEffect(() => {
 
-        if (localStorage.getItem('eventos-token')) {
-            const token = localStorage.getItem('eventos-token')
+        if (localStorage.getItem('events-token')) {
+            const token = localStorage.getItem('events-token')
             const tokenDecode = jwt(token)
             setUser(tokenDecode)
         }

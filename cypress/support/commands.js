@@ -24,6 +24,9 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+import "cypress-localstorage-commands"
+
+
 Cypress.Commands.add('login', () => {
     cy.request({
         method: 'post',
@@ -38,4 +41,22 @@ Cypress.Commands.add('login', () => {
         const { token } = res.body
         return token
     })
+})
+
+
+Cypress.Commands.add('loginWeb', () => {
+    cy.visit('/')
+    cy.contains('Login').click()
+
+    cy.get('#email').type(Cypress.env('email'))
+    cy.get('#password').type(Cypress.env('password'))
+    cy.contains('ENTRAR').click()
+
+    cy.wait(200)
+    cy.getLocalStorage('events-token')
+        .then(token => {
+
+            cy.log(`cy.setLocalStorage('events-token', '${token}')`)
+
+        })
 })

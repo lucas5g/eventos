@@ -1,13 +1,16 @@
 import Link from 'next/link'
 import { useFetch } from '../../hooks/useFetch'
 import {Catch} from '../../components/Catch'
+import { useRouter } from 'next/router'
 export default function Users() {
 
     const { data: users, error } = useFetch('/usuarios')
 
     if (error) {
         console.log(error.response.data)
-        Catch()
+        window.location.reload
+        useRouter().push('/')
+        // Catch()
     }
 
     if (!users) {

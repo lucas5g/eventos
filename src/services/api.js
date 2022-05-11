@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const Authorization = () => {
     if (typeof window !== 'undefined') {
-        return window.localStorage.getItem('eventos-token')
+        return window.localStorage.getItem('events-token')
     }
 }
 

@@ -1,4 +1,5 @@
 import jwtDecode from "jwt-decode"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import { Catch } from "../components/Catch"
@@ -30,8 +31,10 @@ export default function Convidados() {
                 // setLoadPage(false)
             } catch (error) {
 
-                console.log(error.response.data)
-                Catch()
+                console.log('Erro convidados', error.response.data)
+                // window.location.reload
+                // router.push('/')
+                // Catch()
             }
 
         })()
@@ -55,6 +58,7 @@ export default function Convidados() {
             <input type="text"
                 className="form-control form-control-lg my-2 p-2"
                 placeholder="Aluno, pai ou mãe"
+                id="search"
                 value={search}
                 onChange={event => setSearch(event?.target.value)}
 
@@ -143,7 +147,13 @@ function Modal({ responsible }) {
     const [user, setUser] = useState({})
 
     useEffect(() => {
-        const token = localStorage.getItem('eventos-token')
+
+        if(!localStorage.getItem('events-token')){
+            window.location.href = '/'
+            return
+        }
+
+        const token = localStorage.getItem('events-token')
 
         setUser(jwtDecode(token))
         setEmail('')
@@ -152,13 +162,8 @@ function Modal({ responsible }) {
         
 
     }, [responsible])
-    async function handleInvitation() {
-        console.log("enviar convite")
-        console.log({
-            email,
-            numberGuests,
-            students: responsible.students.map( student => student.ra )
-        })
+    async function handleInvitation(event ) {   
+        event.preventDefault()
 
         const data = { email, numberGuests, 
             students: responsible.students.map( student => student.ra )
@@ -178,10 +183,7 @@ function Modal({ responsible }) {
 
 
         >
-            <div
-                className="modal-dialog modal-lg"
-                // style={{ maxWidth: '930px' }}
-            >
+            <div className="modal-dialog modal-lg">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h4 className="modal-title" id="exampleModalLabel">
@@ -223,7 +225,7 @@ function Modal({ responsible }) {
                             <div className="col-lg-6">
 
                                 <h5>Informações de Registro</h5>
-                                <form action="">
+                                <form id="form" onSubmit={handleInvitation}>
 
                                     <div className="form-group mb-3">
                                         <label htmlFor="email" className="small">
@@ -324,9 +326,11 @@ function Modal({ responsible }) {
                     <div className="modal-footer">
                         
                         <button
-                            type="button"
+                            type="submit"
                             className="btn btn-primary"
-                            onClick={handleInvitation}>
+                            form="form"
+                            // onClick={handleInvitation}
+                            >
                             Salvar
                         </button>
                         <button type="button"

@@ -1,12 +1,8 @@
-import { useRouter } from "next/router"
 
-export function Catch(){
-    localStorage.clear()
-    window.location.reload
-    useRouter().push('/')
+export function Catch() {
+    // const router = useRouter()
 
+    window.location.href = '/'
 
-    return(
-        <h1>Logout</h1>
-    )
+    
 }

@@ -1,13 +1,10 @@
 import { useState } from "react"
-import { useRouter } from "next/router"
 import { api } from "../services/api"
 import { Alert } from "../components/Alert"
-import { sleep } from "../helpers"
 
 
 export default function Login() {
 
-    const router = useRouter()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState({ status: false, msg: '', alert: [] })
@@ -18,15 +15,13 @@ export default function Login() {
 
         try {
             setLoading(true)
-            // await sleep(2000)
             const { data } = await api.post('/auth/login', {
                 email, password
             })
             console.log(data)
-            localStorage.setItem('eventos-token', data.token)
+            localStorage.setItem('events-token', data.token)
             setError({ status: false })
             window.location.href = '/'
-            router.push('/')
 
         } catch (error) {
             setLoading(false)
@@ -68,6 +63,7 @@ export default function Login() {
                         <input
                             type="email"
                             name="email"
+                            id="email"
                             className="form-control"
                             placeholder="Email"
                             required
@@ -80,6 +76,7 @@ export default function Login() {
                         <input
                             type="password"
                             name="password"
+                            id="password"
                             className="form-control "
                             placeholder="Senha"
                             required
