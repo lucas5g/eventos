@@ -11,7 +11,7 @@ describe("Frontend Guests", () => {
         cy.visit('/convidados')
 
         const guest = 'PEDRO HENRIQUE'
-        cy.get('#search').type(guest)
+        cy.get('#search', { timeout: 5000 }).type(guest)
 
 
         cy.xpath(`//ul/li[contains(., '${guest}')]//button`)

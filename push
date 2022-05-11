@@ -24,7 +24,7 @@ yarn test
 status=$?
 echo $status
 ##Se a saida for 5, o teste está errado
-if [ $status -eq  5 ] || [ $status -eq 1 ]; then
+if [ $status != 0 ]; then
     echo ""
     echo "###################"
     echo "#                 #"
