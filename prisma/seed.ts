@@ -1,6 +1,7 @@
-import { prisma } from "../src/config/prisma";
+// import { prisma } from "../src/config/prisma";
+import { prisma } from "../src/config/prisma"
 import bcrypt from 'bcryptjs'
-
+;
 (async () => {
 
     const salt = await bcrypt.genSalt(10)

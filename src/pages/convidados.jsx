@@ -46,7 +46,7 @@ export default function Convidados() {
 
         intervel = setInterval(() => {
             setLoadPage(new Date())
-        }, 30000)
+        }, 60000)
         return () => clearInterval(intervel)
 
 

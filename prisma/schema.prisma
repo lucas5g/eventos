@@ -26,7 +26,7 @@ model User {
     id        Int      @id @default(autoincrement())
     name      String
     email     String
-    password  String   
+    password  String
     unity     Unity
     profile   Profile  @default(Operador)
     createdAt DateTime @default(now())
@@ -53,4 +53,13 @@ model Guest {
     updatedAt      DateTime @default(now()) @updatedAt
 
     @@map("events_guests")
+}
+
+model GuestInvite {
+    id           Int    @id @default(autoincrement())
+    email        String
+    numberGuests Int
+    students     Json
+
+    @@map("events_guests_invite")
 }

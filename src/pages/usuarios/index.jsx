@@ -8,9 +8,7 @@ export default function Users() {
 
     if (error) {
         console.log(error.response.data)
-        window.location.reload
-        useRouter().push('/')
-        // Catch()
+        Catch()
     }
 
     if (!users) {

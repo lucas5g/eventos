@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { prisma } from '../../config/prisma'
-import { auth } from '../../middleware/auth'
+import { prisma } from '../../../config/prisma'
+import { auth } from '../../../middleware/auth'
 
 
 export default async function guests(req: NextApiRequest, res: NextApiResponse) {
