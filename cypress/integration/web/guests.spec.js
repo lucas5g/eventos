@@ -1,6 +1,6 @@
 ///<reference types="cypress" />
 
-describe("Frontend Guests", () => {
+describe.skip("Frontend Guests", () => {
     it('Guests Filter and register send invite', () => {
 
         // cy.loginWeb()

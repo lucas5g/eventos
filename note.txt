@@ -10,3 +10,8 @@ JSON_ARRAYAGG( JSON_OBJECT( 'name', student, 'ra', ra, 'email', studentEmail, 'c
 FROM events_guests as g 
 right join events_guests_invite as gi
 WHERE mother LIKE "%ana%" or father LIKE "%ana%" OR student LIKE "%ana%" GROUP BY mother LIMIT 10;
+
+
+    // "prisma": {
+    //     "seed": "ts-node prisma/seed.ts"
+    // },
