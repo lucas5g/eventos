@@ -1,4 +1,4 @@
-import jwtDecode from "jwt-decode"
+import moment from "moment"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
@@ -112,15 +112,15 @@ export default function Convidados() {
 
                                 <button
                                     onClick={() => setResponsible(responsible)}
-                                    className={`btn bg-${responsible.have_invitation ? 'danger' : 'success'}   p-2 text-white rounded fs-3 d-flex align-items-center `}
+                                    className={`btn bg-${responsible.emailInvite ? 'danger' : 'success'}   p-2 text-white rounded fs-3 d-flex align-items-center `}
                                     title={responsible.have_invitation ? 'Gerenciar Retorno do Convite' : 'Gerenciar Envio de Convite'}
                                     role="button"
                                     data-mdb-toggle="modal"
                                     data-mdb-target="#exampleModal"
 
                                 >
-                                    {!responsible.have_invitation == true && <FaArrowRight />}
-                                    {responsible.have_invitation == true && <FaArrowLeft />}
+                                    {responsible.emailInvite == null && <FaArrowRight />}
+                                    {responsible.emailInvite != null && <FaArrowLeft />}
 
 
                                 </button>
@@ -141,34 +141,52 @@ export default function Convidados() {
 function Modal({ responsible }) {
 
 
-    const [email, setEmail] = useState('')
-    const [numberGuests, setNumberGuests] = useState(0)
-    const [kgFood, setKgFood] = useState(0)
+    const [emailInvite, setEmailInvite] = useState('')
+    const [kgFood, setKgFood] = useState('')
+    const [numberGuests, setNumberGuests] = useState('')
+    const [createdInvite, setCreatedInvite] = useState('')
     const [user, setUser] = useState({})
+    const [isSendData, setIsSendData] = useState(false)
+
+
+    // const dataInvite'
 
     useEffect(() => {
 
-        if(!localStorage.getItem('events-token')){
-            window.location.href = '/'
-            return
-        }
+        setKgFood(responsible.kgFood || '')
+        setNumberGuests(responsible.numberGuests || '')
+        setEmailInvite(responsible.emailInvite || '')
+        setUser(responsible.userName)
+        setCreatedInvite(responsible.createdInvite)
 
-        const token = localStorage.getItem('events-token')
-
-        setUser(jwtDecode(token))
-        setEmail('')
-        setNumberGuests(5)
-
-        
 
     }, [responsible])
-    async function handleInvitation(event ) {   
+
+    useEffect(() => {
+        navigator.clipboard.writeText(emailInvite.toLocaleLowerCase())
+    }, [emailInvite])
+    async function handleInvitation(event) {
         event.preventDefault()
 
-        const data = { email, numberGuests, 
-            students: responsible.students.map( student => student.ra )
+        const data = {
+            emailInvite,
+            numberGuests: Number(numberGuests),
+            kgFood: Number(kgFood),
+            students: responsible.students.map(student => student.ra)
         }
-        alert('Informações enviadas no servidor\n\n' + JSON.stringify(data, 1,7))
+
+        try {
+            setIsSendData(true)
+            await api.post('/convidados/registros', data)
+            alert('Registrado com sucesso')
+            setIsSendData(false)
+            window.location.reload()
+
+        } catch (error) {
+            console.log(error.response.data)
+            setIsSendData(false)
+        }
+
     }
 
     return (
@@ -227,6 +245,45 @@ function Modal({ responsible }) {
                                 <h5>Informações de Registro</h5>
                                 <form id="form" onSubmit={handleInvitation}>
 
+                                    <div className="form-group row mb-3">
+                                        <div className="col-lg-6">
+                                            <label htmlFor="numberGuests" className="small">
+                                                Alimentos doados (Kg)
+                                            </label>
+
+                                            <input
+                                                type="number"
+                                                name="kgFood"
+                                                id="kgFood"
+                                                className="form-control"
+                                                value={kgFood}
+                                                onChange={() => setKgFood(event.target.value)}
+                                                placeholder="Kg. Alimentos"
+                                                required
+                                                disabled={createdInvite}
+                                            />
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <label htmlFor="numberGuests" className="small">
+                                                N° Convites
+                                            </label>
+
+                                            <input
+                                                type="number"
+                                                name="numberGuests"
+                                                id="numGuests"
+                                                className="form-control"
+                                                value={numberGuests}
+                                                onChange={() => setNumberGuests(event.target.value)}
+                                                placeholder="Qtd. Convites"
+                                                required
+                                                disabled={createdInvite}
+                                            />
+                                        </div>
+
+
+                                    </div>
+
                                     <div className="form-group mb-3">
                                         <label htmlFor="email" className="small">
                                             E-mail
@@ -234,45 +291,50 @@ function Modal({ responsible }) {
 
                                         <input
                                             type="email"
-                                            id="email"
+                                            id="emailInvite"
                                             className="form-control text-lowercase"
-                                            name="email"
-                                            value={email}
+                                            name="emailInvite"
+                                            value={emailInvite}
                                             onChange={() => setEmail(event.target.value)}
-                                            placeholder="E-mail"
+                                            placeholder="E-mail para quem será enviado os convites"
                                             required
-                                        />
-                                    </div>
-                                    <div className="form-group mb-3">
-                                        <label htmlFor="numberGuests" className="small">
-                                            N° Convites
-                                        </label>
+                                            disabled={createdInvite}
 
-                                        <input
-                                            type="number"
-                                            name="numberGuests"
-                                            id="numGuests"
-                                            className="form-control text-lowercase"
-                                            value={numberGuests}
-                                            onChange={() => setNumberGuests(event.target.value)}
-                                            placeholder="Quantidade Convites"
-                                            required
                                         />
                                     </div>
-                                    <div className="form-group mb-3">
-                                        <label htmlFor="numberGuests" className="small">
-                                            Operador
-                                        </label>
 
-                                        <input
-                                            type="text"
-                                            name="numberGuests"
-                                            id="numGuests"
-                                            className="form-control text-lowercase"
-                                            disabled
-                                            value={user.name || ''}
-                                        />
-                                    </div>
+                                    {user &&
+                                        <>
+                                            <div className="form-group mb-3">
+                                                <label htmlFor="numberGuests" className="small">
+                                                    Operador
+                                                </label>
+
+                                                <input
+                                                    type="text"
+                                                    name="numberGuests"
+                                                    id="numGuests"
+                                                    className="form-control text-lowercase"
+                                                    disabled
+                                                    value={user}
+                                                />
+                                            </div>
+                                            <div className="form-group mb-3">
+                                                <label htmlFor="numberGuests" className="small">
+                                                    Data de Registro
+                                                </label>
+
+                                                <input
+                                                    type="date-time"
+                                                    name="numberGuests"
+                                                    id="numGuests"
+                                                    className="form-control text-lowercase"
+                                                    disabled
+                                                    value={moment(responsible.createdInvite).format('DD/MM/YYYY HH:mm')}
+                                                />
+                                            </div>
+                                        </>
+                                    }
                                 </form>
                             </div>
                             <div className="col-lg-6">
@@ -292,7 +354,7 @@ function Modal({ responsible }) {
                                     <span
                                         className="text-lowercase"
                                         title="Clique para copiar"
-                                        onClick={() => setEmail(responsible.motherEmail)}
+                                        onClick={() => setEmailInvite(responsible.motherEmail)}
 
                                     >
                                         {responsible.motherEmail}
@@ -301,7 +363,7 @@ function Modal({ responsible }) {
                                     <span
                                         className="text-lowercase"
                                         title="Clique para copiar"
-                                        onClick={() => setEmail(responsible.fatherEmail)}
+                                        onClick={() => setEmailInvite(responsible.fatherEmail)}
 
                                     >
                                         {responsible.fatherEmail}
@@ -311,7 +373,7 @@ function Modal({ responsible }) {
                                         <span key={student.ra}
                                             className="text-lowercase"
                                             title="Clique para copiar"
-                                            onClick={() => setEmail(student.email)}
+                                            onClick={() => setEmailInvite(student.email)}
                                         >
                                             {student.email} <br />
                                         </span>
@@ -324,19 +386,62 @@ function Modal({ responsible }) {
 
                     </div>
                     <div className="modal-footer">
-                        
-                        <button
-                            type="submit"
-                            className="btn btn-primary"
-                            form="form"
-                            // onClick={handleInvitation}
+
+                        {!createdInvite &&
+                            <button
+                                type="submit"
+                                className="btn btn-primary"
+                                form="form"
+                                disabled={isSendData}
+
                             >
-                            Salvar
-                        </button>
+                                {isSendData ? 'Carregando ...' : 'Salvar'}
+                            </button>
+                        }
+
+                        {createdInvite &&
+                            <button
+                                className="btn btn-danger"
+                                disabled={isSendData}
+                                onClick={async () => {
+                                    const email = prompt('Tem certeza de deletar o registro de envio do convite?\n\nDigite o e-mail de quem foi registrado:')
+
+                                    console.log({ email, emailInvite: emailInvite.toLowerCase() })
+
+                                    if (email === null) {
+                                        return
+                                    }
+                                    if (email !== emailInvite.toLowerCase()) {
+                                        alert('E-mail errado!')
+                                        return
+                                    }
+
+                                    const data = {
+                                        emailInvite,
+                                        idInvite: responsible.idInvite
+                                    }
+                                    try {
+                                        await api.delete('/convidados/registros', { data })
+                                        alert('Deletado com sucesso!')
+                                        window.location.reload()
+
+                                    } catch (error) {
+                                        console.log(error.response.data)
+                                        Catch()
+                                    }
+
+                                    // confirm
+                                }}
+
+                            >
+                                Deletar Registro
+                            </button>
+                        }
+
                         <button type="button"
                             className="btn btn-secondary"
                             data-mdb-dismiss="modal">
-                            Cancelar
+                            Fechar
                         </button>
                     </div>
                 </div>

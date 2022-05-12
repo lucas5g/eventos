@@ -7,7 +7,14 @@ import { auth } from '../../../middleware/auth'
 export default async function users(req: NextApiRequest, res: NextApiResponse) {
 
     //@ts-ignore
-    auth(req, res)
+    //@ts-ignore
+    if (auth(req, res).profile !== 'Admin') {
+        res
+            .status(401)
+            .json({ msg: 'Sem permissão' })
+
+        return
+    }
 
     if (req.method === 'GET') {
         const users = await prisma.user.findMany({
