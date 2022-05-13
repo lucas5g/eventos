@@ -44,10 +44,16 @@ export function Navbar() {
                     <div className="navbar-nav text-white ms-auto">
              
                         {user &&
+                        <>
                             <Link href='/convidados'>
                                 <a className="nav-link text-white" >Convidados</a>
                             </Link>
+                            <Link href='/relatorio'>
+                                <a className="nav-link text-white" >Relatório</a>
+                            </Link>
+                        </>
                         }
+                        
 
                         {user.profile === 'Admin' &&
                             <Link href='/usuarios'>
