@@ -9,7 +9,7 @@ export function Footer() {
             }}>
             <div className="text-center p-3" >
                 <small>
-                    © {new Date().getFullYear()}
+                    Eventos CSA © {new Date().getFullYear()}
                      {/* DevBear */}
 
                 </small>

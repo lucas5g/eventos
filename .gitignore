@@ -44,5 +44,6 @@ cypress.json
 cypress/screenshots/*
 
 *.XLSX
+*.xlsx
 *.sql
 

@@ -4,8 +4,8 @@ import { auth } from '../../../middleware/auth'
 
 
 export default async function guests(req: NextApiRequest, res: NextApiResponse) {
-
-    auth(req, res)
+    //@ts-ignore
+    const { unity } = auth(req, res)
     if (req.method === 'GET') {
         
         const { search } = req.query
@@ -20,11 +20,13 @@ export default async function guests(req: NextApiRequest, res: NextApiResponse) 
         or gi.emailInvite = g.motherEmail 
         or gi.emailInvite = g.fatherEmail 
         LEFT join events_users as u on gi.userId = u.id 
-        WHERE mother LIKE ? or father LIKE ? OR student LIKE ? GROUP BY mother LIMIT 10;
+        WHERE(mother LIKE ? or father LIKE ? OR student LIKE ?) and g.unity = ?
+        GROUP BY mother, student LIMIT 10;
         `,
             `%${search}%`,
             `%${search}%`,
-            `%${search}%`
+            `%${search}%`,
+            unity
         )
 
         return res.json(guests)

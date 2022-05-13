@@ -31,10 +31,10 @@ export default function Convidados() {
                 // setLoadPage(false)
             } catch (error) {
 
-                console.log('Erro convidados', error.response.data)
+                // console.log('Erro convidados', error.response.data)
                 // window.location.reload
                 // router.push('/')
-                // Catch()
+                Catch()
             }
 
         })()
