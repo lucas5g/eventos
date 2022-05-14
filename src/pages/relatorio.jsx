@@ -4,14 +4,14 @@ import { Catch } from '../components/Catch'
 import { useRouter } from 'next/router'
 export default function Users() {
 
-    const { data: users, error } = useFetch('/usuarios')
+    const { data: report, error } = useFetch('/relatorio')
 
     if (error) {
         console.log(error.response.data)
         Catch()
     }
 
-    if (!users) {
+    if (!report) {
         return (
             <h2>Carregando..</h2>
         )
@@ -21,6 +21,9 @@ export default function Users() {
 
         <div>
             <h1>Relatório</h1>
+            <p>
+                {/* o operador so vai ver da unidade dele. */}
+            </p>
             <hr />
             <table className="table">
                 <thead>
@@ -32,14 +35,36 @@ export default function Users() {
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row">1</th>
+                        <th scope="row">BH</th>
                         <td>ex: 8000 </td>
                         <td>ex: 8000</td>
                     </tr>
-                </tbody>
-            </table>
+                    <tr>
+                        <th scope="row">Contagem</th>
+                        <td>ex: 8000 </td>
+                        <td>ex: 8000</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Gutierrez</th>
+                        <td>ex: 8000 </td>
+                        <td>ex: 8000</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">NovaLima</th>
+                        <td>ex: 8000 </td>
+                        <td>ex: 8000</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Total</th>
+                        <td>ex: 8000 </td>
+                        <td>ex: 8000</td>
+                    </tr>
 
-        </div>
+                </tbody>
+
+            </table >
+
+        </div >
 
     )
 }

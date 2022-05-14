@@ -175,6 +175,8 @@ function Modal({ responsible }) {
             students: responsible.students.map(student => student.ra)
         }
 
+        const persist = confirm('Confirme os dados de registro:\n\n' + JSON.stringify(data, 2, 7))
+        console.log({ persist })
         try {
             setIsSendData(true)
             await api.post('/convidados/registros', data)
@@ -248,23 +250,6 @@ function Modal({ responsible }) {
                                     <div className="form-group row mb-3">
                                         <div className="col-lg-6">
                                             <label htmlFor="numberGuests" className="small">
-                                                Alimentos doados (Kg)
-                                            </label>
-
-                                            <input
-                                                type="number"
-                                                name="kgFood"
-                                                id="kgFood"
-                                                className="form-control"
-                                                value={kgFood}
-                                                onChange={() => setKgFood(event.target.value)}
-                                                placeholder="Kg. Alimentos"
-                                                required
-                                                disabled={createdInvite}
-                                            />
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <label htmlFor="numberGuests" className="small">
                                                 N° Convites
                                             </label>
 
@@ -280,6 +265,24 @@ function Modal({ responsible }) {
                                                 disabled={createdInvite}
                                             />
                                         </div>
+                                        <div className="col-lg-6">
+                                            <label htmlFor="numberGuests" className="small">
+                                                Alimentos doados (Kg)
+                                            </label>
+
+                                            <input
+                                                type="number"
+                                                name="kgFood"
+                                                id="kgFood"
+                                                className="form-control"
+                                                value={kgFood}
+                                                onChange={() => setKgFood(event.target.value)}
+                                                placeholder="Kg. Alimentos"
+                                                required
+                                                disabled={createdInvite}
+                                            />
+                                        </div>
+
 
 
                                     </div>

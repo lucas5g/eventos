@@ -1,6 +1,8 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
+import { Input } from "../../components/Input"
+import { Select } from "../../components/Select"
 import { api } from "../../services/api"
 
 export default function UserForm() {
@@ -49,7 +51,7 @@ export default function UserForm() {
                     type: 'success'
                 })
                 setIsSendData(false)
-                
+
                 setTimeout(() => {
                     console.log('vai')
                     router.push(`/usuarios/${data.id}`)
@@ -58,7 +60,7 @@ export default function UserForm() {
 
 
             } catch (error) {
-                console.log(error.response)
+                console.log(error.response.data)
                 setAlertResult({
                     msg: error.response.data.msg,
                     type: 'warning'
@@ -128,89 +130,61 @@ export default function UserForm() {
                             {alertResult.msg}
                         </div>
                     }
-                    <div className="form-group mb-4">
-                        {/* <label  htmlFor="form4Example1">Name</label> */}
-                        <input
-                            type="text"
-                            id="name"
-                            className="form-control"
-                            value={user.name}
-                            name="name"
-                            onChange={handleChange}
-                            placeholder="Nome"
-                        />
-                    </div>
-                    <div className="form-group mb-4">
-                        {/* <label  htmlFor="form4Example1">Name</label> */}
-                        <select
-                            name="profile"
-                            id="profile"
-                            className="select form-control"
-                            onChange={handleChange}
-                            value={user.profile}
-                            required
-                        >
+                    <Input
+                        name="name"
+                        label="Nome"
+                        value={user.name}
+                        handleChange={handleChange}
 
-                            <option value="">Perfil</option>
-                            <option value="Operador">Operador</option>
-                            <option value="Admin">Admin</option>
+                    />
+                    <Select
+                        label="Perfil"
+                        name="profile"
+                        value={user.profile}
+                        handleChange={handleChange}
+                        options={[
+                            { value: '', name: 'Selecione o Perfil' },
+                            { value: 'Admin', name: 'Admin' },
+                            { value: 'Operador', name: 'Operador' }
+                        ]}
+                    />
 
-                        </select>
-                    </div>
+                    <Select
+                        label="Unidade"
+                        name="unity"
+                        value={user.unity}
+                        handleChange={handleChange}
+                        options={[
+                            { value: '', name: 'Selecione a Unidade' },
+                            { value: 'BH', name: 'BH' },
+                            { value: 'Contagem', name: 'Contagem' },
+                            { value: 'NovaLima', name: 'NovaLima' },
+                            { value: 'Gutierrez', name: 'Gutierrez' },
 
-                    <div className="form-group mb-4">
+                        ]}
+                    />
 
-                        <select
-                            name="unity"
-                            id="unity"
-                            className="select form-control"
-                            onChange={handleChange}
-                            value={user.unity}
-                            required
-                        >
-
-                            <option value="">Unidade</option>
-                            <option value="BH">BH</option>
-                            <option value="Contagem">Contagem</option>
-                            <option value="NovaLima">NovaLima</option>
-                            <option value="Gutierrez">Gutierrez</option>
-                            
-
-                        </select>
-
-
-                    </div>
-                    <div className="form-group mb-4">
-                        {/* <label  htmlFor="form4Example1">Name</label> */}
-                        <input
-                            type="text"
-                            id="email"
-                            className="form-control"
-                            value={user.email}
-                            name="email"
-                            onChange={handleChange}
-                            placeholder="E-mail"
-                            required
+                    <Input
+                        type="email"
+                        name="email"
+                        label="E-mail"
+                        value={user.email}
+                        handleChange={handleChange}
 
                         />
-                    </div>
-                    <div className="form-group mb-4">
-                        <input
-                            type="password"
-                            id="password"
-                            className="form-control"
-                            value={user?.password || ''}
-                            name="password"
-                            onChange={handleChange}
-                            placeholder="Senha"
-                        />
-                    </div>
 
+                    <Input
+                        type="password"
+                        name="password"
+                        label="Senha"
+                        value={user.password}
+                    />
+             
                     <button
                         type="submit"
                         className="btn btn-primary btn-block mb-4"
                         disabled={isSendData}
-                        >
+                    >
                         {isSendData ? 'Carregando ...' : 'Salvar'}
                     </button>
                 </form>

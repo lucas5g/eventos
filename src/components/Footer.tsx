@@ -9,7 +9,7 @@ export function Footer() {
             }}>
             <div className="text-center p-3" >
                 <small>
-                    Eventos CSA © {new Date().getFullYear()}
+                    Desenvolvido e Elaborado por Narla e Lucas © {new Date().getFullYear()}
                      {/* DevBear */}
 
                 </small>
