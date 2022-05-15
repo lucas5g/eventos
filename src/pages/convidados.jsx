@@ -9,14 +9,12 @@ import { api } from "../services/api"
 // export default withPageAuthRequired(function Alunos() {
 export default function Convidados() {
 
-    const [search, setSearch] = useState('')
+    const [search, setSearch] = useState([])
     const [responsible, setResponsible] = useState('')
-    // const [students, setStudents] = useState([])
     const [responsibles, setResponsibles] = useState([])
     const [loading, setLoading] = useState(false)
     const [loadPage, setLoadPage] = useState('')
 
-    // const { user } = useUser()
 
     useEffect(() => {
 
@@ -24,22 +22,19 @@ export default function Convidados() {
 
             try {
                 setLoading(true)
-                // await sleep(3000)
+
                 const { data } = await api.get(`/convidados?search=${search}`)
-                // console.log(data)
                 setResponsibles(data)
                 setLoading(false)
-                // setLoadPage(false)
             } catch (error) {
-
-                // console.log('Erro convidados', error.response.data)
-                // window.location.reload
-                // router.push('/')
+                console.log('error')
+                console.log(error.response)
                 Catch()
             }
 
         })()
     }, [search, loadPage])
+
 
     useEffect(() => {
 
@@ -134,8 +129,13 @@ export default function Convidados() {
                 ))}
             </ul>
 
-            <ModalGuest responsible={responsible} />
-          
+            <ModalGuest 
+                responsible={responsible} 
+                responsibles={responsibles}
+                setResponsibles={setResponsibles}
+                setLoadPage={setLoadPage}
+                    />
+
         </div >
     )
 }

@@ -10,7 +10,7 @@ export default async function guestRegister(req: NextApiRequest, res: NextApiRes
 
     if (req.method === 'POST') {
 
-        const { emailInvite, numberGuests, students, kgFood } = req.body
+        const { emailInvite, numberGuests, students, kgFood, motherEmail } = req.body
 
 
         const registerExist: [] = await prisma.$queryRawUnsafe(`
@@ -32,12 +32,14 @@ export default async function guestRegister(req: NextApiRequest, res: NextApiRes
         const register = await prisma.guestInvite.create({
             data: {
                 emailInvite,
+                motherEmail,
                 numberGuests,
                 students,
                 kgFood,
                 unity,
                 userId: id
-            }
+            },
+         
         })
 
         return res.json(register)

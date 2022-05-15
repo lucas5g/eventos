@@ -3,7 +3,7 @@ import moment from "moment"
 import { api } from "../services/api"
 import { Modal } from "./Modal"
 
-export function ModalGuest({ responsible }) {
+export function ModalGuest({ responsible, responsibles, setResponsibles, setLoadPage }) {
 
     const [emailInvite, setEmailInvite] = useState('')
     const [kgFood, setKgFood] = useState('')
@@ -35,6 +35,7 @@ export function ModalGuest({ responsible }) {
 
         const data = {
             emailInvite,
+            motherEmail: responsible.motherEmail,
             numberGuests: Number(numberGuests),
             kgFood: Number(kgFood),
             students: responsible.students.map(student => student.ra)
@@ -45,15 +46,20 @@ export function ModalGuest({ responsible }) {
         if (!persist) {
             return
         }
+
         try {
             setIsSendData(true)
-            await api.post('/convidados/registros', data)
-            alert('Registrado com sucesso')
+            const response = await api.post('/convidados/registros', data)
+            setLoadPage(new Date())
             setIsSendData(false)
-            window.location.reload()
+            alert('Registrado com sucesso')
+            // console.log(response.data)
+            setCreatedInvite(response.data.createdInvite)    
+
 
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data)
+            alert(error.response.data.msg)
             setIsSendData(false)
         }
 
@@ -66,9 +72,7 @@ export function ModalGuest({ responsible }) {
             tabIndex="-1"
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
-        // data-mdb-keyboard="false"
-        // data-mdb-backdrop="static"
-
+     
 
         >
             {/* <div className="modal-dialog modal-lg"> */}

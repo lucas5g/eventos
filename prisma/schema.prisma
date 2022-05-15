@@ -66,6 +66,7 @@ model Guest {
 model GuestInvite {
     id           Int      @id @default(autoincrement())
     emailInvite  String
+    motherEmail  String 
     numberGuests Int
     students     Json
     kgFood       Int

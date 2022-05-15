@@ -11,14 +11,12 @@ export default async function guests(req: NextApiRequest, res: NextApiResponse) 
         const { search } = req.query
         const guests = await prisma.$queryRawUnsafe(`
         SELECT 
-        g.mother, g.motherEmail, g.father, g.fatherEmail, 
+        g.mother, g.motherEmail, g.father, g.fatherEmail,
         gi.emailInvite, gi.numberGuests, gi.kgFood, gi.userId, gi.createdAt as createdInvite, gi.id as idInvite, 
         u.name as userName, 
         JSON_ARRAYAGG( JSON_OBJECT( 'name', student, 'ra', ra, 'email', studentEmail, 'course', course ) ) as students FROM events_guests as g 
         LEFT join events_guests_invite as gi 
-        on gi.emailInvite = g.studentEmail 
-        or gi.emailInvite = g.motherEmail 
-        or gi.emailInvite = g.fatherEmail 
+        on gi.motherEmail = g.motherEmail      
         LEFT join events_users as u on gi.userId = u.id 
         WHERE(mother LIKE ? or father LIKE ? OR student LIKE ?) and g.unity = ?
         GROUP BY mother
@@ -32,6 +30,9 @@ export default async function guests(req: NextApiRequest, res: NextApiResponse) 
         )         
         
         return res.json(guests)
+
+        // or gi.emailInvite = g.motherEmail 
+        // or gi.emailInvite = g.fatherEmail
     }
 
 }
