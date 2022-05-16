@@ -178,6 +178,7 @@ export default function UserForm() {
                         name="password"
                         label="Senha"
                         value={user.password}
+                        handleChange={handleChange}
                     />
              
                     <button
