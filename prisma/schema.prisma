@@ -66,13 +66,14 @@ model Guest {
 model GuestInvite {
     id           Int      @id @default(autoincrement())
     emailInvite  String
-    motherEmail  String 
+    motherEmail  String
     numberGuests Int
-    students     Json
     kgFood       Int
+    students     Json
     unity        Unity
     user         User     @relation(fields: [userId], references: [id])
     userId       Int
+    comments     String?   @db.Text 
     createdAt    DateTime @default(now())
     updatedAt    DateTime @default(now()) @updatedAt
 

@@ -10,6 +10,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
     const [numberGuests, setNumberGuests] = useState('')
     const [createdInvite, setCreatedInvite] = useState('')
     const [user, setUser] = useState({})
+    const [comments, setComments] = useState('')
     const [isSendData, setIsSendData] = useState(false)
 
 
@@ -21,7 +22,8 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
         setNumberGuests(responsible.numberGuests || '')
         setEmailInvite(responsible.emailInvite || '')
         setUser(responsible.userName)
-        setCreatedInvite(responsible.createdInvite)
+        setCreatedInvite(responsible.createdInvite || '')
+        setComments(responsible.comments || '')
 
 
     }, [responsible])
@@ -38,7 +40,8 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
             motherEmail: responsible.motherEmail,
             numberGuests: Number(numberGuests),
             kgFood: Number(kgFood),
-            students: responsible.students.map(student => student.ra)
+            students: responsible.students.map(student => student.ra),
+            comments
         }
 
         const persist = confirm(`Deseja confirmar este registro?`)
@@ -53,8 +56,9 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
             setLoadPage(new Date())
             setIsSendData(false)
             alert('Registrado com sucesso')
-            // console.log(response.data)
-            setCreatedInvite(response.data.createdInvite)    
+            console.log(response.data.createdAt)
+            setCreatedInvite(response.data.createdAt)
+            // setUser('lucas')
 
 
         } catch (error) {
@@ -72,7 +76,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
             tabIndex="-1"
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
-     
+
 
         >
             {/* <div className="modal-dialog modal-lg"> */}
@@ -133,10 +137,14 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
                                                 id="numGuests"
                                                 className="form-control"
                                                 value={numberGuests}
-                                                onChange={() => setNumberGuests(event.target.value)}
                                                 placeholder="Qtd. Convites"
                                                 required
                                                 disabled={createdInvite}
+                                                min="1"
+                                                onChange={() => {
+                                                    setNumberGuests(event.target.value)
+                                                    setKgFood(event.target.value * 2)
+                                                }}
                                             />
                                         </div>
                                         <div className="col-lg-6">
@@ -153,6 +161,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
                                                 onChange={() => setKgFood(event.target.value)}
                                                 placeholder="Kg. Alimentos"
                                                 required
+                                                min="2"
                                                 disabled={createdInvite}
                                             />
                                         </div>
@@ -179,6 +188,26 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
 
                                         />
                                     </div>
+                                    {/* {console.log({ comments })} */}
+                                    {(kgFood / numberGuests < 2 || comments !== '') &&
+                                        <textarea
+                                            name="comments"
+                                            id="commnets"
+                                            className="form-control"
+                                            cols="30"
+                                            rows="5"
+                                            value={comments}
+                                            onChange={() => setComments(event.target.value)}
+                                            required
+                                            disabled={createdInvite}
+                                            placeholder={`Quantidade de convite acima do previsto!\nDeixa aqui seu comentário.
+                                            `
+                                            }
+
+                                        >
+                                        </textarea>
+
+                                    }
 
                                     {user &&
                                         <>
@@ -208,6 +237,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
                                                     className="form-control text-lowercase"
                                                     disabled
                                                     value={moment(responsible.createdInvite).format('DD/MM/YYYY HH:mm')}
+
                                                 />
                                             </div>
                                         </>
@@ -270,8 +300,8 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
                                 className="btn btn-primary"
                                 form="form"
                                 disabled={isSendData}
-                                // data-mdb-toggle="modal"
-                                // data-mdb-target="#modalConfirm"
+                            // data-mdb-toggle="modal"
+                            // data-mdb-target="#modalConfirm"
 
                             >
                                 {isSendData ? 'Carregando ...' : 'Salvar'}
@@ -343,7 +373,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
                 aria-hidden="true"
 
             > */}
-                {/* <div className="modal-dialog">
+            {/* <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="modalConfirm">Modal title</h5>

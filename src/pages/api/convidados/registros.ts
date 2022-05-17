@@ -10,8 +10,12 @@ export default async function guestRegister(req: NextApiRequest, res: NextApiRes
 
     if (req.method === 'POST') {
 
-        const { emailInvite, numberGuests, students, kgFood, motherEmail } = req.body
+        const { emailInvite, numberGuests, students, kgFood, motherEmail, comments } = req.body
 
+        if(!emailInvite || !numberGuests || !students || !kgFood || !motherEmail){
+            res.status(401)
+                .json({msg: 'Todos os campos são obrigatórios'})
+        }
 
         const registerExist: [] = await prisma.$queryRawUnsafe(`
             select students from events_guests_invite where students like ? or students like ?
@@ -37,7 +41,8 @@ export default async function guestRegister(req: NextApiRequest, res: NextApiRes
                 students,
                 kgFood,
                 unity,
-                userId: id
+                userId: id,
+                comments
             },
          
         })
