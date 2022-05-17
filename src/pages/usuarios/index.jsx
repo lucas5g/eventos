@@ -40,13 +40,13 @@ export default function Users() {
                                 <div className="col-lg-3 col-9">
                                     {user.name}
                                 </div>
-                                <div className="col-lg-3 col">
+                                <div className="col-lg-4 col">
                                     {user.email}
                                 </div>
                                 <div className="col-lg-3 col">
                                     {user.unity}
                                 </div>
-                                <div className="col-lg-3 col" style={{ textAlign: 'right' }}>
+                                <div className="col-lg-2 col" style={{ textAlign: 'right' }}>
                                     {user.profile}
                                 </div>
                             </div>
