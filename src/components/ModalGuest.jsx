@@ -149,24 +149,24 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
                                                     setNumberGuests(event.target.value)
                                                     setKgFood(event.target.value * 2)
                                                     const { unity } = responsible
-                                                    
+
                                                     let inviteTotalDisponible = 0
-                                                    if(unity === 'Contagem'){
-    
-                                                        responsible.students.map( student => {
-                                                            if(student.course.startsWith('M') || student.course.startsWith('F9')){
-                                                                inviteTotalDisponible += 3 
+                                                    if (unity === 'Contagem') {
+
+                                                        responsible.students.map(student => {
+                                                            if (student.course.startsWith('M') || student.course.startsWith('F9')) {
+                                                                inviteTotalDisponible += 3
                                                                 return
                                                             }
 
-                                                            if( student.course.startsWith('I')){
-                                                                inviteTotalDisponible+= 5
+                                                            if (student.course.startsWith('I')) {
+                                                                inviteTotalDisponible += 5
                                                             }
                                                         })
                                                     }
-                                                    
+
                                                     console.log(responsible.students)
-                                                    console.log({ inviteTotalDisponible})
+                                                    console.log({ inviteTotalDisponible })
 
                                                     console.log({ unity })
                                                 }}
@@ -186,7 +186,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
                                                 onChange={() => setKgFood(event.target.value)}
                                                 placeholder="Kg. Alimentos"
                                                 required
-                                                min="2"
+                                                min="1"
                                                 disabled={createdInvite}
                                             />
                                         </div>
@@ -206,31 +206,34 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
                                             className="form-control text-lowercase"
                                             name="emailInvite"
                                             value={emailInvite}
-                                            onChange={() => setEmail(event.target.value)}
+                                            onChange={() => setEmailInvite(event.target.value)}
                                             placeholder="E-mail para quem será enviado os convites"
                                             required
                                             disabled={createdInvite}
 
                                         />
                                     </div>
-                                    {/* {console.log({ comments })} */}
                                     {(kgFood / numberGuests < 2 || comments !== '') &&
-                                        <textarea
-                                            name="comments"
-                                            id="commnets"
-                                            className="form-control"
-                                            cols="30"
-                                            rows="5"
-                                            value={comments}
-                                            onChange={() => setComments(event.target.value)}
-                                            required
-                                            disabled={createdInvite}
-                                            placeholder={`Quantidade de convite acima do previsto!\nDeixa aqui seu comentário.
-                                            `
-                                            }
+                                        <div className="form-group">
 
-                                        >
-                                        </textarea>
+                                            <label htmlFor="comments">
+                                                Observações
+                                            </label>
+                                            <textarea
+                                                name="comments"
+                                                id="commnets"
+                                                className="form-control mb-3"
+                                                cols="30"
+                                                rows="3"
+                                                value={comments}
+                                                onChange={() => setComments(event.target.value)}
+                                                // required
+                                                disabled={createdInvite}
+                                                placeholder="Observações"
+
+                                            >
+                                            </textarea>
+                                        </div>
 
                                     }
 
