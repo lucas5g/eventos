@@ -11,6 +11,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
     const [createdInvite, setCreatedInvite] = useState('')
     const [user, setUser] = useState({})
     const [comments, setComments] = useState('')
+    const [unity, setUnity] = useState('')
     const [isSendData, setIsSendData] = useState(false)
 
 
@@ -24,6 +25,8 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
         setUser(responsible.userName)
         setCreatedInvite(responsible.createdInvite || '')
         setComments(responsible.comments || '')
+        setUnity(responsible.unity)
+
 
 
     }, [responsible])
@@ -41,6 +44,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
             numberGuests: Number(numberGuests),
             kgFood: Number(kgFood),
             students: responsible.students.map(student => student.ra),
+            unity,
             comments
         }
 

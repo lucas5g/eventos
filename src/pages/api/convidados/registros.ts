@@ -6,13 +6,13 @@ import { auth } from '../../../middleware/auth'
 export default async function guestRegister(req: NextApiRequest, res: NextApiResponse) {
 
     //@ts-ignore
-    const { id, unity } = auth(req, res)
+    const { id } = auth(req, res)
 
     if (req.method === 'POST') {
 
-        const { emailInvite, numberGuests, students, kgFood, motherEmail, comments } = req.body
+        const { emailInvite, numberGuests, students, kgFood, motherEmail, unity,  comments } = req.body
 
-        if(!emailInvite || !numberGuests || !students || !kgFood || !motherEmail){
+        if(!emailInvite || !numberGuests || !students || !kgFood || !motherEmail || !unity){
             res.status(401)
                 .json({msg: 'Todos os campos são obrigatórios'})
         }
