@@ -145,6 +145,7 @@ export default function UserForm() {
                         options={[
                             { value: '', name: 'Selecione o Perfil' },
                             { value: 'Admin', name: 'Admin' },
+                            { value: 'Gerente', name: 'Gerente' },
                             { value: 'Operador', name: 'Operador' }
                         ]}
                     />

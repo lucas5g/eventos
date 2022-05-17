@@ -19,7 +19,9 @@ enum Unity {
 
 enum Profile {
     Admin
+    Gerente
     Operador
+
 }
 
 enum Alumni {

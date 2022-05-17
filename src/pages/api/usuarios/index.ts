@@ -7,7 +7,6 @@ import { auth } from '../../../middleware/auth'
 export default async function users(req: NextApiRequest, res: NextApiResponse) {
 
     //@ts-ignore
-    //@ts-ignore
     if (auth(req, res).profile !== 'Admin') {
         res
             .status(401)
