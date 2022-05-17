@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import moment from "moment"
 import { api } from "../services/api"
-import { Modal } from "./Modal"
+// import { Modal } from "./Modal"
 
 export function ModalGuest({ responsible, responsibles, setResponsibles, setLoadPage }) {
 
@@ -148,6 +148,27 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
                                                 onChange={() => {
                                                     setNumberGuests(event.target.value)
                                                     setKgFood(event.target.value * 2)
+                                                    const { unity } = responsible
+                                                    
+                                                    let inviteTotalDisponible = 0
+                                                    if(unity === 'Contagem'){
+    
+                                                        responsible.students.map( student => {
+                                                            if(student.course.startsWith('M') || student.course.startsWith('F9')){
+                                                                inviteTotalDisponible += 3 
+                                                                return
+                                                            }
+
+                                                            if( student.course.startsWith('I')){
+                                                                inviteTotalDisponible+= 5
+                                                            }
+                                                        })
+                                                    }
+                                                    
+                                                    console.log(responsible.students)
+                                                    console.log({ inviteTotalDisponible})
+
+                                                    console.log({ unity })
                                                 }}
                                             />
                                         </div>
