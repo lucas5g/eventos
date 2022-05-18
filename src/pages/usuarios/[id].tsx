@@ -8,15 +8,15 @@ import { Select } from "../../components/Select"
 import { TextCenter } from "../../components/TextCenter"
 import { api } from "../../services/api"
 
-// interface User {
-//     id: number
-//     name: string
-//     unity: string
-//     profile: string
-//     emailNewUser: string
-//     passwordNewUser: string
+interface User {
+    id: number
+    name: string
+    unity: string
+    profile: string
+    email: string
+    password?: string
 
-// }
+}
 
 export default function UserForm() {
 
@@ -25,12 +25,12 @@ export default function UserForm() {
     const [isSendData, setIsSendData] = useState(false)
 
     // const { data } = useFetch(`/usuarios/${id}`)
-    const [user, setUser] = useState({
+    const [user, setUser] = useState<User>({
         name: '',
         profile: '',
         unity: '',
         id: 0,
-        email:'',
+        email: '',
         password: ''
     })
     const [alertResult, setAlertResult] = useState({
@@ -42,13 +42,24 @@ export default function UserForm() {
         if (id === undefined || id === "criar") {
             return
         }
+        const users: User[] = JSON.parse(localStorage.getItem('users') || '')
+        // const user: User = users.find(user => user.id === Number(id)) 
+        setUser(users.find(user => user.id === Number(id)) || {
+            name: '',
+            email: '',
+            id: 0,
+            profile: '',
+            unity: '',
+        })
+        setUser(user)
+        // setUser(localStorage.getItem)
 
         api.get(`/usuarios/${id}`)
             .then(({ data }) => {
                 setUser(data)
             })
             .catch(error => Catch())
-        
+
         // setTimeout(() =>
         //     api.get(`/usuarios/${id}`)
         //         .then(({ data }) => {
@@ -80,12 +91,12 @@ export default function UserForm() {
                 setTimeout(() => {
                     console.log('vai')
                     router.push(`/usuarios/${data.id}`)
-                    setAlertResult({msg: '', type: ''})
+                    setAlertResult({ msg: '', type: '' })
                 }, 3000)
 
 
             } catch (error) {
-                const result:any = error
+                const result: any = error
 
                 // console.log(error.response.data)
                 setAlertResult({
@@ -95,7 +106,7 @@ export default function UserForm() {
                 setIsSendData(false)
 
                 setTimeout(() => {
-                    setAlertResult({msg:'', type: ''})
+                    setAlertResult({ msg: '', type: '' })
                 }, 5000)
             }
             return
@@ -109,25 +120,25 @@ export default function UserForm() {
             })
             console.log(data)
             setTimeout(() => {
-                setAlertResult({msg:'', type: ''})
+                setAlertResult({ msg: '', type: '' })
             }, 5000)
 
 
-        } catch (error:any) {
+        } catch (error: any) {
             console.log(error.response)
         }
 
     }
     function handleChange(event: ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target
-    
+
         setUser({
             ...user,
             [name]: value
         })
     }
 
- 
+
     if (!user.name && id !== 'criar') {
         return (
             <TextCenter
@@ -156,10 +167,10 @@ export default function UserForm() {
             </div>
             <hr />
             <div className="bg-primaryy d-flex justify-content-center align-items-center">
-                <form className="w-50" 
+                <form className="w-50"
                     onSubmit={handleSubmit}
                     autoComplete="off"
-                    >
+                >
 
                     {alertResult.msg &&
                         <div
@@ -221,7 +232,7 @@ export default function UserForm() {
                         label="Senha"
                         value={user.password || ''}
                         handleChange={handleChange}
-                        
+
                     />
 
                     <button
