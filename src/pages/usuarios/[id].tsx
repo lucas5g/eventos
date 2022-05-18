@@ -43,16 +43,17 @@ export default function UserForm() {
             return
         }
         const users: User[] = JSON.parse(localStorage.getItem('users') || '')
-        // const user: User = users.find(user => user.id === Number(id)) 
-        setUser(users.find(user => user.id === Number(id)) || {
+        const user: User = users.find(user => user.id === Number(id)) || {
             name: '',
             email: '',
             id: 0,
             profile: '',
-            unity: '',
-        })
+            unity: ''
+        }
+
+        // console.log(user)
         setUser(user)
-        // setUser(localStorage.getItem)
+      
 
         api.get(`/usuarios/${id}`)
             .then(({ data }) => {
@@ -67,7 +68,7 @@ export default function UserForm() {
         //         })
         //         .catch(error => Catch())
 
-        //     , 3000)
+        //     , 1500)
 
     }, [id])
 

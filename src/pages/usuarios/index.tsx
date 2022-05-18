@@ -26,7 +26,7 @@ export default function Users() {
             setUsers(JSON.parse(localStorage.getItem('users') || ''))
         }
 
-        api.get('/usuarios')
+        api.get(`/usuarios?search=${search}`)
             .then(({ data }) => {
 
                 setUsers(data)
