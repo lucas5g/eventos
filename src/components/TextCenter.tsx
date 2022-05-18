@@ -1,6 +1,6 @@
 interface TextCenter{
     text:string,
-    height: string 
+    height?: string 
 }
 
 

@@ -8,13 +8,13 @@ yarn build
 status=$?
 echo $status
 # #Se a saida for 1, teve erro na copilão do código
-if [ $status -eq 1 ]; then
+if [ $status != 0 ]; then
     echo ""
-    echo "########################"
-    echo "#                      #"
+    echo "#########################"
+    echo "#                       #"
     echo "# Erro na compilação :( #"
-    echo "#                      #"
-    echo "########################"
+    echo "#                       #"
+    echo "#########################"
     echo ""
     exit 0
 fi

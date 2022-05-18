@@ -3,7 +3,8 @@ export function Input({
     label,
     name,
     value,
-    handleChange
+    handleChange,
+    required = false
  }) {
 
     return (
@@ -17,6 +18,8 @@ export function Input({
                 value={value}
                 onChange={handleChange}
                 placeholder={label}
+                autoComplete="off"
+                required={required}
             />
         </div>
     )

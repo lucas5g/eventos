@@ -7,34 +7,31 @@ import { api } from '../../services/api'
 import { sleep } from '../../helpers'
 
 
-interface Users{
+interface User {
     id: number
-    name: string 
-    email: string 
+    name: string
+    email: string
     unity: string
-    profile:string 
+    profile: string
 
 }
 
 export default function Users() {
 
-      const [users, setUsers] = useState<Users[]>([])
+    const [users, setUsers] = useState<User[]>([])
+    const [search, setSearch] = useState('')
     useEffect(() => {
 
-        (async () => {
-            setUsers(JSON.parse(localStorage.getItem('users') || ''))
-            await sleep(1500)
+        setUsers(JSON.parse(localStorage.getItem('users') || ''))
 
-            try {
-                const { data } = await api.get('/usuarios')
+        api.get('/usuarios')
+            .then(({ data }) => {
+
                 setUsers(data)
-
                 localStorage.setItem('users', JSON.stringify(data))
-            } catch (error) {
-                Catch()
-            }
+            })
+            .catch(error => Catch())
 
-        })()
     }, [])
 
     if (users.length === 0) {
@@ -64,6 +61,15 @@ export default function Users() {
             </div>
             <hr />
             <div className="list-group" role="button" >
+                <input type="text"
+                    className="form-control form-control-lg my-2 p-2"
+                    placeholder="Aluno, pai ou mãe"
+                    id="search"
+                    value={search}
+                    onChange={event => setSearch(event?.target.value)}
+
+                />
+
                 {users.map(user => (
                     <Link
                         key={user.id}

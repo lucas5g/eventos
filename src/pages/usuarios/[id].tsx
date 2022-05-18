@@ -1,9 +1,22 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { eventNames } from "process"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
+import { Catch } from "../../components/Catch"
 import { Input } from "../../components/Input"
 import { Select } from "../../components/Select"
+import { TextCenter } from "../../components/TextCenter"
 import { api } from "../../services/api"
+
+// interface User {
+//     id: number
+//     name: string
+//     unity: string
+//     profile: string
+//     emailNewUser: string
+//     passwordNewUser: string
+
+// }
 
 export default function UserForm() {
 
@@ -15,8 +28,10 @@ export default function UserForm() {
     const [user, setUser] = useState({
         name: '',
         profile: '',
-        email: '',
-        password: '',
+        unity: '',
+        id: 0,
+        email:'',
+        password: ''
     })
     const [alertResult, setAlertResult] = useState({
         msg: '',
@@ -27,18 +42,28 @@ export default function UserForm() {
         if (id === undefined || id === "criar") {
             return
         }
-        (async () => {
 
-            const { data } = await api.get(`/usuarios/${id}`)
-            // console.log(data)
-            setUser(data)
+        api.get(`/usuarios/${id}`)
+            .then(({ data }) => {
+                setUser(data)
+            })
+            .catch(error => Catch())
+        
+        // setTimeout(() =>
+        //     api.get(`/usuarios/${id}`)
+        //         .then(({ data }) => {
+        //             setUser(data)
+        //         })
+        //         .catch(error => Catch())
 
-        })()
+        //     , 3000)
+
     }, [id])
 
 
 
-    async function handleSubmit(event) {
+
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
         if (id === 'criar') {
@@ -55,20 +80,22 @@ export default function UserForm() {
                 setTimeout(() => {
                     console.log('vai')
                     router.push(`/usuarios/${data.id}`)
-                    setAlertResult(false)
+                    setAlertResult({msg: '', type: ''})
                 }, 3000)
 
 
             } catch (error) {
-                console.log(error.response.data)
+                const result:any = error
+
+                // console.log(error.response.data)
                 setAlertResult({
-                    msg: error.response.data.msg,
+                    msg: result.response.data.msg,
                     type: 'warning'
                 })
                 setIsSendData(false)
 
                 setTimeout(() => {
-                    setAlertResult(false)
+                    setAlertResult({msg:'', type: ''})
                 }, 5000)
             }
             return
@@ -82,24 +109,33 @@ export default function UserForm() {
             })
             console.log(data)
             setTimeout(() => {
-                setAlertResult(false)
+                setAlertResult({msg:'', type: ''})
             }, 5000)
 
 
-        } catch (error) {
+        } catch (error:any) {
             console.log(error.response)
         }
 
     }
-    function handleChange(event) {
+    function handleChange(event: ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target
-        console.log({ name, value })
+    
         setUser({
             ...user,
             [name]: value
         })
     }
 
+ 
+    if (!user.name && id !== 'criar') {
+        return (
+            <TextCenter
+                text="Carregando..."
+
+            />
+        )
+    }
     return (
         <>
             <div className="d-flex justify-content-between">
@@ -108,7 +144,7 @@ export default function UserForm() {
                     <h1>Criar Usuário</h1>
                 }
 
-                {id > 0 &&
+                {Number(id) > 0 &&
                     <h1>Editar {user.name.split(" ")[0]}</h1>
 
                 }
@@ -120,7 +156,10 @@ export default function UserForm() {
             </div>
             <hr />
             <div className="bg-primaryy d-flex justify-content-center align-items-center">
-                <form className="w-50" onSubmit={handleSubmit}>
+                <form className="w-50" 
+                    onSubmit={handleSubmit}
+                    autoComplete="off"
+                    >
 
                     {alertResult.msg &&
                         <div
@@ -133,14 +172,15 @@ export default function UserForm() {
                     <Input
                         name="name"
                         label="Nome"
-                        value={user.name}
+                        value={user.name || ''}
                         handleChange={handleChange}
+                        required
 
                     />
                     <Select
                         label="Perfil"
                         name="profile"
-                        value={user.profile}
+                        value={user.profile || ''}
                         handleChange={handleChange}
                         options={[
                             { value: '', name: 'Selecione o Perfil' },
@@ -153,7 +193,7 @@ export default function UserForm() {
                     <Select
                         label="Unidade"
                         name="unity"
-                        value={user.unity}
+                        value={user.unity || ''}
                         handleChange={handleChange}
                         options={[
                             { value: '', name: 'Selecione a Unidade' },
@@ -171,17 +211,19 @@ export default function UserForm() {
                         label="E-mail"
                         value={user.email}
                         handleChange={handleChange}
+                        required
 
-                        />
+                    />
 
                     <Input
                         type="password"
                         name="password"
                         label="Senha"
-                        value={user.password}
+                        value={user.password || ''}
                         handleChange={handleChange}
+                        
                     />
-             
+
                     <button
                         type="submit"
                         className="btn btn-primary btn-block mb-4"
