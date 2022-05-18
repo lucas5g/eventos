@@ -22,7 +22,9 @@ export default function Users() {
     const [search, setSearch] = useState('')
     useEffect(() => {
 
-        setUsers(JSON.parse(localStorage.getItem('users') || ''))
+        if (localStorage.getItem('users')) {
+            setUsers(JSON.parse(localStorage.getItem('users') || ''))
+        }
 
         api.get('/usuarios')
             .then(({ data }) => {
@@ -63,7 +65,7 @@ export default function Users() {
             <div className="list-group" role="button" >
                 <input type="text"
                     className="form-control form-control-lg my-2 p-2"
-                    placeholder="Aluno, pai ou mãe"
+                    placeholder="Nome, email ou unidade"
                     id="search"
                     value={search}
                     onChange={event => setSearch(event?.target.value)}
