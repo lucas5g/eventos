@@ -34,21 +34,21 @@ export default function Users() {
             })
             .catch(error => Catch())
 
-    }, [])
+    }, [search])
 
-    if (users.length === 0) {
-        return (
-            <>
-                <Head>
-                    <title>Eventos | Usuários</title>
-                </Head>
-                <TextCenter
-                    text='Carregando...'
-                    height='60vh'
-                />
-            </>
-        )
-    }
+    // if (users.length === 0) {
+    //     return (
+    //         <>
+    //             <Head>
+    //                 <title>Eventos | Usuários</title>
+    //             </Head>
+    //             <TextCenter
+    //                 text='Carregando...'
+    //                 height='60vh'
+    //             />
+    //         </>
+    //     )
+    // }
 
     return (
         <>
@@ -71,6 +71,22 @@ export default function Users() {
                     onChange={event => setSearch(event?.target.value)}
 
                 />
+                {users.length === 0 && search.length === 0 &&
+
+                    <TextCenter
+                        text='Carregando...'
+                        height='45vh'
+                    />
+
+                }
+                {users.length === 0 && search.length > 0 &&
+
+                    <TextCenter
+                        text='Nada Encontrado :('
+                        height='45vh'
+                    />
+
+                }
 
                 {users.map(user => (
                     <Link

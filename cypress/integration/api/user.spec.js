@@ -26,6 +26,9 @@ describe('Crud users', () => {
         cy.request({
             method: 'get',
             url: '/api/usuarios',
+            qs: {
+                search: ''
+            },
             headers: {
                 Authorization: token
             }

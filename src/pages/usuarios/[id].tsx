@@ -51,7 +51,6 @@ export default function UserForm() {
             unity: ''
         }
 
-        // console.log(user)
         setUser(user)
       
 

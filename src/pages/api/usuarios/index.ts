@@ -16,17 +16,43 @@ export default async function users(req: NextApiRequest, res: NextApiResponse) {
     }
 
     if (req.method === 'GET') {
-        const users = await prisma.user.findMany({
-            select: {
-                id: true,
-                name: true,
-                email: true,
-                profile: true,
-                unity: true
-            }
-        })
+
+        const { search } = req.query
+
+        const users = await prisma.$queryRawUnsafe(`
+            Select id, name, email, profile, unity
+            from events_users
+            where name like ? or email like ? or unity like ? 
+            limit 50
+        `,
+        `%${search}%`,
+        `%${search}%`,
+        `%${search}%`,
+        
+        )
 
         res.send(users)
+
+
+        // const users = await prisma.user.findMany({
+        //     select: {
+        //         id: true,
+        //         name: true,
+        //         email: true,
+        //         profile: true,
+        //         unity: true
+        //     },
+        //     where: {
+        //         OR: [
+        //             {
+        //                 //@ts-ignore
+        //                 name: { contains: search },
+        //             }
+        //         ]
+        //     }
+
+        // })
+
     }
 
 
