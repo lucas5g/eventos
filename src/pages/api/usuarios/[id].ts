@@ -11,6 +11,7 @@ interface Authenticated {
 export default async function users(req: NextApiRequest, res: NextApiResponse) {
 
     // console.log(auth(req, res))
+    const {method} = req
     //@ts-ignore
     if (auth(req, res).profile !== 'Admin') {
         res
@@ -20,7 +21,7 @@ export default async function users(req: NextApiRequest, res: NextApiResponse) {
         return
     }
 
-    if (req.method === 'GET') {
+    if (method === 'GET') {
         const { id } = req.query
         const user = await prisma.user.findUnique({
             where: {
@@ -35,10 +36,11 @@ export default async function users(req: NextApiRequest, res: NextApiResponse) {
             }
         })
 
-        res.send(user)
+        return res.send(user)
+
     }
 
-    if (req.method === 'PUT') {
+    if (method === 'PUT') {
 
         const { name, email, password, profile, unity } = req.body
 
@@ -97,18 +99,18 @@ export default async function users(req: NextApiRequest, res: NextApiResponse) {
     /**
      * Evitar utilizar está funcçao
      */
-    if (req.method === 'DELETE') {
+    if (method === 'DELETE') {
 
-        const user = await prisma.user.delete({
-            where: {
-                id: Number(req.query.id)
-            }
-        })
+        // const user = await prisma.user.delete({
+        //     where: {
+        //         id: Number(req.query.id)
+        //     }
+        // })
 
 
         res.json({
             msg: 'User deleted',
-            user
+            // user
         })
 
     }

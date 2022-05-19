@@ -3,7 +3,7 @@ import moment from "moment"
 import { api } from "../services/api"
 // import { Modal } from "./Modal"
 
-export function ModalGuest({ responsible, responsibles, setResponsibles, setLoadPage }) {
+export function ModalGuest({ responsible, responsibles, setResponsibles, setReloadPage }) {
 
   const [emailInvite, setEmailInvite] = useState('')
   const [kgFood, setKgFood] = useState('')
@@ -13,9 +13,6 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
   const [comments, setComments] = useState('')
   const [unity, setUnity] = useState('')
   const [isSendData, setIsSendData] = useState(false)
-
-
-  // const dataInvite'
 
   useEffect(() => {
 
@@ -37,7 +34,6 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
   async function handleInvitation(event) {
     event.preventDefault()
 
-
     const data = {
       emailInvite,
       motherEmail: responsible.motherEmail,
@@ -57,7 +53,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
     try {
       setIsSendData(true)
       const response = await api.post('/convidados/registros', data)
-      setLoadPage(new Date())
+      setReloadPage(new Date())
       setIsSendData(false)
       alert('Registrado com sucesso')
       console.log(response.data.createdAt)
@@ -66,12 +62,14 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
 
 
     } catch (error) {
-      console.log(error.response.data)
+      console.log(error.response)
       alert(error.response.data.msg)
-      setIsSendData(false)
+      setReloadPage(new Date())
+    //   setIsSendData(false)
     }
 
   }
+
 
   return (
     <div
@@ -80,10 +78,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setLoad
       tabIndex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
-
-
     >
-      {/* <div className="modal-dialog modal-lg"> */}
 
       <div className="modal-dialog modal-lg ">
         <div className="modal-content">

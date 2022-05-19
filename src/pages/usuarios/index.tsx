@@ -36,20 +36,6 @@ export default function Users() {
 
     }, [search])
 
-    // if (users.length === 0) {
-    //     return (
-    //         <>
-    //             <Head>
-    //                 <title>Eventos | Usuários</title>
-    //             </Head>
-    //             <TextCenter
-    //                 text='Carregando...'
-    //                 height='60vh'
-    //             />
-    //         </>
-    //     )
-    // }
-
     return (
         <>
             <Head>
@@ -121,4 +107,15 @@ export default function Users() {
 
         </>
     )
+}
+
+export async function getServerSideProps(){
+
+
+    return {
+        props:{
+            // data
+        }
+    }
+
 }

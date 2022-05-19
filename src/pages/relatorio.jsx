@@ -1,5 +1,7 @@
+import Head from 'next/head'
 import { useFetch } from '../hooks/useFetch'
 import { Catch } from '../components/Catch'
+import { TextCenter } from '../components/TextCenter'
 export default function Users() {
 
     const { data: reports, error } = useFetch('/relatorio')
@@ -11,17 +13,21 @@ export default function Users() {
 
     if (!reports) {
         return (
-            <h2>Carregando..</h2>
+            <TextCenter
+                text="Carregando..."
+                height="60vh"
+            />
         )
     }
 
     return (
 
         <div>
+            <Head>
+                <title>Eventos | Relatório</title>
+            </Head>
             <h1>Relatório</h1>
-            <p>
-                {/* o operador so vai ver da unidade dele. */}
-            </p>
+
             <hr />
             <table className="table">
                 <thead>
@@ -35,7 +41,7 @@ export default function Users() {
                     {reports.map(report => (
                         <tr key={report.unity}>
                             <th scope="row">{report.unity}</th>
-                            <td>{report.sumNumberGuests || '-' } </td>
+                            <td>{report.sumNumberGuests || '-'} </td>
                             <td>{report.sumKgFood || '-'}</td>
                         </tr>
                     ))}

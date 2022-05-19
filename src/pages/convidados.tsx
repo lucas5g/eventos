@@ -1,54 +1,99 @@
 import moment from "moment"
+import Head from "next/head"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import { Catch } from "../components/Catch"
 import { ModalGuest } from "../components/ModalGuest"
+import { TextCenter } from "../components/TextCenter"
 import { api } from "../services/api"
 
-// export default withPageAuthRequired(function Alunos() {
+
+interface Responsible {
+    mother: string
+    father: string
+    emailInvite: string
+    kgFood: number
+
+    students: [
+        {
+            ra: string
+            name: string
+            course: string
+        }
+    ]
+
+
+}
+
 export default function Convidados() {
 
-    const [search, setSearch] = useState([])
-    const [responsible, setResponsible] = useState('')
-    const [responsibles, setResponsibles] = useState([])
-    const [loading, setLoading] = useState(false)
-    const [loadPage, setLoadPage] = useState('')
+    const [search, setSearch] = useState('')
+    const [responsible, setResponsible] = useState<Responsible>({
+        kgFood: 0,
+        father: '',
+        mother: '',
+        emailInvite: '',
+        students: [{
+            ra: '', name: '', course: ''
+        }]
+
+    })
+    const [responsibles, setResponsibles] = useState<Responsible[]>([])
+    const [reloadPage, setReloadPage] = useState(new Date())
 
 
     useEffect(() => {
 
-        (async () => {
-
-            try {
-                setLoading(true)
-
-                const { data } = await api.get(`/convidados?search=${search}`)
+        if (localStorage.getItem('responsibles')) {
+            setResponsibles(JSON.parse(localStorage.getItem('responsibles') || ''))
+        }
+        api.get(`/convidados?search=${search}`)
+            .then(({ data }) => {
                 setResponsibles(data)
-                setLoading(false)
-            } catch (error) {
+                localStorage.setItem('responsibles', JSON.stringify(data))
+
+            })
+            .catch(error => {
                 console.log('error')
                 console.log(error.response)
                 Catch()
-            }
+            })
 
-        })()
-    }, [search, loadPage])
+        // setTimeout(() => {
+
+        // api.get(`/convidados?search=${search}`)
+        //     .then(({ data }) => {
+        //         setResponsibles(data)
+        //         localStorage.setItem('responsibles', JSON.stringify(data))
+        //     })
+        //     .catch(error => {
+        //         console.log('error')
+        //         console.log(error.response)
+        //         Catch()
+        //     })
+        // }, 1500)
+
+
+
+
+    }, [search, reloadPage])
 
 
     useEffect(() => {
 
-        let intervel
-
-        intervel = setInterval(() => {
-            setLoadPage(new Date())
-        }, 60000)
+        const intervel = setInterval(() => {
+            setReloadPage(new Date())
+        }, 30000)
         return () => clearInterval(intervel)
 
 
     }, [])
     return (
         <div>
+            <Head>
+                <title>Eventos | Convidados</title>
+            </Head>
             <h1>Convidados</h1>
             <hr />
             <input type="text"
@@ -60,15 +105,18 @@ export default function Convidados() {
 
             />
 
-            {responsibles.length === 0 && loading &&
-                <h2 className="mt-5">Carregando ...</h2>
+            {responsibles.length === 0 && search.length === 0 &&
+                <TextCenter
+                    text="Carregando..."
+                    height="45vh"
+                />
 
             }
-            {responsibles.length === 0 && search.length > 3 && !loading &&
-
-                <h2 className="mt-5">Nada encontrado :(</h2>
-
-
+            {responsibles.length === 0 && search.length > 3 &&
+                <TextCenter
+                    text="Nada encontrado :("
+                    height="45vh"
+                />
             }
             <ul className="list-group">
 
@@ -107,9 +155,12 @@ export default function Convidados() {
                             <div className="col-md-3 d-flex align-items-center justify-content-end mt-2">
 
                                 <button
-                                    onClick={() => setResponsible(responsible)}
+                                    onClick={() => {
+                                        setResponsible(responsible)
+                                        setReloadPage(new Date())
+                                    }}
                                     className={`btn bg-${responsible.emailInvite ? 'danger' : 'success'}   p-2 text-white rounded fs-3 d-flex align-items-center `}
-                                    title={responsible.have_invitation ? 'Gerenciar Retorno do Convite' : 'Gerenciar Envio de Convite'}
+                                    title={'Gerenciar Envio de Convite'}
                                     role="button"
                                     data-mdb-toggle="modal"
                                     data-mdb-target="#exampleModal"
@@ -129,12 +180,13 @@ export default function Convidados() {
                 ))}
             </ul>
 
-            <ModalGuest 
-                responsible={responsible} 
+            {/* {console.log({ responsible })} */}
+            <ModalGuest
+                responsible={responsible}
                 responsibles={responsibles}
                 setResponsibles={setResponsibles}
-                setLoadPage={setLoadPage}
-                    />
+                setReloadPage={setReloadPage}
+            />
 
         </div >
     )

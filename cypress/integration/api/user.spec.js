@@ -4,7 +4,7 @@ describe('Crud users', () => {
 
     const user = {
             name: 'admin',
-            email: 'admintestcy@mail.com',
+            email: `${new Date()}@mail.com`,
             password: 'qweqwe',
             profile: 'Admin',
             unity: 'BH',
@@ -74,7 +74,8 @@ describe('Crud users', () => {
 
         cy.request({
             method: 'get',
-            url: `/api/usuarios/${user.id}`,
+            url: `/api/usuarios/${user.id}
+                    `,
             headers: {
                 Authorization: token
             }
