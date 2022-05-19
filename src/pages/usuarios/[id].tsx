@@ -99,6 +99,7 @@ export default function UserForm() {
                 const result: any = error
 
                 // console.log(error.response.data)
+
                 setAlertResult({
                     msg: result.response.data.msg,
                     type: 'warning'
@@ -113,11 +114,14 @@ export default function UserForm() {
         }
 
         try {
+            setIsSendData(true)
             const { data } = await api.put(`/usuarios/${id}`, user)
             setAlertResult({
                 msg: 'Atualizado com sucesso.',
                 type: 'success'
             })
+            setIsSendData(false)
+
             console.log(data)
             setTimeout(() => {
                 setAlertResult({ msg: '', type: '' })
@@ -179,7 +183,7 @@ export default function UserForm() {
             <hr />
             {/* <div className="bg-primaryy d-flex justify-content-center align-items-center"> */}
             <div className="d-flex justify-content-center">
-                <div className="col-lg-8 col-12">
+                <div className="col-lg-7 col-12">
 
                     <form
                         onSubmit={handleSubmit}
