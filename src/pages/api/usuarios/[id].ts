@@ -11,11 +11,13 @@ interface Authenticated {
 export default async function users(req: NextApiRequest, res: NextApiResponse) {
 
     // console.log(auth(req, res))
-    const {method} = req
+    const { method } = req
+
     //@ts-ignore
-    if (auth(req, res).profile !== 'Admin') {
-        res
-            .status(401)
+    const { profile } = auth(req, res)
+
+    if (profile !== 'Admin' && profile !== 'Gerente') {
+        res.status(401)
             .json({ msg: 'Sem permissão' })
 
         return

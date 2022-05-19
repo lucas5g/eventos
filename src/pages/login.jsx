@@ -18,7 +18,7 @@ export default function Login() {
             const { data } = await api.post('/auth/login', {
                 email, password
             })
-            console.log(data)
+            // console.log(data)
             localStorage.setItem('events-token', data.token)
             setError({ status: false })
             window.location.href = '/'
@@ -36,7 +36,7 @@ export default function Login() {
                 msg: data.msg,
                 alert: data.alert
             })
-            console.log(data, status)
+            // console.log(data, status)
         }
     }
 
@@ -46,8 +46,6 @@ export default function Login() {
             style={{
                 minHeight: "70vh",
             }}
-        // className="card w-50
-        //    / d-flex align-items-center justify-content-center purple-gradient"
         >
 
             <div

@@ -5,6 +5,7 @@ import { TextCenter } from '../../components/TextCenter'
 import { useEffect, useState } from 'react'
 import { api } from '../../services/api'
 import { sleep } from '../../helpers'
+import jwtDecode from 'jwt-decode'
 
 
 interface User {
@@ -20,11 +21,19 @@ export default function Users() {
 
     const [users, setUsers] = useState<User[]>([])
     const [search, setSearch] = useState('')
+    const [authenticatedProfile, setAuthenticatedProfile] = useState('')
     useEffect(() => {
 
         if (localStorage.getItem('users')) {
             setUsers(JSON.parse(localStorage.getItem('users') || ''))
         }
+        if (localStorage.getItem('events-token')) {
+            const token = localStorage.getItem('events-token') || ''
+            const tokenDecode: { profile: string } = jwtDecode(token)
+
+            setAuthenticatedProfile(tokenDecode.profile || '')
+        }
+
 
         api.get(`/usuarios?search=${search}`)
             .then(({ data }) => {
@@ -32,7 +41,10 @@ export default function Users() {
                 setUsers(data)
                 localStorage.setItem('users', JSON.stringify(data))
             })
-            .catch(error => Catch())
+            .catch(error => {
+                console.log(error.response.data)
+                Catch()
+            })
 
     }, [search])
 
@@ -43,9 +55,11 @@ export default function Users() {
             </Head>
             <div className="d-flex justify-content-between">
                 <h1>Usuários</h1>
-                <Link href='/usuarios/criar'>
-                    <a className="btn btn-outline-primary h-25">Criar</a>
-                </Link>
+                {authenticatedProfile === 'Admin' &&
+                    <Link href='/usuarios/criar'>
+                        <a className="btn btn-outline-primary h-25">Criar</a>
+                    </Link>
+                }
             </div>
             <hr />
             <div className="list-group" role="button" >
@@ -109,11 +123,11 @@ export default function Users() {
     )
 }
 
-export async function getServerSideProps(){
+export async function getServerSideProps() {
 
 
     return {
-        props:{
+        props: {
             // data
         }
     }

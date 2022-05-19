@@ -1,21 +1,27 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import jwt from 'jwt-decode'
+import jwtDecode from 'jwt-decode'
+
+
+interface User{
+    name: string 
+    profile: string 
+
+}
 
 export function Navbar() {
 
-    const [user, setUser] = useState('')
+    const [user, setUser] = useState<User>({
+        name: '', profile: ''
+    })
 
 
     useEffect(() => {
 
         if (localStorage.getItem('events-token')) {
             const token = localStorage.getItem('events-token')
-            const tokenDecode = jwt(token)
-            setUser(tokenDecode)
+            setUser(jwtDecode(token || ''))
         }
-        // setUser(jwt(token))
-        // console.log(decoded)
     }, [])
 
 
@@ -42,30 +48,30 @@ export function Navbar() {
 
                     </div>
                     <div className="navbar-nav text-white ms-auto">
-             
-                        {user &&
-                        <>
-                            <Link href='/convidados'>
-                                <a className="nav-link text-white" >Convidados</a>
-                            </Link>
-                            <Link href='/relatorio'>
-                                <a className="nav-link text-white" >Relatório</a>
-                            </Link>
-                        </>
-                        }
-                        
 
-                        {user.profile === 'Admin' &&
+                        {user.name &&
+                            <>
+                                <Link href='/convidados'>
+                                    <a className="nav-link text-white" >Convidados</a>
+                                </Link>
+                                <Link href='/relatorio'>
+                                    <a className="nav-link text-white" >Relatório</a>
+                                </Link>
+                            </>
+                        }
+
+
+                        {(user.profile === 'Admin' || user.profile === 'Gerente') &&
                             <Link href='/usuarios'>
                                 <a className="nav-link text-white" >Usuários</a>
                             </Link>
                         }
-                        {!user &&
+                        {!user.name &&
                             <Link href='/login'>
                                 <a className="nav-link text-white">Login</a>
                             </Link>
                         }
-                        {user &&
+                        {user.name &&
                             <li className="nav-item dropdown mr-4">
                                 <a
                                     className="nav-link dropdown-toggle text-white"
@@ -88,9 +94,6 @@ export function Navbar() {
                                 </ul>
                             </li>
                         }
-
-
-
                     </div>
                 </div>
             </div>
