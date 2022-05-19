@@ -255,7 +255,7 @@ export default function UserForm() {
 
                         <button
                             type="submit"
-                            className="btn btn-primary btn-block mb-4"
+                            className="btn btn-primary btn-lg btn-block mb-4"
                             disabled={isSendData}
                         >
                             {isSendData ? 'Carregando ...' : 'Salvar'}
