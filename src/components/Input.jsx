@@ -14,7 +14,7 @@ export function Input({
                 type={type}
                 id={name}
                 name={name}
-                className="form-control"
+                className="form-control form-control-lg"
                 value={value}
                 onChange={handleChange}
                 placeholder={label}

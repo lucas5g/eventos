@@ -15,7 +15,7 @@ export function Select({
                 id={name}
                 value={value}
                 onChange={handleChange}
-                className="select form-control"
+                className="select form-control form-control-lg"
                 required
             >
                 {options.map(option => (

@@ -52,7 +52,7 @@ export default function UserForm() {
         }
 
         setUser(user)
-      
+
 
         api.get(`/usuarios/${id}`)
             .then(({ data }) => {
@@ -149,13 +149,24 @@ export default function UserForm() {
     }
     return (
         <>
-            <div className="d-flex justify-content-between">
-
+            {/* <div className="row"></div> */}
+            <div
+                className="d-flex justify-content-between"
+                style={{
+                    flexWrap: 'wrap',
+                    flexBasis: '100%',
+                    // width:0
+                }}
+            >
                 {id === 'criar' &&
                     <h1>Criar Usuário</h1>
                 }
 
-                {Number(id) > 0 &&
+                {Number(id) > 0 && user.name.includes('@') && 
+                    <h1>Editar {user.name.split('@')[0]}</h1>
+                }
+                {Number(id) > 0 && !user.name.includes('@') && 
+
                     <h1>Editar {user.name.split(" ")[0]}</h1>
 
                 }
@@ -166,83 +177,87 @@ export default function UserForm() {
                 </Link>
             </div>
             <hr />
-            <div className="bg-primaryy d-flex justify-content-center align-items-center">
-                <form className="w-50"
-                    onSubmit={handleSubmit}
-                    autoComplete="off"
-                >
+            {/* <div className="bg-primaryy d-flex justify-content-center align-items-center"> */}
+            <div className="d-flex justify-content-center">
+                <div className="col-lg-8 col-12">
 
-                    {alertResult.msg &&
-                        <div
-                            className={`alert alert-${alertResult.type}`}
-                            role="alert"
-                            data-dimiss="alert">
-                            {alertResult.msg}
-                        </div>
-                    }
-                    <Input
-                        name="name"
-                        label="Nome"
-                        value={user.name || ''}
-                        handleChange={handleChange}
-                        required
-
-                    />
-                    <Select
-                        label="Perfil"
-                        name="profile"
-                        value={user.profile || ''}
-                        handleChange={handleChange}
-                        options={[
-                            { value: '', name: 'Selecione o Perfil' },
-                            { value: 'Admin', name: 'Admin' },
-                            { value: 'Gerente', name: 'Gerente' },
-                            { value: 'Operador', name: 'Operador' }
-                        ]}
-                    />
-
-                    <Select
-                        label="Unidade"
-                        name="unity"
-                        value={user.unity || ''}
-                        handleChange={handleChange}
-                        options={[
-                            { value: '', name: 'Selecione a Unidade' },
-                            { value: 'BH', name: 'BH' },
-                            { value: 'Contagem', name: 'Contagem' },
-                            { value: 'NovaLima', name: 'NovaLima' },
-                            { value: 'Gutierrez', name: 'Gutierrez' },
-
-                        ]}
-                    />
-
-                    <Input
-                        type="email"
-                        name="email"
-                        label="E-mail"
-                        value={user.email}
-                        handleChange={handleChange}
-                        required
-
-                    />
-
-                    <Input
-                        type="password"
-                        name="password"
-                        label="Senha"
-                        value={user.password || ''}
-                        handleChange={handleChange}
-
-                    />
-
-                    <button
-                        type="submit"
-                        className="btn btn-primary btn-block mb-4"
-                        disabled={isSendData}
+                    <form
+                        onSubmit={handleSubmit}
+                        autoComplete="off"
                     >
-                        {isSendData ? 'Carregando ...' : 'Salvar'}
-                    </button>
-                </form>
+
+                        {alertResult.msg &&
+                            <div
+                                className={`alert alert-${alertResult.type}`}
+                                role="alert"
+                                data-dimiss="alert">
+                                {alertResult.msg}
+                            </div>
+                        }
+                        <Input
+                            name="name"
+                            label="Nome"
+                            value={user.name || ''}
+                            handleChange={handleChange}
+                            required
+
+                        />
+                        <Select
+                            label="Perfil"
+                            name="profile"
+                            value={user.profile || ''}
+                            handleChange={handleChange}
+                            options={[
+                                { value: '', name: 'Selecione o Perfil' },
+                                { value: 'Admin', name: 'Admin' },
+                                { value: 'Gerente', name: 'Gerente' },
+                                { value: 'Operador', name: 'Operador' }
+                            ]}
+                        />
+
+                        <Select
+                            label="Unidade"
+                            name="unity"
+                            value={user.unity || ''}
+                            handleChange={handleChange}
+                            options={[
+                                { value: '', name: 'Selecione a Unidade' },
+                                { value: 'BH', name: 'BH' },
+                                { value: 'Contagem', name: 'Contagem' },
+                                { value: 'NovaLima', name: 'NovaLima' },
+                                { value: 'Gutierrez', name: 'Gutierrez' },
+
+                            ]}
+                        />
+
+                        <Input
+                            type="email"
+                            name="email"
+                            label="E-mail"
+                            value={user.email}
+                            handleChange={handleChange}
+                            required
+
+                        />
+
+                        <Input
+                            type="password"
+                            name="password"
+                            label="Senha"
+                            value={user.password || ''}
+                            handleChange={handleChange}
+
+                        />
+
+                        <button
+                            type="submit"
+                            className="btn btn-primary btn-block mb-4"
+                            disabled={isSendData}
+                        >
+                            {isSendData ? 'Carregando ...' : 'Salvar'}
+                        </button>
+                    </form>
+                </div>
             </div>
         </>
     )
