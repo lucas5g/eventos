@@ -162,8 +162,8 @@ export default function Convidados() {
                                     className={`btn bg-${responsible.emailInvite ? 'danger' : 'success'}   p-2 text-white rounded fs-3 d-flex align-items-center `}
                                     title={'Gerenciar Envio de Convite'}
                                     role="button"
+                                    data-mdb-target="#modalFormGuest"
                                     data-mdb-toggle="modal"
-                                    data-mdb-target="#exampleModal"
 
                                 >
                                     {responsible.emailInvite == null && <FaArrowRight />}
