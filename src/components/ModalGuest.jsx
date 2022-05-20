@@ -14,6 +14,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
     const [comments, setComments] = useState('')
     const [unity, setUnity] = useState('')
     const [isSendData, setIsSendData] = useState(false)
+    // const 
 
     useEffect(() => {
 
@@ -330,10 +331,12 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                             emailInvite,
                                             idInvite: responsible.idInvite
                                         }
-                                        console.log({email, data})
+
                                         // return
                                         try {
+                                            setIsSendData(true)
                                             await api.delete('/convidados/registros', { data })
+                                            setIsSendData(false)
                                             alert('Deletado com sucesso!')
                                             window.location.reload()
 
@@ -346,7 +349,8 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                     }}
 
                                 >
-                                    Deletar Registro
+                                    {isSendData ? 'Deletando...' : 'Deletar Registro'}
+                                    {/* Deletar Registro */}
                                 </button>
                             }
 
@@ -394,7 +398,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                 type="button"
                                 className="btn btn-primary"
                                 disabled={isSendData}
-                                onClick={async() => {
+                                onClick={async () => {
                                     const data = {
                                         emailInvite,
                                         motherEmail: responsible.motherEmail,
@@ -404,22 +408,25 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                         unity,
                                         comments
                                     }
-                            
+
                                     try {
-                            
+
                                         setIsSendData(true)
                                         const response = await api.post('/convidados/registros', data)
                                         setReloadPage(new Date())
                                         setIsSendData(false)
                                         setCreatedInvite(response.data.createdAt)
+                                        responsible.idInvite = response.data.id
+                                        console.log(response.data)
                                         document.getElementById('buttonCancel').click()
-                            
+
                                     } catch (error) {
                                         console.log(error.response)
                                         alert(error.response.data.msg)
                                         setReloadPage(new Date())
+                                        setIsSendData(false)
                                     }
-                            
+
                                 }}
                             >
                                 {isSendData ? 'Carregando ...' : 'Salvar'}
