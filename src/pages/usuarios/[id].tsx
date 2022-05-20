@@ -42,17 +42,19 @@ export default function UserForm() {
         if (id === undefined || id === "criar") {
             return
         }
-        const users: User[] = JSON.parse(localStorage.getItem('users') || '')
-        const user: User = users.find(user => user.id === Number(id)) || {
-            name: '',
-            email: '',
-            id: 0,
-            profile: '',
-            unity: ''
+
+        if (localStorage.getItem('users')){
+
+            const users: User[] = JSON.parse(localStorage.getItem('users') || '')
+            const user: User = users.find(user => user.id === Number(id)) || {
+                name: '',
+                email: '',
+                id: 0,
+                profile: '',
+                unity: ''
+            }
+            setUser(user)
         }
-
-        setUser(user)
-
 
         api.get(`/usuarios/${id}`)
             .then(({ data }) => {
@@ -166,10 +168,10 @@ export default function UserForm() {
                     <h1>Criar Usuário</h1>
                 }
 
-                {Number(id) > 0 && user.name.includes('@') && 
+                {Number(id) > 0 && user.name.includes('@') &&
                     <h1>Editar {user.name.split('@')[0]}</h1>
                 }
-                {Number(id) > 0 && !user.name.includes('@') && 
+                {Number(id) > 0 && !user.name.includes('@') &&
 
                     <h1>Editar {user.name.split(" ")[0]}</h1>
 
