@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import moment from "moment"
 import { api } from "../services/api"
+import { Catch } from "./Catch"
 // import { Modal } from "./Modal"
 
 export function ModalGuest({ responsible, responsibles, setResponsibles, setReloadPage }) {
@@ -329,6 +330,8 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                             emailInvite,
                                             idInvite: responsible.idInvite
                                         }
+                                        console.log({email, data})
+                                        // return
                                         try {
                                             await api.delete('/convidados/registros', { data })
                                             alert('Deletado com sucesso!')
