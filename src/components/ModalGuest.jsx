@@ -55,9 +55,12 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                             >
 
                             </button>
+
                         </div>
                         <div className="modal-body">
-
+                            {/* <div class="alert alert-success" role="alert">
+                                Registrado com Sucesso!
+                            </div> */}
                             <div className="row">
                                 <div className="col-lg-6 mb-3">
                                     <h5>Responsáveis</h5>

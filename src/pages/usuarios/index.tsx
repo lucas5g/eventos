@@ -64,7 +64,7 @@ export default function Users() {
             <hr />
             <div className="list-group" role="button" >
                 <input type="text"
-                    className="form-control form-control-lg my-2 p-2"
+                    className="form-control form-control-lg my-2"
                     placeholder="Nome, email ou unidade"
                     id="search"
                     value={search}

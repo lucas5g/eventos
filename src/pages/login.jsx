@@ -51,7 +51,7 @@ export default function Login() {
             <div
                 className="card col-md-5"
             >
-                <h5 className="card-header purple-gradient mb-5 text-white text-center ">LOGIN</h5>
+                <h5 className="card-header purple-gradient mb-5 text-white text-center py-3">LOGIN</h5>
 
                 <form
 
