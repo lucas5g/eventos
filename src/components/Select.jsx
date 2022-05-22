@@ -7,7 +7,7 @@ export function Select({
 }) {
     return (
 
-        <div className="form-group mb-3">
+        <div className="input-group-lg mb-3">
             <label htmlFor={name}>{label}</label>
          
             <select
@@ -15,7 +15,7 @@ export function Select({
                 id={name}
                 value={value}
                 onChange={handleChange}
-                className="select form-control form-control-lg"
+                className="select form-control"
                 required
             >
                 {options.map(option => (

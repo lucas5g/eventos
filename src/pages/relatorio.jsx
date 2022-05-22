@@ -3,6 +3,7 @@ import { useFetch } from '../hooks/useFetch'
 import { Catch } from '../components/Catch'
 import { TextCenter } from '../components/TextCenter'
 import { SpinnerCenter } from '../components/SpinnerCenter'
+import { Heading } from '@chakra-ui/react'
 export default function Users() {
 
     const { data: reports, error } = useFetch('/relatorio')
@@ -24,8 +25,9 @@ export default function Users() {
             <Head>
                 <title>Eventos | Relatório</title>
             </Head>
-            <h1>Relatório</h1>
-
+            <Heading>
+                Relatório
+            </Heading>
             <hr />
             <table className="table">
                 <thead>

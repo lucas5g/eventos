@@ -1,3 +1,4 @@
+import { Heading } from "@chakra-ui/react"
 import moment from "moment"
 import Head from "next/head"
 import { useEffect, useState } from "react"
@@ -77,7 +78,9 @@ export default function Convidados() {
             <Head>
                 <title>Eventos | Convidados</title>
             </Head>
-            <h1>Convidados</h1>
+            <Heading>
+                Convidados
+            </Heading>
             <hr />
             <input type="text"
                 className="form-control form-control-lg my-2 p-2"
@@ -90,8 +93,8 @@ export default function Convidados() {
 
 
             {responsibles.length === 0 && search.length === 0 &&
-               
-              <SpinnerCenter height="45vh" />
+
+                <SpinnerCenter height="45vh" />
 
             }
             {responsibles.length === 0 && search.length > 3 &&

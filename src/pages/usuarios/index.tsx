@@ -7,6 +7,7 @@ import { api } from '../../services/api'
 import { sleep } from '../../helpers'
 import jwtDecode from 'jwt-decode'
 import { SpinnerCenter } from '../../components/SpinnerCenter'
+import { Heading } from '@chakra-ui/react'
 
 
 interface User {
@@ -55,7 +56,9 @@ export default function Users() {
                 <title>Eventos | Usuários</title>
             </Head>
             <div className="d-flex justify-content-between">
-                <h1>Usuários</h1>
+                <Heading>
+                    Usuários
+                </Heading>
                 {authenticatedProfile === 'Admin' &&
                     <Link href='/usuarios/criar'>
                         <a className="btn btn-outline-primary h-25">Criar</a>
@@ -74,7 +77,7 @@ export default function Users() {
                 />
                 {users.length === 0 && search.length === 0 &&
 
-                    <SpinnerCenter height='45vh'/>
+                    <SpinnerCenter height='45vh' />
 
                 }
                 {users.length === 0 && search.length > 0 &&

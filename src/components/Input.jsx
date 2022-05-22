@@ -8,13 +8,13 @@ export function Input({
  }) {
 
     return (
-        <div className="form-group mb-3">
+        <div className="input-group-lg mb-3">
             <label  htmlFor={name}>{label}</label>
             <input
                 type={type}
                 id={name}
                 name={name}
-                className="form-control form-control-lg"
+                className="form-control"
                 value={value}
                 onChange={handleChange}
                 placeholder={label}
