@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { api } from "../services/api"
 import { Alert } from "../components/Alert"
-
+import { Button, Spinner } from 'react-bootstrap'
 
 export default function Login() {
 
@@ -27,7 +27,7 @@ export default function Login() {
             setLoading(false)
             console.log(error.response)
             const { data, status } = error.response
-            if(status === 500){
+            if (status === 500) {
                 alert('Erro no servidor')
             }
 
@@ -81,7 +81,26 @@ export default function Login() {
                             onChange={event => setPassword(event.target.value)}
                         />
                     </div>
-                    <div className="col px-4 mb-4">
+                    <div className="d-grid mx-4 mb-4">
+                        <Button
+                            variant="primary"
+                            disabled={loading}
+                            size="lg"
+                            type="submit"
+                        >
+                            {loading &&
+                                <Spinner
+                                    as="span"
+                                    animation="border"
+                                    role="status"
+                                />
+                            }
+                            {!loading &&
+                                'Entrar'
+                            }
+                        </Button>
+                    </div>
+                    {/* <div className="col px-4 mb-4">
 
                         <button
                             type="submit"
@@ -91,7 +110,8 @@ export default function Login() {
                             {loading ? 'Carregando ...' : 'ENTRAR'}
 
                         </button>
-                    </div>
+
+                    </div> */}
                     <Alert
                         message={error.msg}
                         loading={loading}
