@@ -78,9 +78,9 @@ export default function Convidados() {
             <Head>
                 <title>Eventos | Convidados</title>
             </Head>
-            <Heading>
+            <h1>
                 Convidados
-            </Heading>
+            </h1>
             <hr />
             <input type="text"
                 className="form-control form-control-lg my-2 p-2"

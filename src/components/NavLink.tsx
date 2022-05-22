@@ -7,7 +7,6 @@ interface NavLink {
 
 export function NavLink({ href, children }: NavLink) {
 
-    console.log({ href, children })
     return (
         <li className='nav-item'>
             <Link href={href}>

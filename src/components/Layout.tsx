@@ -1,5 +1,5 @@
 import { Container } from 'react-bootstrap'
-import { NavbarLayout } from './NavbarLayout'
+import { Navbar } from './Navbar'
 import { Footer } from './Footer'
 
 
@@ -9,15 +9,16 @@ export default function Layout({ children }) {
 
     return (
         <div className='vh-100 d-flex flex-column justify-content-between'>
-            <NavbarLayout />
-            <Container className='mb-4 pt-5'>
+            <Navbar />
+            <main className='container mb-4'>
                 <div style={{
-                    minHeight: "70vh"
+                    minHeight: "70vh",
+                    marginTop: "6em"
                 }}>
                     {children}
 
                 </div>
-            </Container>
+            </main>
             <script
                 type="text/javascript"
                 src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"

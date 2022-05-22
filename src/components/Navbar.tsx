@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import jwtDecode from 'jwt-decode'
-import { Container, Nav, Navbar, NavDropdown, Offcanvas } from 'react-bootstrap'
 
 import { useEffect, useState } from 'react'
 import { NavLink } from './NavLink'
@@ -12,7 +11,7 @@ interface User {
 
 }
 
-export function NavbarLayout() {
+export function Navbar() {
 
     const [user, setUser] = useState<User>({
         name: '', profile: ''
@@ -29,12 +28,13 @@ export function NavbarLayout() {
 
     return (
 
-        <nav className="navbar navbar-dark navbar-expand-lg navbar-light purple-gradient">
+        <nav className="navbar navbar-dark navbar-expand-lg navbar-light purple-gradient fw-bold fixed-top">
             <div className="container">
-
-                <a className="navbar-brand me-2" href="https://mdbgo.com/">
-                    Eventos
-                </a>
+                <Link href='/'>
+                    <a className="navbar-brand">
+                        Eventos
+                    </a>
+                </Link>
                 <button
                     className="navbar-toggler"
                     type="button"
@@ -85,7 +85,7 @@ export function NavbarLayout() {
                                     <li>
                                         <a className="dropdown-item" href="/sair">Sair</a>
                                     </li>
-                                   
+
                                 </ul>
                             </li>
                         }
