@@ -30,10 +30,12 @@ export function NavbarLayout() {
 
     return (
         <>
-            <Navbar bg="blank" className='purple-gradient' expand="lg"   >
+            <Navbar bg="dark" variant='dark' className='purple-gradient' expand="lg"   >
                 <Container >
                     <Link href={'/'}>
-                        <Navbar.Brand href='/'>Eventos</Navbar.Brand>
+                        <Navbar.Brand href='/' >
+                            Eventos
+                            </Navbar.Brand>
                     </Link>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
@@ -59,7 +61,7 @@ export function NavbarLayout() {
                                 </NavLink>
                             }
                             {user.name &&
-                                <NavDropdown title={user.name} id="collasible-nav-dropdown">
+                                <NavDropdown title={user.name} id="collasible-nav-dropdown" >
 
                                     <NavDropdown.Item href="/sair">
                                         Sair

@@ -11,7 +11,10 @@ export function NavLink({ href, children }: NavLink) {
     console.log({href, children})
     return (
         <Link href={href}>
-            <Nav.Link href={href}>
+            <Nav.Link 
+                href={href}
+               
+                >
                 {children}
             </Nav.Link>
         </Link>

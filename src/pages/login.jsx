@@ -63,7 +63,7 @@ export default function Login() {
                             name="email"
                             id="email"
                             className="form-control"
-                            placeholder="Email"
+                            placeholder="E-mail"
                             required
                             onChange={event => setEmail(event.target.value)}
 
