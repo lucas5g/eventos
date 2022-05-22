@@ -1,10 +1,10 @@
 import moment from "moment"
 import Head from "next/head"
-import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import { Catch } from "../components/Catch"
 import { ModalGuest } from "../components/ModalGuest"
+import { SpinnerCenter } from "../components/SpinnerCenter"
 import { TextCenter } from "../components/TextCenter"
 import { api } from "../services/api"
 
@@ -60,23 +60,6 @@ export default function Convidados() {
                 Catch()
             })
 
-        // setTimeout(() => {
-
-        // api.get(`/convidados?search=${search}`)
-        //     .then(({ data }) => {
-        //         setResponsibles(data)
-        //         localStorage.setItem('responsibles', JSON.stringify(data))
-        //     })
-        //     .catch(error => {
-        //         console.log('error')
-        //         console.log(error.response)
-        //         Catch()
-        //     })
-        // }, 1500)
-
-
-
-
     }, [search, reloadPage])
 
 
@@ -105,11 +88,10 @@ export default function Convidados() {
 
             />
 
+
             {responsibles.length === 0 && search.length === 0 &&
-                <TextCenter
-                    text="Carregando..."
-                    height="45vh"
-                />
+               
+              <SpinnerCenter height="45vh" />
 
             }
             {responsibles.length === 0 && search.length > 3 &&

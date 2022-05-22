@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { useFetch } from '../hooks/useFetch'
 import { Catch } from '../components/Catch'
 import { TextCenter } from '../components/TextCenter'
+import { SpinnerCenter } from '../components/SpinnerCenter'
 export default function Users() {
 
     const { data: reports, error } = useFetch('/relatorio')
@@ -13,10 +14,7 @@ export default function Users() {
 
     if (!reports) {
         return (
-            <TextCenter
-                text="Carregando..."
-                height="60vh"
-            />
+            <SpinnerCenter height="60vh"/>
         )
     }
 

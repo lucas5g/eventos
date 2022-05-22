@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { api } from '../../services/api'
 import { sleep } from '../../helpers'
 import jwtDecode from 'jwt-decode'
+import { SpinnerCenter } from '../../components/SpinnerCenter'
 
 
 interface User {
@@ -73,10 +74,7 @@ export default function Users() {
                 />
                 {users.length === 0 && search.length === 0 &&
 
-                    <TextCenter
-                        text='Carregando...'
-                        height='45vh'
-                    />
+                    <SpinnerCenter height='45vh'/>
 
                 }
                 {users.length === 0 && search.length > 0 &&
