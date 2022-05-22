@@ -56,9 +56,7 @@ export default function Users() {
                 <title>Eventos | Usuários</title>
             </Head>
             <div className="d-flex justify-content-between">
-                <Heading>
-                    Usuários
-                </Heading>
+                <h1>Usuários</h1>
                 {authenticatedProfile === 'Admin' &&
                     <Link href='/usuarios/criar'>
                         <a className="btn btn-outline-primary h-25">Criar</a>

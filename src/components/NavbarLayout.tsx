@@ -27,55 +27,126 @@ export function NavbarLayout() {
         }
     }, [])
 
-
     return (
-        <>
-            <Navbar bg="dark" variant='dark' className='purple-gradient' expand="lg"   >
-                <Container >
-                    <Link href={'/'}>
-                        <Navbar.Brand href='/' >
-                            Eventos
-                            </Navbar.Brand>
-                    </Link>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="ms-auto">
-                            {user.name &&
-                                <>
-                                    <NavLink href='/convidados'>
-                                        Convidadados
-                                    </NavLink>
-                                    <NavLink href='/relatorio'>
-                                        Relatório
-                                    </NavLink>
-                                </>
-                            }
-                            {(user.profile === 'Admin' || user.profile === 'Gerente') &&
-                                <NavLink href='/usuarios'>
-                                    Usuários
+
+        <nav className="navbar navbar-dark navbar-expand-lg navbar-light purple-gradient">
+            <div className="container">
+
+                <a className="navbar-brand me-2" href="https://mdbgo.com/">
+                    Eventos
+                </a>
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarButtonsExample"
+                    aria-controls="navbarButtonsExample"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <i className="fas fa-bars"></i>
+                </button>
+
+                <div className="collapse navbar-collapse" id="navbarButtonsExample">
+                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                        {user.name &&
+                            <>
+                                <NavLink href='/convidados'>
+                                    Convidadados
                                 </NavLink>
-                            }
-                            {!user.name &&
-                                <NavLink href='/login'>
-                                    Login
+                                <NavLink href='/relatorio'>
+                                    Relatório
                                 </NavLink>
-                            }
-                            {user.name &&
-                                <NavDropdown title={user.name} id="collasible-nav-dropdown" >
+                            </>
+                        }
+                        {(user.profile === 'Admin' || user.profile === 'Gerente') &&
+                            <NavLink href='/usuarios'>
+                                Usuários
+                            </NavLink>
+                        }
+                        {!user.name &&
+                            <NavLink href='/login'>
+                                Login
+                            </NavLink>
+                        }
+                        {user.name &&
+                            <li className="nav-item dropdown">
+                                <a
+                                    className="nav-link active dropdown-toggle"
+                                    href="#"
+                                    id="navbarDropdownMenuLink"
+                                    role="button"
+                                    data-mdb-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    {user.name}
+                                </a>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <li>
+                                        <a className="dropdown-item" href="/sair">Sair</a>
+                                    </li>
+                                   
+                                </ul>
+                            </li>
+                        }
+                    </ul>
 
-                                    <NavDropdown.Item href="/sair">
-                                        Sair
-                                    </NavDropdown.Item>
-                                </NavDropdown>
-                            }
-
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
-        </>
-
+                </div>
+            </div>
+        </nav>
     )
-
-
 }
+
+
+
+
+    // return (
+    //     <>
+    //         <Navbar bg="dark" variant='dark' className='purple-gradient' expand="lg"   >
+    //             <Container >
+    //                 <Link href={'/'}>
+    //                     <Navbar.Brand href='/' >
+    //                         Eventos
+    //                         </Navbar.Brand>
+    //                 </Link>
+    //                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+    //                 <Navbar.Collapse id="responsive-navbar-nav">
+    //                     <Nav className="ms-auto">
+    //                         {user.name &&
+    //                             <>
+    //                                 <NavLink href='/convidados'>
+    //                                     Convidadados
+    //                                 </NavLink>
+    //                                 <NavLink href='/relatorio'>
+    //                                     Relatório
+    //                                 </NavLink>
+    //                             </>
+    //                         }
+    //                         {(user.profile === 'Admin' || user.profile === 'Gerente') &&
+    //                             <NavLink href='/usuarios'>
+    //                                 Usuários
+    //                             </NavLink>
+    //                         }
+    //                         {!user.name &&
+    //                             <NavLink href='/login'>
+    //                                 Login
+    //                             </NavLink>
+    //                         }
+    //                         {user.name &&
+    //                             <NavDropdown title={user.name} id="collasible-nav-dropdown" >
+
+    //                                 <NavDropdown.Item href="/sair">
+    //                                     Sair
+    //                                 </NavDropdown.Item>
+    //                             </NavDropdown>
+    //                         }
+
+    //                     </Nav>
+    //                 </Navbar.Collapse>
+    //             </Container>
+    //         </Navbar>
+    //     </>
+
+    // )
+
+

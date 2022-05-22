@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { Nav } from 'react-bootstrap'
 
 interface NavLink {
     href: string,
@@ -8,15 +7,14 @@ interface NavLink {
 
 export function NavLink({ href, children }: NavLink) {
 
-    console.log({href, children})
+    console.log({ href, children })
     return (
-        <Link href={href}>
-            <Nav.Link 
-                href={href}
-               
-                >
-                {children}
-            </Nav.Link>
-        </Link>
+        <li className='nav-item'>
+            <Link href={href}>
+                <a className="nav-link active">
+                    {children}
+                </a>
+            </Link>
+        </li>
     )
 }

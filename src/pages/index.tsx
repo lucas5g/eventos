@@ -1,17 +1,14 @@
-import { Heading } from "@chakra-ui/react";
-
 export default function Home() {
     return (
-        <div className="mt-0">
-
-            <Heading>
+        <div>
+            <h1>
                 Home
-            </Heading>
+            </h1>
             <hr />
-            <Heading as="h3" size="lg">
+            <h3>
                 Aplicação para ajudar nas organizações dos eventos do colégio.
 
-            </Heading>
+            </h3>
 
         </div>
 
