@@ -20,12 +20,11 @@ export default async function guests(req: NextApiRequest, res: NextApiResponse) 
             LEFT join events_guests_invite as gi 
             on gi.motherEmail = g.motherEmail      
             LEFT join events_users as u on gi.userId = u.id 
-            WHERE(mother LIKE ? or father LIKE ? OR student LIKE ?) and g.unity = ?
+            WHERE(mother LIKE ? or father LIKE ?) and g.unity = ?
             GROUP BY mother
             order by mother, student
             LIMIT 10;
             `,
-                `%${search}%`,
                 `%${search}%`,
                 `%${search}%`,
                 unity
@@ -44,14 +43,14 @@ export default async function guests(req: NextApiRequest, res: NextApiResponse) 
         LEFT join events_guests_invite as gi 
         on gi.motherEmail = g.motherEmail      
         LEFT join events_users as u on gi.userId = u.id 
-        WHERE mother LIKE ? or father LIKE ? OR student LIKE ? 
+        WHERE mother LIKE ? or father LIKE ? 
         GROUP BY mother
         order by mother, student
         LIMIT 10;
         `,
             `%${search}%`,
             `%${search}%`,
-            `%${search}%`,
+            
         )
 
         return res.json(guests)

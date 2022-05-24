@@ -52,7 +52,7 @@ export function Navbar() {
                         {user.name &&
                             <>
                                 <NavLink href='/convidados'>
-                                    Convidadados
+                                    Convidados
                                 </NavLink>
                                 <NavLink href='/relatorio'>
                                     Relatório

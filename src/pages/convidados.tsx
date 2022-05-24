@@ -84,7 +84,7 @@ export default function Convidados() {
             <hr />
             <input type="text"
                 className="form-control form-control-lg my-2 p-2"
-                placeholder="Aluno, pai ou mãe"
+                placeholder="Pesquisar por Pai ou Mãe"
                 id="search"
                 value={search}
                 onChange={event => setSearch(event?.target.value)}
