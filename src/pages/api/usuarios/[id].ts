@@ -46,6 +46,21 @@ export default async function users(req: NextApiRequest, res: NextApiResponse) {
 
         const { name, email, password, profile, unity } = req.body
 
+        const emailExistOtherUser:[] = await prisma.$queryRawUnsafe(`
+            select id, email from events_users
+            where id != ? and email = ?
+        `,
+            req.query.id,
+            email
+        )
+        console.log({ emailExistOtherUser })
+        if(emailExistOtherUser.length > 0){
+            return res 
+                .status(401)
+                .json({ msg: 'Já tem usuário com esté email.'})
+        }
+
+
         if (!name || !email || !profile || !unity) {
             return res
                 .status(401)

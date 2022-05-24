@@ -83,17 +83,18 @@ export function Navbar() {
                                 </a>
                                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <li>
-                                        <a 
-                                            className="dropdown-item" 
+                                        <a
+                                            className="dropdown-item"
                                             href="/#sair"
                                             onClick={() => {
                                                 localStorage.clear()
                                                 window.location.href = '/'
-                                    
-                                            }}                                            
-                                            >
-                                                Sair
-                                            </a>
+
+                                            }
+                                            }
+                                        >
+                                            Sair
+                                        </a>
                                     </li>
 
                                 </ul>

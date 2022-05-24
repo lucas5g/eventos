@@ -133,7 +133,12 @@ export default function UserForm() {
 
 
         } catch (error: any) {
+            setAlertResult({msg: error.response.data.msg, type:'warning'})
+            setIsSendData(false)
             console.log(error.response)
+            setTimeout(() => {
+                setAlertResult({ msg: '', type: '' })
+            }, 5000)
         }
 
     }

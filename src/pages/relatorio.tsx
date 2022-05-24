@@ -2,7 +2,14 @@ import Head from 'next/head'
 import { useFetch } from '../hooks/useFetch'
 import { Catch } from '../components/Catch'
 import { SpinnerCenter } from '../components/SpinnerCenter'
-export default function Users() {
+
+interface Report {
+    unity: string
+    sumNumberGuests: number
+    sumKgFood: number
+}
+
+export default function Report() {
 
     const { data: reports, error } = useFetch('/relatorio')
 
@@ -41,7 +48,7 @@ export default function Users() {
                     </tr>
                 </thead>
                 <tbody>
-                    {reports.map(report => (
+                    {reports.map((report: Report) => (
                         <tr key={report.unity}>
                             <th scope="row">{report.unity}</th>
                             <td>{report.sumNumberGuests || '-'} </td>
