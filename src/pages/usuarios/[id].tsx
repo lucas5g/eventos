@@ -1,7 +1,6 @@
 import { Heading } from "@chakra-ui/react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { eventNames } from "process"
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { Catch } from "../../components/Catch"
 import { Input } from "../../components/Input"
@@ -166,15 +165,15 @@ export default function UserForm() {
                 }}
             >
                 {id === 'criar' &&
-                    <Heading>Criar Usuário</Heading>
+                    <h1>Criar Usuário</h1>
                 }
 
                 {Number(id) > 0 && user.name.includes('@') &&
-                    <Heading>Editar {user.name.split('@')[0]}</Heading>
+                    <h1>Editar {user.name.split('@')[0]}</h1>
                 }
                 {Number(id) > 0 && !user.name.includes('@') &&
 
-                    <Heading>Editar {user.name.split(" ")[0]}</Heading>
+                    <h1>Editar {user.name.split(" ")[0]}</h1>
 
                 }
 

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 import { api } from "../services/api"
 import { Alert } from "../components/Alert"
 import { Button, Spinner } from 'react-bootstrap'
@@ -10,7 +10,7 @@ export default function Login() {
     const [error, setError] = useState({ status: false, msg: '', alert: [] })
     const [loading, setLoading] = useState(false)
 
-    async function handleSubmit(event) {
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
         try {
@@ -20,10 +20,10 @@ export default function Login() {
             })
             // console.log(data)
             localStorage.setItem('events-token', data.token)
-            setError({ status: false })
+            // setError({ status: false,  })
             window.location.href = '/'
 
-        } catch (error) {
+        } catch (error: any) {
             setLoading(false)
             console.log(error.response)
             const { data, status } = error.response
@@ -42,22 +42,20 @@ export default function Login() {
 
     return (
         <div
-            className="d-flex justify-content-center align-items-center"
+            className="d-flex justify-content-center align-items-center container-fluid"
             style={{
                 minHeight: "70vh",
             }}
         >
 
             <div
-                className="card col-md-5"
+                className="card col-lg-5 col-12 m-0"
             >
                 <h5 className="card-header purple-gradient mb-5 text-white text-center py-3">LOGIN</h5>
 
-                <form
+                <form onSubmit={handleSubmit} className="px-4 pb-5 pt-0">
 
-                    onSubmit={handleSubmit} >
-
-                    <div className="mb-4 input-group-lg px-4">
+                    <div className="mb-4 input-group-lg">
                         <input
                             type="email"
                             name="email"
@@ -70,7 +68,7 @@ export default function Login() {
                         />
                     </div>
 
-                    <div className="mb-4 input-group-lg px-4">
+                    <div className="mb-4 input-group-lg">
                         <input
                             type="password"
                             name="password"
@@ -81,37 +79,25 @@ export default function Login() {
                             onChange={event => setPassword(event.target.value)}
                         />
                     </div>
-                    <div className="d-grid mx-4 mb-4">
-                        <Button
-                            variant="primary"
-                            disabled={loading}
-                            size="lg"
-                            type="submit"
-                        >
-                            {loading &&
-                                <Spinner
-                                    as="span"
-                                    animation="border"
-                                    role="status"
-                                />
-                            }
-                            {!loading &&
-                                'Entrar'
-                            }
-                        </Button>
-                    </div>
-                    {/* <div className="col px-4 mb-4">
+                    <div className="input-group-lg">
 
                         <button
                             type="submit"
-                            className="btn btn-primary btn-block btn-lg"
+                            className="btn btn-primary btn-block"
                             disabled={loading}
                         >
-                            {loading ? 'Carregando ...' : 'ENTRAR'}
+                            {loading ?
+                                <span
+                                    className="spinner-border spinner-border-sm"
+                                    role="status" aria-hidden="true">
+                                </span>
+                                :
+                                'Entrar'
+                            }
 
                         </button>
+                    </div>
 
-                    </div> */}
                     <Alert
                         message={error.msg}
                         loading={loading}

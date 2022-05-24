@@ -13,7 +13,12 @@ export default function Users() {
 
     if (!reports) {
         return (
-            <SpinnerCenter height="60vh"/>
+            <>
+                <Head>
+                    <title>Eventos | Relatório</title>
+                </Head>
+                <SpinnerCenter height="60vh" />
+            </>
         )
     }
 
