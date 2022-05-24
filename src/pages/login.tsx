@@ -47,6 +47,9 @@ export default function Login() {
                 minHeight: "70vh",
             }}
         >
+            <head>
+                <title>Eventos | Login </title>
+            </head>
 
             <div
                 className="card col-lg-5 col-12 m-0"
