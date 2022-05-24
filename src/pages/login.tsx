@@ -53,7 +53,7 @@ export default function Login() {
             >
                 <h5 className="card-header purple-gradient mb-5 text-white text-center py-3">LOGIN</h5>
 
-                <form onSubmit={handleSubmit} className="px-4 pb-5 pt-0">
+                <form onSubmit={handleSubmit} className="px-4 pb-4 pt-0">
 
                     <div className="mb-4 input-group-lg">
                         <input
@@ -79,7 +79,7 @@ export default function Login() {
                             onChange={event => setPassword(event.target.value)}
                         />
                     </div>
-                    <div className="input-group-lg">
+                    <div className="input-group-lg mb-4">
 
                         <button
                             type="submit"
