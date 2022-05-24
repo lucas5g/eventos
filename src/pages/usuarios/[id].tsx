@@ -1,10 +1,12 @@
 import { Heading } from "@chakra-ui/react"
+import Head from "next/head"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { Catch } from "../../components/Catch"
 import { Input } from "../../components/Input"
 import { Select } from "../../components/Select"
+import { SpinnerCenter } from "../../components/SpinnerCenter"
 import { TextCenter } from "../../components/TextCenter"
 import { api } from "../../services/api"
 
@@ -43,7 +45,7 @@ export default function UserForm() {
             return
         }
 
-        if (localStorage.getItem('users')){
+        if (localStorage.getItem('users')) {
 
             const users: User[] = JSON.parse(localStorage.getItem('users') || '')
             const user: User = users.find(user => user.id === Number(id)) || {
@@ -147,15 +149,23 @@ export default function UserForm() {
 
     if (!user.name && id !== 'criar') {
         return (
-            <TextCenter
-                text="Carregando..."
-
-            />
+            <>
+                <Head>
+                    <title>Eventos | Usuário &gt; Editar </title>
+                </Head>
+                <SpinnerCenter />
+            </>
         )
     }
     return (
         <>
-            {/* <div className="row"></div> */}
+            <Head>
+                <title>Eventos | Usuário &gt; &nbsp;
+                    {id === 'criar' ? 'Criar' : 'Editar' }
+
+
+                </title>
+            </Head>
             <div
                 className="d-flex justify-content-between"
                 style={{
