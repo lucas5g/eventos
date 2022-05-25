@@ -8,6 +8,7 @@ import { Input } from "../../components/Input"
 import { Select } from "../../components/Select"
 import { SpinnerCenter } from "../../components/SpinnerCenter"
 import { TextCenter } from "../../components/TextCenter"
+import { sleep } from "../../helpers"
 import { api } from "../../services/api"
 
 interface User {
@@ -80,6 +81,7 @@ export default function UserForm() {
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
+        window.scrollTo(0, 40)
 
         if (id === 'criar') {
 
@@ -109,10 +111,9 @@ export default function UserForm() {
                     type: 'warning'
                 })
                 setIsSendData(false)
+                await sleep(5000)
+                setAlertResult({ msg: '', type: '' })
 
-                setTimeout(() => {
-                    setAlertResult({ msg: '', type: '' })
-                }, 5000)
             }
             return
         }
@@ -127,18 +128,17 @@ export default function UserForm() {
             setIsSendData(false)
 
             console.log(data)
-            setTimeout(() => {
-                setAlertResult({ msg: '', type: '' })
-            }, 5000)
+            await sleep(5000)
+            setAlertResult({ msg: '', type: '' })
 
 
         } catch (error: any) {
-            setAlertResult({msg: error.response.data.msg, type:'warning'})
+            setAlertResult({ msg: error.response.data.msg, type: 'warning' })
             setIsSendData(false)
             console.log(error.response)
-            setTimeout(() => {
-                setAlertResult({ msg: '', type: '' })
-            }, 5000)
+            await sleep(5000)
+            setAlertResult({ msg: '', type: '' })
+
         }
 
     }
@@ -166,7 +166,7 @@ export default function UserForm() {
         <>
             <Head>
                 <title>Eventos | Usuário &gt; &nbsp;
-                    {id === 'criar' ? 'Criar' : 'Editar' }
+                    {id === 'criar' ? 'Criar' : 'Editar'}
 
 
                 </title>

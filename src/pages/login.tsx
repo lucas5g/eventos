@@ -1,13 +1,14 @@
 import { FormEvent, useState } from "react"
 import { api } from "../services/api"
 import { Alert } from "../components/Alert"
-import { Button, Spinner } from 'react-bootstrap'
+import Head from "next/head"
+import { sleep } from "../helpers"
 
 export default function Login() {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [error, setError] = useState({ status: false, msg: '', alert: [] })
+    const [error, setError] = useState({ status: false, msg: ''})
     const [loading, setLoading] = useState(false)
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -34,8 +35,9 @@ export default function Login() {
             setError({
                 status: true,
                 msg: data.msg,
-                alert: data.alert
             })
+            await sleep(5000)
+            setError({status: false, msg: ''})
             // console.log(data, status)
         }
     }
@@ -47,9 +49,9 @@ export default function Login() {
                 minHeight: "70vh",
             }}
         >
-            <head>
+            <Head>
                 <title>Eventos | Login </title>
-            </head>
+            </Head>
 
             <div
                 className="card col-lg-5 col-12 m-0"
