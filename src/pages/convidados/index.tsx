@@ -1,13 +1,11 @@
-import { Heading } from "@chakra-ui/react"
-import moment from "moment"
 import Head from "next/head"
 import { useEffect, useState } from "react"
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
-import { Catch } from "../components/Catch"
-import { ModalGuest } from "../components/ModalGuest"
-import { SpinnerCenter } from "../components/SpinnerCenter"
-import { TextCenter } from "../components/TextCenter"
-import { api } from "../services/api"
+import { Catch } from "../../components/Catch"
+import { ModalGuest } from "../../components/ModalGuest"
+import { SpinnerCenter } from "../../components/SpinnerCenter"
+import { TextCenter } from "../../components/TextCenter"
+import { api } from "../../services/api"
 
 
 interface Responsible {
@@ -68,7 +66,7 @@ export default function Convidados() {
 
         const intervel = setInterval(() => {
             setReloadPage(new Date())
-        }, 30000)
+        }, 60000)
         return () => clearInterval(intervel)
 
 

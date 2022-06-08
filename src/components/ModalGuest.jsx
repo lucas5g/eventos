@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import moment from "moment"
 import { api } from "../services/api"
 import { Catch } from "./Catch"
+import Link from "next/link"
 // import { Modal } from "./Modal"
 
 export function ModalGuest({ responsible, responsibles, setResponsibles, setReloadPage }) {
@@ -314,47 +315,64 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                             }
 
                             {createdInvite &&
-                                <button
-                                    className="btn btn-danger"
-                                    disabled={isSendData}
-                                    onClick={async () => {
-                                        const email = prompt('Tem certeza de deletar o registro de envio do convite?\n\nDigite o e-mail de quem foi registrado:')
+                                <>
+                                    {/* <Link href={`/convidados/convites/${responsible.idInvite}`}>
+                                        <a 
+                                            // data-mdb-dismiss="modal"
+                                        >
+                                            Editar
+                                        </a>
+                                    </Link> */}
 
-                                        console.log({ email, emailInvite: emailInvite.toLowerCase() })
+                                    <a href={`/convidados/convites/${responsible.idInvite}`}
+                                        className="btn btn-primary"
+                                    >
+                                        Editar
+                                    </a>
 
-                                        if (email === null) {
-                                            return
-                                        }
-                                        if (email !== emailInvite.toLowerCase()) {
-                                            alert('E-mail errado!')
-                                            return
-                                        }
+                                    <button
+                                        className="btn btn-danger"
+                                        disabled={isSendData}
+                                        onClick={async () => {
+                                            const email = prompt('Tem certeza de deletar o registro de envio do convite?\n\nDigite o e-mail de quem foi registrado:')
 
-                                        const data = {
-                                            emailInvite,
-                                            idInvite: responsible.idInvite
-                                        }
+                                            console.log({ email, emailInvite: emailInvite.toLowerCase() })
 
-                                        // return
-                                        try {
-                                            setIsSendData(true)
-                                            await api.delete('/convidados/registros', { data })
-                                            setIsSendData(false)
-                                            alert('Deletado com sucesso!')
-                                            window.location.reload()
+                                            if (email === null) {
+                                                return
+                                            }
+                                            if (email !== emailInvite.toLowerCase()) {
+                                                alert('E-mail errado!')
+                                                return
+                                            }
 
-                                        } catch (error) {
-                                            console.log(error.response.data)
-                                            Catch()
-                                        }
+                                            const data = {
+                                                emailInvite,
+                                                idInvite: responsible.idInvite
+                                            }
 
-                                        // confirm
-                                    }}
+                                            // return
+                                            try {
+                                                setIsSendData(true)
+                                                await api.delete('/convidados/registros', { data })
+                                                setIsSendData(false)
+                                                alert('Deletado com sucesso!')
+                                                window.location.reload()
 
-                                >
-                                    {isSendData ? 'Deletando...' : 'Deletar Registro'}
-                                    {/* Deletar Registro */}
-                                </button>
+                                            } catch (error) {
+                                                console.log(error.response.data)
+                                                Catch()
+                                            }
+
+                                            // confirm
+                                        }}
+
+                                    >
+
+                                        {isSendData ? 'Deletando...' : 'Deletar Registro'}
+                                        {/* Deletar Registro */}
+                                    </button>
+                                </>
                             }
 
                         </div>
