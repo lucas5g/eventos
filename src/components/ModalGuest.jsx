@@ -435,9 +435,11 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                     }
 
                                     if (createdInvite) {
-
+                                        
+                                        
                                         try {
-
+                                            
+                                            setIsSendData(true)
                                             const response = await api.put(`/convidados/registros/${responsible.idInvite}`, data)
                                             setReloadPage(new Date())
                                             setIsSendData(false)
