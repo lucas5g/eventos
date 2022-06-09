@@ -11,6 +11,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
     const [kgFood, setKgFood] = useState('')
     const [numberGuests, setNumberGuests] = useState('')
     const [createdInvite, setCreatedInvite] = useState('')
+    const [updatedInvite, setUpdatedInvite] = useState('')
     const [user, setUser] = useState({})
     const [comments, setComments] = useState('')
     const [unity, setUnity] = useState('')
@@ -26,6 +27,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
         setCreatedInvite(responsible.createdInvite || '')
         setComments(responsible.comments || '')
         setUnity(responsible.unity)
+        setUpdatedInvite(responsible.updatedInvite)
 
 
 
@@ -109,7 +111,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                                     value={numberGuests}
                                                     placeholder="Qtd. Convites"
                                                     required
-                                                    disabled={createdInvite}
+                                                    // disabled={createdInvite}
                                                     min="1"
                                                     onChange={() => {
                                                         setNumberGuests(event.target.value)
@@ -153,7 +155,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                                     placeholder="Kg. Alimentos"
                                                     required
                                                     min="1"
-                                                    disabled={createdInvite}
+                                                // disabled={createdInvite}
                                                 />
                                             </div>
 
@@ -175,7 +177,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                                 onChange={() => setEmailInvite(event.target.value)}
                                                 placeholder="E-mail para quem será enviado os convites"
                                                 required
-                                                disabled={createdInvite}
+                                            // disabled={createdInvite}
 
                                             />
                                         </div>
@@ -194,7 +196,6 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                                     value={comments}
                                                     onChange={() => setComments(event.target.value)}
                                                     // required
-                                                    disabled={createdInvite}
                                                     placeholder="Observações"
 
                                                 >
@@ -230,7 +231,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                                         id="numGuests"
                                                         className="form-control text-lowercase"
                                                         disabled
-                                                        value={moment(responsible.createdInvite).format('DD/MM/YYYY HH:mm')}
+                                                        value={moment(updatedInvite).format('DD/MM/YYYY HH:mm')}
 
                                                     />
                                                 </div>
@@ -293,26 +294,24 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                 Fechar
                             </button>
 
-                            {!createdInvite &&
-                                <>
-                                    <button
-                                        type="submit"
-                                        className="btn btn-primary"
-                                        form="form"
 
-                                    >
-                                        Salvar
-                                    </button>
-                                    <button
-                                        id="buttonOpenModalConfirm"
-                                        data-mdb-target="#modalConfirm"
-                                        data-mdb-toggle="modal"
-                                        className="d-none"
-                                    >
-                                        next
-                                    </button>
-                                </>
-                            }
+                            <button
+                                type="submit"
+                                className="btn btn-primary"
+                                form="form"
+
+                            >
+                                Salvar
+                            </button>
+                            <button
+                                id="buttonOpenModalConfirm"
+                                data-mdb-target="#modalConfirm"
+                                data-mdb-toggle="modal"
+                                className="d-none"
+                            >
+                                next
+                            </button>
+
 
                             {createdInvite &&
                                 <>
@@ -324,11 +323,11 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                         </a>
                                     </Link> */}
 
-                                    <a href={`/convidados/convites/${responsible.idInvite}`}
+                                    {/* <a href={`/convidados/convites/${responsible.idInvite}`}
                                         className="btn btn-primary"
                                     >
                                         Editar
-                                    </a>
+                                    </a> */}
 
                                     <button
                                         className="btn btn-danger"
@@ -389,7 +388,12 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="modalConfirm">Confirmar Dados do Registro</h5>
+                            <h5
+                                className="modal-title"
+                                id="modalConfirm"
+                            >
+                                {createdInvite ? 'Atualizar Dados do Registro' : 'Confirmar Dados do Registro'}
+                            </h5>
                             <button
                                 type="button"
                                 className="btn-close"
@@ -430,6 +434,40 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                         comments
                                     }
 
+                                    if (createdInvite) {
+
+                                        try {
+
+                                            const response = await api.put(`/convidados/registros/${responsible.idInvite}`, data)
+                                            setReloadPage(new Date())
+                                            setIsSendData(false)
+                                            setCreatedInvite(response.data.createdAt)
+                                            setUpdatedInvite(response.data.updatedInvite)
+                                            setUser(response.data.user.name)
+                                            responsible.idInvite = response.data.id
+
+                                            console.log(response.data)
+                                            //   alert('Atualizado com sucesso.')
+                                            document.getElementById('buttonCancel').click()
+
+                                        } catch (error) {
+                                            console.log(error.response)
+                                            alert(error.response.data.msg)
+                                            setReloadPage(new Date())
+                                            setIsSendData(false)
+                                        }
+                                        // setReloadPage(new Date())
+                                        // setIsSendData(false)
+                                        // setCreatedInvite(response.data.createdAt)
+                                        // responsible.idInvite = response.data.id
+                                        // console.log(response.data)
+                                        // document.getElementById('buttonCancel').click()
+
+
+
+                                        return
+                                    }
+
                                     try {
 
                                         setIsSendData(true)
@@ -438,6 +476,8 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                         setIsSendData(false)
                                         setCreatedInvite(response.data.createdAt)
                                         responsible.idInvite = response.data.id
+                                        setUser(response.data.user.name)
+                                        setUpdatedInvite(response.data.updatedAt)
                                         console.log(response.data)
                                         document.getElementById('buttonCancel').click()
 

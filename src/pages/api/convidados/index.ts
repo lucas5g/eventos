@@ -14,7 +14,7 @@ export default async function guests(req: NextApiRequest, res: NextApiResponse) 
             const guests = await prisma.$queryRawUnsafe(`
             SELECT 
             g.mother, g.motherEmail, g.father, g.fatherEmail, g.unity,
-            gi.emailInvite, gi.numberGuests, gi.kgFood, gi.userId, gi.createdAt as createdInvite, gi.id as idInvite, gi.comments, 
+            gi.emailInvite, gi.numberGuests, gi.kgFood, gi.userId, gi.createdAt as createdInvite, gi.updatedAt as updatedInvite, gi.id as idInvite, gi.comments, 
             u.name as userName, 
             JSON_ARRAYAGG( JSON_OBJECT( 'name', student, 'ra', ra, 'email', studentEmail, 'course', course ) ) as students FROM events_guests as g 
             LEFT join events_guests_invite as gi 
@@ -37,7 +37,7 @@ export default async function guests(req: NextApiRequest, res: NextApiResponse) 
         const guests = await prisma.$queryRawUnsafe(`
         SELECT 
         g.mother, g.motherEmail, g.father, g.fatherEmail, g.unity,
-        gi.emailInvite, gi.numberGuests, gi.kgFood, gi.userId, gi.createdAt as createdInvite, gi.id as idInvite, gi.comments, 
+        gi.emailInvite, gi.numberGuests, gi.kgFood, gi.userId, gi.createdAt as createdInvite, gi.id as idInvite, gi.updatedAt as updatedInvite, gi.comments, 
         u.name as userName, 
         JSON_ARRAYAGG( JSON_OBJECT( 'name', student, 'ra', ra, 'email', studentEmail, 'course', course ) ) as students FROM events_guests as g 
         LEFT join events_guests_invite as gi 

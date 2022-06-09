@@ -14,8 +14,8 @@ export function SpinnerCenter({ height = '90vh' }: SpinnerCenter) {
                 role="status"
                 style={{
                     // fontSize: '3em',
-                    height: '10em',
-                    width: '10em'
+                    height: '8em',
+                    width: '8em'
                 }}
             >
                 <span className="visually-hidden">Loading...</span>

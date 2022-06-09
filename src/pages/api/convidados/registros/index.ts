@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { prisma } from '../../../config/prisma'
-import { auth } from '../../../middleware/auth'
+import { prisma } from '../../../../config/prisma'
+import { auth } from '../../../../middleware/auth'
 
 
 export default async function guestRegister(req: NextApiRequest, res: NextApiResponse) {
@@ -15,6 +15,7 @@ export default async function guestRegister(req: NextApiRequest, res: NextApiRes
         if(!emailInvite || !numberGuests || !students || !kgFood || !motherEmail || !unity){
             res.status(401)
                 .json({msg: 'Todos os campos são obrigatórios'})
+            return 
         }
 
         const registerExist: [] = await prisma.$queryRawUnsafe(`
@@ -44,6 +45,15 @@ export default async function guestRegister(req: NextApiRequest, res: NextApiRes
                 userId: id,
                 comments
             },
+            include:{
+                user:{
+                    select:{
+                        name: true
+                    }
+                }
+
+                
+            }
          
         })
 
