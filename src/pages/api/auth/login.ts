@@ -6,7 +6,7 @@ import { prisma } from '../../../config/prisma'
 
 
 
-export default async function guests(req: NextApiRequest, res: NextApiResponse) {
+export default async function login(req: NextApiRequest, res: NextApiResponse) {
     const { email, password } = req.body
 
     if (!email || !password) {
@@ -22,6 +22,8 @@ export default async function guests(req: NextApiRequest, res: NextApiResponse) 
         },
 
     })
+
+    // await prisma.$disconnect()
 
     if (!user || !await bcrypt.compare(password, user.password)) {
         res.status(401).json({

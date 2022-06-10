@@ -62,15 +62,15 @@ export default function Convidados() {
     }, [search, reloadPage])
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const intervel = setInterval(() => {
-            setReloadPage(new Date())
-        }, 60000)
-        return () => clearInterval(intervel)
+    //     const intervel = setInterval(() => {
+    //         setReloadPage(new Date())
+    //     }, 60000)
+    //     return () => clearInterval(intervel)
 
 
-    }, [])
+    // }, [])
     return (
         <div>
             <Head>

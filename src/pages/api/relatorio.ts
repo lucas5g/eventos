@@ -7,7 +7,7 @@ export default async function report(req: NextApiRequest, res: NextApiResponse) 
     //@ts-ignore
     const {unity, profile} = auth(req, res)
 
-    console.log({unity})
+    // console.log({unity})
     if(profile === 'Operador'){
 
         const queryReportUnity = await queryReport(unity)
@@ -48,7 +48,7 @@ async function queryReport(unity: string) {
     `,
     unity
     )
-    console.log(result)
+    // console.log(result)
     //@ts-ignore 
     return {...result[0], unity}
 }
