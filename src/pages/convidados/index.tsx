@@ -44,9 +44,17 @@ export default function Convidados() {
 
     useEffect(() => {
 
+
         if (localStorage.getItem('responsibles')) {
             setResponsibles(JSON.parse(localStorage.getItem('responsibles') || ''))
+
         }
+
+        if(search.length < 6 && search){
+            return 
+        }
+
+        console.log({search})
         api.get(`/convidados?search=${search}`)
             .then(({ data }) => {
                 setResponsibles(data)
