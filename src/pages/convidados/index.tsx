@@ -5,6 +5,7 @@ import { Catch } from "../../components/Catch"
 import { ModalGuest } from "../../components/ModalGuest"
 import { SpinnerCenter } from "../../components/SpinnerCenter"
 import { TextCenter } from "../../components/TextCenter"
+import { useFetch } from "../../hooks/useFetch"
 import { api } from "../../services/api"
 
 
@@ -38,47 +39,61 @@ export default function Convidados() {
         }]
 
     })
-    const [responsibles, setResponsibles] = useState<Responsible[]>([])
-    const [reloadPage, setReloadPage] = useState(new Date())
 
+
+    const [responsibles, setResponsibles] = useState<Responsible[]>([])
+    const {data, error } = useFetch('/convidados') 
 
     useEffect(() => {
 
-
-        if (localStorage.getItem('responsibles')) {
-            setResponsibles(JSON.parse(localStorage.getItem('responsibles') || ''))
-
+        if(!data){
+            return
+        }
+        
+        if(search.length < 5 && search){
+            return
         }
 
-        if(search.length < 6 && search){
+        let filterSearch
+        //@ts-ignore.
+        filterSearch = data.filter( responsible => responsible.mother.includes(search.toUpperCase()))
+
+        if(filterSearch.length > 0){
+            setResponsibles(filterSearch.slice(0,10))
             return 
         }
 
-        console.log({search})
-        api.get(`/convidados?search=${search}`)
-            .then(({ data }) => {
-                setResponsibles(data)
-                localStorage.setItem('responsibles', JSON.stringify(data))
+       //@ts-ignore.
+        filterSearch = data.filter( responsible => responsible.father.includes(search.toUpperCase()))
+        if(filterSearch.length > 0){
+            setResponsibles(filterSearch.slice(0,10))
+            return 
+        }
+        setResponsibles([])
 
-            })
-            .catch(error => {
-                console.log('error')
-                console.log(error.response)
-                Catch()
-            })
-
-    }, [search, reloadPage])
+    }, [data, search])
 
 
-    // useEffect(() => {
 
-    //     const intervel = setInterval(() => {
-    //         setReloadPage(new Date())
-    //     }, 60000)
-    //     return () => clearInterval(intervel)
+    if(error){
+        Catch(error)
+        // return 
+    }
+
+    if(!data){
+        return (
+            <>
+                <Head>
+                    <title>Eventos | Convidados</title>
+                </Head>
+                <SpinnerCenter height="60vh" />
+            </>
+        )
+    }
 
 
-    // }, [])
+
+
     return (
         <div>
             <Head>
@@ -97,12 +112,6 @@ export default function Convidados() {
 
             />
 
-
-            {responsibles.length === 0 && search.length === 0 &&
-
-                <SpinnerCenter height="45vh" />
-
-            }
             {responsibles.length === 0 && search.length > 3 &&
                 <TextCenter
                     text="Nada encontrado :("
@@ -148,7 +157,6 @@ export default function Convidados() {
                                 <button
                                     onClick={() => {
                                         setResponsible(responsible)
-                                        setReloadPage(new Date())
                                     }}
                                     className={`btn bg-${responsible.emailInvite ? 'danger' : 'success'}   p-2 text-white rounded fs-3 d-flex align-items-center `}
                                     title={'Gerenciar Envio de Convite'}
@@ -176,7 +184,7 @@ export default function Convidados() {
                 responsible={responsible}
                 responsibles={responsibles}
                 setResponsibles={setResponsibles}
-                setReloadPage={setReloadPage}
+                // setReloadPage={setReloadPage}
             />
 
         </div >

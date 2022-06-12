@@ -5,7 +5,7 @@ import { Catch } from "./Catch"
 import Link from "next/link"
 // import { Modal } from "./Modal"
 
-export function ModalGuest({ responsible, responsibles, setResponsibles, setReloadPage }) {
+export function ModalGuest({ responsible, responsibles, setResponsibles }) {
 
     const [emailInvite, setEmailInvite] = useState('')
     const [kgFood, setKgFood] = useState('')
@@ -133,10 +133,10 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                                             })
                                                         }
 
-                                                        console.log(responsible.students)
-                                                        console.log({ inviteTotalDisponible })
+                                                        // console.log(responsible.students)
+                                                        // console.log({ inviteTotalDisponible })
 
-                                                        console.log({ unity })
+                                                        // console.log({ unity })
                                                     }}
                                                 />
                                             </div>
@@ -441,7 +441,6 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
                                             
                                             setIsSendData(true)
                                             const response = await api.put(`/convidados/registros/${responsible.idInvite}`, data)
-                                            setReloadPage(new Date())
                                             setIsSendData(false)
                                             setCreatedInvite(response.data.createdAt)
                                             setUpdatedInvite(response.data.updatedInvite)
@@ -454,7 +453,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
 
                                         } catch (error) {
                                             console.log(error.response)
-                                            alert(error.response.data.msg)
+                                            alert(error.response?.data.msg)
                                             setReloadPage(new Date())
                                             setIsSendData(false)
                                         }
@@ -474,19 +473,34 @@ export function ModalGuest({ responsible, responsibles, setResponsibles, setRelo
 
                                         setIsSendData(true)
                                         const response = await api.post('/convidados/registros', data)
-                                        setReloadPage(new Date())
                                         setIsSendData(false)
                                         setCreatedInvite(response.data.createdAt)
                                         responsible.idInvite = response.data.id
                                         setUser(response.data.user.name)
+                                        
+
+                                        console.log(responsibles)
+                                        const responsiblesUpdate = responsibles.map(res => {
+                                            if(res.motherEmail === responsible.motherEmail ){
+                                                res.emailInvite = response.data.emailInvite
+                                            }
+                                            return res
+                                        })
+                                        // setResponsibles(responsibles.map(responsible => ))
+                                        console.log(responsiblesUpdate)
+                                        setResponsibles(responsiblesUpdate)
                                         setUpdatedInvite(response.data.updatedAt)
-                                        console.log(response.data)
+                                        // console.log('response', response.data)
                                         document.getElementById('buttonCancel').click()
 
                                     } catch (error) {
                                         console.log(error.response)
-                                        alert(error.response.data.msg)
-                                        setReloadPage(new Date())
+
+                                        if(error.response){
+
+                                            alert(error.response.data.msg)
+                                        }
+                                        // setReloadPage(new Date())
                                         setIsSendData(false)
                                     }
 
