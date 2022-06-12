@@ -18,8 +18,9 @@ export default async function guests(req: NextApiRequest, res: NextApiResponse) 
                 LEFT join events_guests_invite as gi 
                 on gi.motherEmail = g.motherEmail      
                 LEFT join events_users as u on gi.userId = u.id 
+                where g.unity = ?
                 GROUP BY mother
-                order by mother, student
+                order by mother, student;
                 `,
                 unity
             )
