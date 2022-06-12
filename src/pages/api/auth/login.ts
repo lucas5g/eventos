@@ -43,7 +43,7 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
     }, TOKEN_KEY, {
         expiresIn: '8h'
     })
-    console.log(process.env.TOKEN_KEY)
+    // console.log(process.env.TOKEN_KEY)
     res.json({
         // user,
         token,
