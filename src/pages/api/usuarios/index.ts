@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcryptjs'
 
-import { prisma } from '../../../config/prisma'
-import { auth } from '../../../middleware/auth'
+import { prisma } from '../../../libs/prisma'
+import { auth } from '../../../utils/auth'
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
 
@@ -11,10 +11,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     console.log({ profile })
 
     if (profile !== 'Admin' && profile !== 'Gerente') {
-        res.status(401)
-            .json({ msg: 'Sem permissão' })
-
-        return
+        return res.status(401).json({ message: 'Sem permissão' })
     }
 
 
@@ -41,7 +38,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 
     if (profile !== 'Admin') {
         res.status(401)
-            .json({ msg: 'Sem permissão!' })
+            .json({ message: 'Sem permissão!' })
 
         return
     }
@@ -52,7 +49,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         if (!name || !email || !password || !profile || !unity) {
             return res
                 .status(401)
-                .json({ msg: 'Todos os campos são obrigatórios' })
+                .json({ message: 'Todos os campos são obrigatórios' })
         }
 
 
@@ -65,7 +62,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         if (emailExist) {
             return res
                 .status(401)
-                .json({ msg: 'E-mail já cadastrado!' })
+                .json({ message: 'E-mail já cadastrado!' })
         }
 
         // return res.send({ name, email, password, profile, unity })
@@ -94,6 +91,6 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     }
 
     return res.status(404).json({
-        msg: 'Route not found'
+        message: 'Route not found'
     })
 }

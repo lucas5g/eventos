@@ -1,7 +1,7 @@
 import Head from 'next/head'
-import { useFetch } from '../hooks/useFetch'
 import { Catch } from '../components/Catch'
 import { SpinnerCenter } from '../components/SpinnerCenter'
+import { swr } from '../libs/swr'
 
 interface Report {
     unity: string
@@ -11,7 +11,7 @@ interface Report {
 
 export default function Report() {
 
-    const { data: reports, error } = useFetch('/relatorio')
+    const { data: reports, error } = swr('/relatorio')
 
     if (error) {
         console.log(error.response.data)

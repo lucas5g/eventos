@@ -9,7 +9,7 @@ import { Select } from "../../components/Select"
 import { SpinnerCenter } from "../../components/SpinnerCenter"
 import { TextCenter } from "../../components/TextCenter"
 import { sleep } from "../../helpers"
-import { api } from "../../services/api"
+import { api } from "../../libs/axios"
 
 interface User {
     id: number
@@ -37,7 +37,7 @@ export default function UserForm() {
         password: ''
     })
     const [alertResult, setAlertResult] = useState({
-        msg: '',
+        message: '',
         type: ''
     })
 
@@ -89,7 +89,7 @@ export default function UserForm() {
                 setIsSendData(true)
                 const { data } = await api.post(`/usuarios`, user)
                 setAlertResult({
-                    msg: 'Criado com sucesso.',
+                    message: 'Criado com sucesso.',
                     type: 'success'
                 })
                 setIsSendData(false)
@@ -97,7 +97,7 @@ export default function UserForm() {
                 setTimeout(() => {
                     console.log('vai')
                     router.push(`/usuarios/${data.id}`)
-                    setAlertResult({ msg: '', type: '' })
+                    setAlertResult({ message: '', type: '' })
                 }, 3000)
 
 
@@ -107,12 +107,12 @@ export default function UserForm() {
                 // console.log(error.response.data)
 
                 setAlertResult({
-                    msg: result.response.data.msg,
+                    message: result.response.data.message,
                     type: 'warning'
                 })
                 setIsSendData(false)
                 await sleep(5000)
-                setAlertResult({ msg: '', type: '' })
+                setAlertResult({ message: '', type: '' })
 
             }
             return
@@ -122,22 +122,22 @@ export default function UserForm() {
             setIsSendData(true)
             const { data } = await api.put(`/usuarios/${id}`, user)
             setAlertResult({
-                msg: 'Atualizado com sucesso.',
+                message: 'Atualizado com sucesso.',
                 type: 'success'
             })
             setIsSendData(false)
 
             console.log(data)
             await sleep(5000)
-            setAlertResult({ msg: '', type: '' })
+            setAlertResult({ message: '', type: '' })
 
 
         } catch (error: any) {
-            setAlertResult({ msg: error.response.data.msg, type: 'warning' })
+            setAlertResult({ message: error.response.data.message, type: 'warning' })
             setIsSendData(false)
             console.log(error.response)
             await sleep(5000)
-            setAlertResult({ msg: '', type: '' })
+            setAlertResult({ message: '', type: '' })
 
         }
 
@@ -207,12 +207,12 @@ export default function UserForm() {
                         autoComplete="off"
                     >
 
-                        {alertResult.msg &&
+                        {alertResult.message &&
                             <div
                                 className={`alert alert-${alertResult.type}`}
                                 role="alert"
                                 data-dimiss="alert">
-                                {alertResult.msg}
+                                {alertResult.message}
                             </div>
                         }
                         <Input

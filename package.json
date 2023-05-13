@@ -9,8 +9,9 @@
         "start": "next start",
         "lint": "next lint",
         "server": "nodemon backend/server.mjs",
-        "test:open": "cypress open",
-        "test": "cypress run",
+        "test": "vitest",
+        "cy:open": "cypress open",
+        "test:cy": "cypress run",
         "commit": "node auto/commit.mjs",
         "commit:dev": "auto/commit.sh",
         "postinstall": "prisma generate"
@@ -19,15 +20,14 @@
         "@chakra-ui/react": "^2.1.0",
         "@emotion/react": "^11",
         "@emotion/styled": "^11",
-        "@prisma/client": "3.14.0",
+        "@prisma/client": "^4.14.0",
         "@types/bcryptjs": "^2.4.2",
         "axios": "^0.26.1",
         "bcryptjs": "^2.4.3",
         "bootstrap": "^5.1.3",
-        "cypress": "^9.6.0",
         "emotion-theming": "^11.0.0",
         "framer-motion": "^6",
-        "jsonwebtoken": "^8.5.1",
+        "jsonwebtoken": "^9.0.0",
         "jwt-decode": "^3.1.2",
         "moment": "^2.29.3",
         "next": "12.1.6",
@@ -37,21 +37,22 @@
         "react-icons": "^4.3.1",
         "remove": "^0.1.5",
         "swr": "^1.2.2",
-        "xlsx": "^0.18.5"
+        "zod": "^3.21.4"
     },
     "devDependencies": {
         "@types/express": "^4.17.13",
         "@types/jsonwebtoken": "^8.5.8",
         "@types/node": "^17.0.32",
         "@types/react": "17.0.42",
+        "cypress": "^12.12.0",
         "cypress-localstorage-commands": "^1.7.0",
-        "cypress-xpath": "^1.6.2",
         "eslint": "8.11.0",
         "eslint-config-next": "12.1.0",
         "nodemon": "^2.0.15",
-        "prisma": "^3.14.0",
+        "prisma": "^4.14.0",
         "ts-node": "^10.7.0",
         "ts-node-dev": "^1.1.8",
-        "typescript": "^4.6.4"
+        "typescript": "^4.6.4",
+        "vitest": "^0.31.0"
     }
 }

@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcryptjs'
 
-import { prisma } from '../../../config/prisma'
-import { auth } from '../../../middleware/auth'
+import { prisma } from '../../../libs/prisma'
+import { auth } from '../../../utils/auth'
 
 interface Authenticated {
     profile: string
@@ -18,7 +18,7 @@ export default async function users(req: NextApiRequest, res: NextApiResponse) {
 
     if (profile !== 'Admin' && profile !== 'Gerente') {
         res.status(401)
-            .json({ msg: 'Sem permissão' })
+            .json({ message: 'Sem permissão' })
 
         return
     }
@@ -57,14 +57,14 @@ export default async function users(req: NextApiRequest, res: NextApiResponse) {
         if(emailExistOtherUser.length > 0){
             return res 
                 .status(401)
-                .json({ msg: 'Já tem usuário com esté email.'})
+                .json({ message: 'Já tem usuário com esté email.'})
         }
 
 
         if (!name || !email || !profile || !unity) {
             return res
                 .status(401)
-                .json({ msg: 'Todos os campos são obrigatórios' })
+                .json({ message: 'Todos os campos são obrigatórios' })
         }
 
         if (password) {
@@ -126,7 +126,7 @@ export default async function users(req: NextApiRequest, res: NextApiResponse) {
 
 
         res.json({
-            msg: 'User deleted',
+            message: 'User deleted',
             // user
         })
 

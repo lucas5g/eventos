@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import moment from "moment"
-import { api } from "../services/api"
+import { api } from "../libs/axios"
 import { Catch } from "./Catch"
 import Link from "next/link"
 // import { Modal } from "./Modal"
@@ -453,7 +453,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles }) {
 
                                         } catch (error) {
                                             console.log(error.response)
-                                            alert(error.response?.data.msg)
+                                            alert(error.response?.data.message)
                                             setReloadPage(new Date())
                                             setIsSendData(false)
                                         }
@@ -498,7 +498,7 @@ export function ModalGuest({ responsible, responsibles, setResponsibles }) {
 
                                         if(error.response){
 
-                                            alert(error.response.data.msg)
+                                            alert(error.response.data.message)
                                         }
                                         // setReloadPage(new Date())
                                         setIsSendData(false)
