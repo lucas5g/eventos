@@ -14,6 +14,12 @@ export function error(error: any) {
     }
 
   }
+  if(error.message.includes('prisma')){
+    return {
+      status: 500,
+      message: {message: error.message}
+    }
+  }
   if(error.message.includes('token')){
     return {
       status:403,
