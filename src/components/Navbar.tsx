@@ -6,106 +6,106 @@ import { NavLink } from './NavLink'
 
 
 interface User {
-    name: string
-    profile: string
+  name: string
+  profile: string
 
 }
 
 export function Navbar() {
 
-    const [user, setUser] = useState<User>({
-        name: '', profile: ''
-    })
+  const [user, setUser] = useState<User>({
+    name: '', profile: ''
+  })
 
 
-    useEffect(() => {
+  useEffect(() => {
 
-        if (localStorage.getItem('events-token')) {
-            const token = localStorage.getItem('events-token')
-            setUser(jwtDecode(token || ''))
-        }
-    }, [])
+    if (localStorage.getItem('events-token')) {
+      const token = localStorage.getItem('events-token')
+      setUser(jwtDecode(token || ''))
+    }
+  }, [])
 
-    return (
+  return (
 
-        <nav className="navbar navbar-dark navbar-expand-lg navbar-light purple-gradient fw-bold fixed-top">
-            <div className="container">
-                <Link href='/'>
-                    <a className="navbar-brand">
-                        Eventos
-                    </a>
-                </Link>
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-mdb-toggle="collapse"
-                    data-mdb-target="#navbarButtonsExample"
-                    aria-controls="navbarButtonsExample"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
+    <nav className="navbar navbar-dark navbar-expand-lg navbar-light purple-gradient fw-bold fixed-top">
+      <div className="container">
+        <Link href='/'>
+          <a className="navbar-brand">
+            Eventos
+          </a>
+        </Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-mdb-toggle="collapse"
+          data-mdb-target="#navbarButtonsExample"
+          aria-controls="navbarButtonsExample"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i className="fas fa-bars"></i>
+        </button>
+
+        <div className="collapse navbar-collapse" id="navbarButtonsExample">
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            {user.name &&
+              <>
+                <NavLink href='/convidados'>
+                  Convidados
+                </NavLink>
+                <NavLink href='/relatorio'>
+                  Relatório
+                </NavLink>
+              </>
+            }
+            {(user.profile === 'Admin' || user.profile === 'Gerente') &&
+              <NavLink href='/usuarios'>
+                Usuários
+              </NavLink>
+            }
+            {!user.name &&
+              <NavLink href='/login'>
+                Login
+              </NavLink>
+            }
+            {user.name &&
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link active dropdown-toggle"
+                  href="#"
+                  id="navbarDropdownMenuLink"
+                  role="button"
+                  data-mdb-toggle="dropdown"
+                  aria-expanded="false"
                 >
-                    <i className="fas fa-bars"></i>
-                </button>
+                  {user.name}
+                </a>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li>
+                    <a
+                      className="dropdown-item"
+                      href="/#sair"
+                      onClick={() => {
+                        localStorage.clear()
+                        window.location.href = '/'
 
-                <div className="collapse navbar-collapse" id="navbarButtonsExample">
-                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                        {user.name &&
-                            <>
-                                <NavLink href='/convidados'>
-                                    Convidados
-                                </NavLink>
-                                <NavLink href='/relatorio'>
-                                    Relatório
-                                </NavLink>
-                            </>
-                        }
-                        {(user.profile === 'Admin' || user.profile === 'Gerente') &&
-                            <NavLink href='/usuarios'>
-                                Usuários
-                            </NavLink>
-                        }
-                        {!user.name &&
-                            <NavLink href='/login'>
-                                Login
-                            </NavLink>
-                        }
-                        {user.name &&
-                            <li className="nav-item dropdown">
-                                <a
-                                    className="nav-link active dropdown-toggle"
-                                    href="#"
-                                    id="navbarDropdownMenuLink"
-                                    role="button"
-                                    data-mdb-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    {user.name}
-                                </a>
-                                <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <li>
-                                        <a
-                                            className="dropdown-item"
-                                            href="/#sair"
-                                            onClick={() => {
-                                                localStorage.clear()
-                                                window.location.href = '/'
+                      }
+                      }
+                    >
+                      Sair
+                    </a>
+                  </li>
 
-                                            }
-                                            }
-                                        >
-                                            Sair
-                                        </a>
-                                    </li>
+                </ul>
+              </li>
+            }
+          </ul>
 
-                                </ul>
-                            </li>
-                        }
-                    </ul>
-
-                </div>
-            </div>
-        </nav>
-    )
+        </div>
+      </div>
+    </nav>
+  )
 }
 
 
