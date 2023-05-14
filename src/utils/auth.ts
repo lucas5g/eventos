@@ -11,21 +11,19 @@ export const auth = (req: NextApiRequest, res: NextApiResponse) => {
 
   // console.log(req.headers)
   if (!token) {
-    return res.status(403).json({
-      message: 'A token is required for authentication'
-    })
+    throw new Error('A token is required for authentication')
   }
-  try {
-    const user = jwt.verify(token, env.JWT_TOKEN);
-    return user
+  interface UserInterface{
+    unity: 'BH' | 'Contagem' | 'EPSA' | 'Gutierrez' | 'NovaLima' | 'SIC'
+    profile: 'Admin' | 'Gerente' | 'Operador'
+  }
 
-  } catch (err) {
-    res
-      .status(401)
-      .json({
-        message: "Invalid Token"
-      });
-    return
+  const user = jwt.verify(token, env.JWT_TOKEN) as UserInterface;
+  if(!user){
+    throw new Error('Invalid token')
   }
+
+  return user
+
 }
 

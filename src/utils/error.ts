@@ -14,12 +14,12 @@ export function error(error: any) {
     }
 
   }
-  // if(error.message.includes('utilizado')){
-  //   return {
-  //     status:401,
-  //     message: {message:error.message}
-  //   }
-  // }
+  if(error.message.includes('token')){
+    return {
+      status:403,
+      message: {message:error.message}
+    }
+  }
   return {
     status: 400,
     message:{message:error.message} 

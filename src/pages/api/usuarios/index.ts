@@ -8,7 +8,6 @@ import { error } from '../../../utils/error'
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
 
-  //@ts-ignore
   const { profile } = auth(req, res)
 
   if (profile !== 'Admin' && profile !== 'Gerente') {

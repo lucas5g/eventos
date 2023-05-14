@@ -1,11 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { auth } from '../../../utils/auth'
 import { GuestService } from '../../../services/GuestService'
+import { error } from '../../../utils/error'
 
 
 export default async function guests(req: NextApiRequest, res: NextApiResponse) {
-    //@ts-ignore
-    const { unity, profile } = auth(req, res)   
-    res.json(await GuestService.findMany({unity, profile}))
+
+  try {
+    const { unity, profile } = auth(req, res)
+    res.json(await GuestService.findMany({ unity, profile }))
+  } catch (e) {
+    const {status, message} = error(e)
+    return res.status(status).json(message)
+  }
 }
 
