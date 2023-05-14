@@ -15,7 +15,7 @@ describe('User', () => {
     expect(user).toHaveProperty('id', 2)
   })
 
-  it.only('update', async() => {
+  it('update', async() => {
     const data = {
       name:`name ${new Date().getMinutes()}`,
       email: 'seed@mail.com',
@@ -27,7 +27,7 @@ describe('User', () => {
     expect(user).toContain({name: data.name})
   })
 
-  it.only('create and delete user', async() => {
+  it('create and delete user', async() => {
 
     const data = {
       name:`name ${new Date().getMinutes()}`,
