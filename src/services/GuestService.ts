@@ -8,10 +8,7 @@ const schema = z.object({
 
 export class GuestService {
   static async findMany(data: any) {
-
     schema.parse(data)
-    const guests = await GuestRepository.findMany(data) as any[]
-    // console.log('guestsLength => ', guests.length)
-    return guests
+    return await GuestRepository.findMany(data) as any[]
   }
 }

@@ -1,10 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../../libs/prisma";
 import { auth } from "../../../../utils/auth";
+import { cache } from "../../../../libs/cache";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-  //@ts-ignore
+  cache.flushAll()
+
   const { id } = auth(req, res)
 
   if (req.method === 'PUT') {

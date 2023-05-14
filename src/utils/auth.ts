@@ -14,6 +14,7 @@ export const auth = (req: NextApiRequest, res: NextApiResponse) => {
     throw new Error('A token is required for authentication')
   }
   interface UserInterface{
+    id:number
     unity: 'BH' | 'Contagem' | 'EPSA' | 'Gutierrez' | 'NovaLima' | 'SIC'
     profile: 'Admin' | 'Gerente' | 'Operador'
   }

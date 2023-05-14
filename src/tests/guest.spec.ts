@@ -1,4 +1,4 @@
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { GuestService } from "../services/GuestService";
 
 describe('Guest', () => {
@@ -10,7 +10,8 @@ describe('Guest', () => {
 
   it('list all', async() => {
     const guests = await GuestService.findMany({profile:'Operador', unity:'BH'}) as any[]
-    const guest = guests[0]
+    // const guest = guests[0]
+    expect(guests).toBe
   })
 
 })

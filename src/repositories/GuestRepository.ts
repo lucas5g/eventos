@@ -1,9 +1,13 @@
+import { cache } from "../libs/cache";
 import { prisma } from "../libs/prisma";
 
 export class GuestRepository {
   static async findMany({profile, unity}:{profile:string, unity:string}) {
     if (profile === 'Operador') {
-      return await prisma.$queryRawUnsafe(`
+      if(cache.has('guestsOperator')){
+        return cache.get('guestsOperator')
+      }
+      const guests = await prisma.$queryRawUnsafe(`
         SELECT 
         g.mother, g.motherEmail, g.father, g.fatherEmail, g.unity,
         gi.emailInvite, gi.numberGuests, gi.kgFood, gi.userId, gi.createdAt as createdInvite, gi.updatedAt as updatedInvite, gi.id as idInvite, gi.comments, 
@@ -18,9 +22,16 @@ export class GuestRepository {
         `,
         unity
       )
+      cache.set('guestsOperator', guests)
+      return guests
     }
 
-    return await prisma.$queryRawUnsafe(`
+    if(cache.get('guests')){
+      console.log('daqui')
+      return cache.get('guests')
+    }
+    console.log('nao foi cache')
+    const guests =  await prisma.$queryRawUnsafe(`
       SELECT 
       g.mother, g.motherEmail, g.father, g.fatherEmail, g.unity,
       gi.emailInvite, gi.numberGuests, gi.kgFood, gi.userId, gi.createdAt as createdInvite, gi.id as idInvite, gi.updatedAt as updatedInvite, gi.comments, 
@@ -33,6 +44,8 @@ export class GuestRepository {
       order by mother, student;
     `
     )
+    cache.set('guests', guests)
+    return guests
 
   }
 
