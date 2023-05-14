@@ -3,6 +3,8 @@ import bcrypt from 'bcryptjs'
 
 import { prisma } from '../../../libs/prisma'
 import { auth } from '../../../utils/auth'
+import { UserService } from '../../../services/UserService'
+import { error } from '../../../utils/error'
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
 
@@ -15,79 +17,19 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 
 
   if (req.method === 'GET') {
-    return res.json(await prisma.user.findMany())
-    // const users = await prisma.$queryRawUnsafe(`
-    //       Select id, name, email, profile, unity
-    //       from events_users
-    //       where name like ? or email like ? or unity like ? or profile like ?
-    //       order by unity, name
-    //       limit 50
-    //   `,
-    //   `%${search}%`,
-    //   `%${search}%`,
-    //   `%${search}%`,
-    //   `%${search}%`,
-
-    // )
-
-    // return res.send(users)
+    return res.json(await UserService.findMany())
   }
 
   if (profile !== 'Admin') {
-    res.status(401)
-      .json({ message: 'Sem permissão!' })
-
-    return
+    return res.status(401).json({ message: 'Sem permissão!' })
   }
 
-  if (req.method === 'POST' && profile === 'Admin') {
-    const { name, email, password, profile, unity } = req.body
-
-    if (!name || !email || !password || !profile || !unity) {
-      return res
-        .status(401)
-        .json({ message: 'Todos os campos são obrigatórios' })
+  if (req.method === 'POST'){
+    try{
+      return res.status(201).json(await UserService.create(req.body))
+    }catch(e){
+      const {status, message} = error(e)
+      return res.status(status).json(message)
     }
-
-
-    const emailExist = await prisma.user.findFirst({
-      where: {
-        email
-      }
-    })
-
-    if (emailExist) {
-      return res
-        .status(401)
-        .json({ message: 'E-mail já cadastrado!' })
-    }
-
-    // return res.send({ name, email, password, profile, unity })
-
-    const salt = await bcrypt.genSalt(10);
-
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        password: await bcrypt.hash(password, salt),
-        profile,
-        unity
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        profile: true,
-        unity: true
-      }
-    })
-
-
-    return res.json(user)
   }
-
-  return res.status(404).json({
-    message: 'Route not found'
-  })
 }
