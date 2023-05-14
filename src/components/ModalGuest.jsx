@@ -2,8 +2,7 @@ import { useEffect, useState } from "react"
 import moment from "moment"
 import { api } from "../libs/axios"
 import { Catch } from "./Catch"
-import Link from "next/link"
-// import { Modal } from "./Modal"
+
 
 export function ModalGuest({ responsible, responsibles, setResponsibles }) {
 

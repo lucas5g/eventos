@@ -8,10 +8,9 @@ describe('Guest', () => {
     console.log(guestFirst)
   })
 
-  it.only('list all', async() => {
+  it('list all', async() => {
     const guests = await GuestService.findMany({profile:'Operador', unity:'BH'}) as any[]
     const guest = guests[0]
-    console.log(guest)
   })
 
 })
