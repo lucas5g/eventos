@@ -11,6 +11,7 @@ export default async function guests(req: NextApiRequest, res: NextApiResponse) 
     res.json(await GuestService.findMany({ unity, profile }))
   } catch (e) {
     const {status, message} = error(e)
+    console.log(message)
     return res.status(status).json(message)
   }
 }
