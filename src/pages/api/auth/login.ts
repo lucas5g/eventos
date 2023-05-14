@@ -7,7 +7,7 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
     res.json(await AuthService.login(req.body))
   }catch(e){
     const {status, message} = error(e)    
-    res.status(status).json({message})
+    res.status(status).json(message)
   }
 }
    
