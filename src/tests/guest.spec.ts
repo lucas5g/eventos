@@ -5,7 +5,7 @@ describe('Guest', () => {
   it('list by unity', async() => {
     const guests = await GuestService.findMany({profile:'Operador', unity:'Contagem'}) as any[]
     const guestFirst = guests[0]
-    console.log(guestFirst)
+    expect(guestFirst).toBe
   })
 
   it('list all', async() => {
