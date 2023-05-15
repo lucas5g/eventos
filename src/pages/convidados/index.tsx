@@ -59,8 +59,7 @@ export default function Convidados() {
       return
     }
 
-    //@ts-ignore.
-    filterSearch = data.filter(responsible => responsible.father.includes(search.toUpperCase()))
+    filterSearch = data.filter((responsible:any )=> responsible.father.includes(search.toUpperCase()))
     if (filterSearch.length > 0) {
       setResponsibles(filterSearch.slice(0, 10))
       return
