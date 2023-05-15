@@ -48,10 +48,8 @@ export default function Convidados() {
       return
     }
 
-    if (search.length < 5 && search) {
-      return
-    }
-    let filterSearch
+
+    let filterSearch:any[]
     filterSearch = data.filter((responsible:any) => responsible.mother.includes(search.toUpperCase()))
 
     if (filterSearch.length > 0) {
