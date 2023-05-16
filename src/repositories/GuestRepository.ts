@@ -27,10 +27,8 @@ export class GuestRepository {
     }
 
     if(cache.get('guests')){
-      console.log('daqui')
       return cache.get('guests')
     }
-    console.log('nao foi cache')
     const guests =  await prisma.$queryRawUnsafe(`
       SELECT 
       g.mother, g.motherEmail, g.father, g.fatherEmail, g.unity,

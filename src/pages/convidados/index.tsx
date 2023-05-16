@@ -42,7 +42,7 @@ export default function Convidados() {
   const [responsibles, setResponsibles] = useState<Responsible[]>([])
   const { data, error } = swr('/convidados')
 
-  useEffect(() => {
+  useEffect(() => { 
 
     if (!data) {
       return
@@ -50,14 +50,14 @@ export default function Convidados() {
 
 
     let filterSearch:any[]
-    filterSearch = data.filter((responsible:any) => responsible.mother.includes(search.toUpperCase()))
+    filterSearch = data.filter((responsible:any) => responsible.mother.toLowerCase().includes(search.toLocaleLowerCase()))
 
     if (filterSearch.length > 0) {
       setResponsibles(filterSearch.slice(0, 10))
       return
     }
 
-    filterSearch = data.filter((responsible:any )=> responsible.father.includes(search.toUpperCase()))
+    filterSearch = data.filter((responsible:any )=> responsible.father.toLowerCase().includes(search.toLocaleLowerCase()))
     if (filterSearch.length > 0) {
       setResponsibles(filterSearch.slice(0, 10))
       return

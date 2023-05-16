@@ -20,7 +20,7 @@ if [ $status != 0 ]; then
 fi
 
 
-yarn test
+q | yarn test
 status=$?
 echo $status
 ##Se a saida for 5, o teste está errado
