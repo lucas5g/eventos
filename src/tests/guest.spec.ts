@@ -9,9 +9,9 @@ describe('Guest', () => {
   })
 
   it('list all', async() => {
-    const guests = await GuestService.findMany({profile:'Operador', unity:'BH'}) as any[]
-    // const guest = guests[0]
-    expect(guests).toBe
+    const guests = await GuestService.findMany({profile:'Admin', unity:'Contagem'}) as any[]
+    const guest = guests[0]
+    expect(guest).toBe
   })
 
 })

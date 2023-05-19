@@ -2,7 +2,9 @@ import Head from "next/head"
 import { swr } from "../libs/swr"
 
 export default function Home() {
+  console.log("Release 2023-05-19 20:22")
   swr('/convidados')
+
   return (
     <div>
       <Head>

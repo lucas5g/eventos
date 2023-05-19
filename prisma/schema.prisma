@@ -44,10 +44,10 @@ model User {
 
 model Guest {
     id           Int      @id @default(autoincrement())
-    father       String
-    fatherEmail  String
-    mother       String
-    motherEmail  String
+    father       String?
+    fatherEmail  String?
+    mother       String?
+    motherEmail  String?
     student      String
     studentEmail String
     course       String
