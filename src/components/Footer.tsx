@@ -5,7 +5,7 @@ export function Footer() {
             >
             <div className="text-center p-3" >
                 <small>
-                    Desenvolvido e Elaborado por Narla e Lucas © {new Date().getFullYear()}
+                    © {new Date().getFullYear()}
                      {/* DevBear */}
 
                 </small>
