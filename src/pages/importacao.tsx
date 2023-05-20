@@ -30,16 +30,12 @@ export default function Import() {
     const fileInput = document.querySelector('input') as HTMLInputElement;
     const file = fileInput.files?.[0];
     
-    // const file = document.querySelector('input').value
-
     reader.readAsText(file)
-
     
     reader.onload = (e:ProgressEvent<FileReader>) => {
       const content = e.target?.result as string;
       const lines = content.split('\n')
       const headers = lines[0].split(',')
-      console.log(headers, lines)
       const jsonArray: any[] = [];
 
       for (let i = 1; i < lines.length; i++) {
@@ -54,7 +50,7 @@ export default function Import() {
         }
       }
 
-      console.log(jsonArray);
+      console.log(jsonArray[0]);
 
     }
     

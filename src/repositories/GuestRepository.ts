@@ -47,4 +47,13 @@ export class GuestRepository {
 
   }
 
+  static async CreateOrUpdate(data:any){
+    return await prisma.guest.upsert({
+      where:{
+        ra: data.ra,
+      }, 
+      update:data,
+      create:data
+    })
+  }
 }
