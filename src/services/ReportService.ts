@@ -33,8 +33,8 @@ export class ReportService {
       queryReportNovaLima,
       queryReportSIC, 
       {
-        sumKgFood: Number(queryReportBH.sumKgFood) + queryReportContagem.sumKgFood + queryReportNovaLima.sumKgFood + queryReportGutierrez.sumKgFood,
-        sumNumberGuests: Number(queryReportBH.sumNumberGuests) + queryReportContagem.sumNumberGuests + queryReportNovaLima.sumNumberGuests + queryReportGutierrez.sumNumberGuests,
+        sumKgFood: Number(queryReportBH.sumKgFood) + Number(queryReportContagem.sumKgFood) + queryReportNovaLima.sumKgFood + queryReportGutierrez.sumKgFood,
+        sumNumberGuests: Number(queryReportBH.sumNumberGuests) + Number(queryReportContagem.sumNumberGuests) + queryReportNovaLima.sumNumberGuests + queryReportGutierrez.sumNumberGuests,
         unity: 'Total',
       }
     ]
