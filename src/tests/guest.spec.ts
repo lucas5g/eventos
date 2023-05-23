@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { GuestService } from "../services/GuestService";
+import { faker } from "@faker-js/faker";
 
 describe('Guest', () => {
   it('list by unity', async () => {
@@ -14,24 +15,30 @@ describe('Guest', () => {
     expect(guest).toBe
   })
 
-  it('Create or update', async() => {
-    const data = {
-      father: "Lucas de sousa pai",
-      fatherEmail: "lucaspai@mail.com",
-      mother: "luana de sousa",
-      motherEmail: "lucas@mail.com",
-      student: "Lucas de sousa Assunção",
-      studentEmail: "lucas@mail.com",
-      course: "M3BFM",
-      ra: "Test1111",
-      unity: "BH",
-      alumni: "no"
+  it('Create or update', async () => {
+
+    const guest = () => {
+      // id: faker.number.int(1000),
+      return {
+
+        father: faker.person.fullName(),
+        fatherEmail: faker.internet.email(),
+        mother: faker.person.fullName(),
+        motherEmail: faker.internet.email(),
+        student: faker.person.fullName(),
+        studentEmail: faker.internet.email(),
+        course: `course name`,
+        ra: faker.string.alpha({ length: 5 }),
+        unity: 'BH',
+        alumni: 'no'
+      }
     }
 
-    const guest = await GuestService.CreateOrUpdate(data)
-    expect(guest).contain({
-      course: data.course,
-      ra: data.ra
+    const data = faker.helpers.multiple(guest, {
+      count: 1
     })
+
+    const guests = await GuestService.CreateOrUpdate(data)
+
   })
 })

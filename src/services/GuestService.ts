@@ -1,12 +1,13 @@
 import { z } from "zod"
 import { GuestRepository } from "../repositories/GuestRepository"
+import { sleep } from "../helpers"
 
 const filterSchema = z.object({
   profile: z.string(),
   unity: z.string()
 })
 
-const createSchema = z.object({
+export const createSchema = z.object({
   father: z.string(),
   fatherEmail: z.string().email(),
   mother: z.string(),
@@ -27,7 +28,14 @@ export class GuestService {
 
   static async CreateOrUpdate(data: any) {
 
-    const guest = createSchema.parse(data)
-    return await GuestRepository.CreateOrUpdate(guest)
+    const guests = []
+    data.forEach(async(guest:any, index:number) => {
+      guests[index] = createSchema.parse(guest)
+      await sleep(index * 100)
+      await GuestRepository.CreateOrUpdate(guests[index])
+    })
+    await sleep(data.length * 100)
+    return guests
+
   }
 }

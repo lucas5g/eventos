@@ -21,7 +21,7 @@ export default async function guests(req: NextApiRequest, res: NextApiResponse) 
 
   if(req.method === 'POST'){
     try{
-      return res.json(await GuestService.CreateOrUpdate(req.body))
+      return res.status(201).json(await GuestService.CreateOrUpdate(req.body))
     }catch(e){
       const { status, message} = error(e)
       return res.status(status).json(message)

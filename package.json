@@ -20,6 +20,7 @@
         "@chakra-ui/react": "^2.1.0",
         "@emotion/react": "^11",
         "@emotion/styled": "^11",
+        "@faker-js/faker": "^8.0.1",
         "@prisma/client": "^4.14.0",
         "@types/bcryptjs": "^2.4.2",
         "axios": "^0.26.1",
@@ -43,6 +44,7 @@
     },
     "devDependencies": {
         "@types/express": "^4.17.13",
+        "@types/faker": "^6.6.9",
         "@types/jsonwebtoken": "^8.5.8",
         "@types/node": "^17.0.32",
         "@types/react": "17.0.42",
