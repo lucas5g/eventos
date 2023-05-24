@@ -74,7 +74,7 @@ export default function Import() {
       try{
         await api.post('convidados', guests)
       }catch(error){
-        return alert(error.response.data.message)        
+        alert(error.response.data.message)        
       }finally{
         setLoading(false)
       }
