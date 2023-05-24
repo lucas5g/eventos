@@ -35,7 +35,7 @@ export class GuestService {
     cache.flushAll()
     
     const guests = guestsSchema.parse(data)
-    cache.set('creatingGuests', true, guests.length / 800 )
+    cache.set('creatingGuests', true, guests.length / 100 )
     guests.forEach(async (guest: any, index: number) => {
       await sleep(index * 100)
       await GuestRepository.CreateOrUpdate(guests[index])
