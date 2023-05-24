@@ -29,3 +29,10 @@ export default async function guests(req: NextApiRequest, res: NextApiResponse) 
   }
 }
 
+export const config = {
+  api:{
+    bodyParser:{
+      sizeLimit: '2mb'
+    }
+  }
+}
