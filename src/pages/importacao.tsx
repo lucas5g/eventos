@@ -47,66 +47,37 @@ export default function Import() {
     reader.onload = async(e: ProgressEvent<FileReader>) => {
       const content = e.target?.result as string;
       const lines = content.split('\n')
-      const headers = lines[0].replace('\r', '').split(',')
+      const headers = lines[0]
+        .replace('\r', '')
+        .replace('RA', 'ra')
+        .split(',')
 
+        console.log(lines[783])
       const guests = lines.map(line => {
         let guest: any = {}
         headers.forEach((header: string, index) => {
-
           guest[header] = line
             .replace('\r', '')
             .replace('GUTIERREZ', 'Gutierrez')
+            .replace('COLÉGIO SANTO AGOSTINHO BH', 'BH')
             .split(',')[index]
         })
         return {
           ...guest,
-          alumni: guest.alumni.toLowerCase()
+          fatherEmail: guest.fatherEmail || null,
+          alumni: guest.alumni?.toLowerCase()
         }
 
       }).filter((_, index) => index > 0)
+      // return console.log(guests)
 
       try{
         await api.post('convidados', guests)
       }catch(error){
-        console.log(error)
+        return alert(error.response.data.message)        
       }finally{
         setLoading(false)
       }
-
-      // let errors: any = {}
-      // let shouldSkip = false;
-
-      // const timeWait = 300
-      // guests.forEach(async (guest, index) => {
-      //   await sleep(timeWait * index)
-      //   // await sleep(index * timeWait)
-        
-      //   if (shouldSkip) return
-      //   try {
-      //     await api.post('convidados', guest)
-
-      //   } catch (e) {
-      //     shouldSkip = true
-      //     console.log({shouldSkip})
-      //     setLoading(false)
-      //   } finally {
-      //   }
-      // })
-
-      // await sleep(guests.length * (timeWait + 7))
-      // setLoading(false)
-      // alert('Atualizado com sucesso!')
-
-      //   if (!errors[0]) {
-      //     alert('Cadastrados ou atualizados com Sucesso!.')
-      //     return
-      //   }
-
-      //   console.log(errors)
-      //   alert(errors[0].message
-      //     .replace('Invalid enum value. Expected', 'Opção Errada. É esperado')
-      //     .replace('received', 'e recebeu')
-      //   )
 
     }
 

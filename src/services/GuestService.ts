@@ -20,7 +20,7 @@ export const createSchema = z.object({
   unity: z.enum(['BH', 'Contagem', 'EPSA', 'Gutierrez', 'NovaLima', 'SIC']),
   alumni: z.enum(['yes', 'no'])
 })
-
+const guestsSchema = z.array(createSchema)
 export class GuestService {
   static async findMany(data: any) {
     filterSchema.parse(data)
@@ -28,15 +28,18 @@ export class GuestService {
   }
 
   static async CreateOrUpdate(data: any) {
+    if(cache.has('creatingGuests')){
+      return {message: 'Já esta sendo cadastrado no momento'}
+    }
+
     cache.flushAll()
-    const guests = []
-    data.forEach(async(guest:any, index:number) => {
-      guests[index] = createSchema.parse(guest)
+    cache.set('creatingGuests', true)
+
+    const guests = guestsSchema.parse(data)
+    guests.forEach(async (guest: any, index: number) => {
       await sleep(index * 100)
       await GuestRepository.CreateOrUpdate(guests[index])
     })
-    await sleep(data.length * 100)
     return guests
-
   }
 }
