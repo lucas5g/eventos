@@ -1,6 +1,7 @@
 import { z } from "zod"
 import { GuestRepository } from "../repositories/GuestRepository"
 import { sleep } from "../helpers"
+import { cache } from "../libs/cache"
 
 const filterSchema = z.object({
   profile: z.string(),
@@ -27,7 +28,7 @@ export class GuestService {
   }
 
   static async CreateOrUpdate(data: any) {
-
+    cache.flushAll()
     const guests = []
     data.forEach(async(guest:any, index:number) => {
       guests[index] = createSchema.parse(guest)
