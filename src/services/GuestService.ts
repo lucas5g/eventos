@@ -29,13 +29,13 @@ export class GuestService {
 
   static async CreateOrUpdate(data: any) {
     if(cache.has('creatingGuests')){
-      return {message: 'Já esta sendo cadastrado no momento'}
+      return {message: `Aguarde ${cache.getTtl('creatingGuests')}`}
     }
 
     cache.flushAll()
-    cache.set('creatingGuests', true)
-
+    
     const guests = guestsSchema.parse(data)
+    cache.set('creatingGuests', true, guests.length / 800 )
     guests.forEach(async (guest: any, index: number) => {
       await sleep(index * 100)
       await GuestRepository.CreateOrUpdate(guests[index])
