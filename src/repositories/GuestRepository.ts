@@ -4,9 +4,9 @@ import { prisma } from "../libs/prisma";
 export class GuestRepository {
   static async findMany({profile, unity}:{profile:string, unity:string}) {
     if (profile === 'Operador') {
-      if(cache.has('guestsOperator')){
-        return cache.get('guestsOperator')
-      }
+      // if(cache.has('guestsOperator')){
+      //   return cache.get('guestsOperator')
+      // }
       const guests = await prisma.$queryRawUnsafe(`
         SELECT 
         g.mother, g.motherEmail, g.father, g.fatherEmail, g.unity,
@@ -22,7 +22,7 @@ export class GuestRepository {
         `,
         unity
       )
-      cache.set('guestsOperator', guests)
+      // cache.set('guestsOperator', guests)
       return guests
     }
 
