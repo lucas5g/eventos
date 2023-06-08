@@ -25,10 +25,10 @@ enum Profile {
     Operador
 }
 
-enum Alumni {
-    yes
-    no
-}
+// enum Alumni {
+//     yes
+//     no
+// }
 
 model User {
     id          Int           @id @default(autoincrement())
@@ -53,7 +53,7 @@ model Guest {
     course       String
     ra           String   @unique
     unity        String
-    alumni       Alumni
+    alumni       String
     createdAt    DateTime @default(now())
     updatedAt    DateTime @default(now()) @updatedAt
 }
