@@ -55,8 +55,8 @@ export default function Convidados() {
         responsible.students[0].name.toLowerCase().includes(search.toLowerCase())
       )
     })
-    setResponsibles(filterSearch.slice(0,10))
-    
+    setResponsibles(filterSearch.slice(0, 10))
+
 
   }, [data, search])
 
@@ -77,8 +77,6 @@ export default function Convidados() {
       </>
     )
   }
-
-
 
 
   return (
@@ -152,6 +150,7 @@ export default function Convidados() {
                   data-mdb-toggle="modal"
 
                 >
+
                   {responsible.emailInvite == null && <FaArrowRight />}
                   {responsible.emailInvite != null && <FaArrowLeft />}
 

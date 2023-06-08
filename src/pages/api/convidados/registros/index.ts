@@ -75,7 +75,6 @@ export default async function guestRegister(req: NextApiRequest, res: NextApiRes
       }
     })
 
-    console.log({ register })
     return res.json({
       message: 'deletado',
       register

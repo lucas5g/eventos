@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import moment from "moment"
 import { api } from "../libs/axios"
 import { Catch } from "./Catch"
+import { mutate } from "swr"
 
 
 export function ModalGuest({ responsible, responsibles, setResponsibles }) {
@@ -479,17 +480,17 @@ export function ModalGuest({ responsible, responsibles, setResponsibles }) {
                                         
 
                                         console.log(responsibles)
-                                        const responsiblesUpdate = responsibles.map(res => {
-                                            if(res.motherEmail === responsible.motherEmail ){
-                                                res.emailInvite = response.data.emailInvite
-                                            }
-                                            return res
-                                        })
+                                        mutate('/convidados')
+                                        // const responsiblesUpdate = responsibles.map(res => {
+                                        //     if(res.motherEmail === responsible.motherEmail ){
+                                        //         res.emailInvite = response.data.emailInvite
+                                        //     }
+                                        //     return res
+                                        // })
                                         // setResponsibles(responsibles.map(responsible => ))
-                                        console.log(responsiblesUpdate)
-                                        setResponsibles(responsiblesUpdate)
+                                        // setResponsibles(responsiblesUpdate)
+
                                         setUpdatedInvite(response.data.updatedAt)
-                                        // console.log('response', response.data)
                                         document.getElementById('buttonCancel').click()
 
                                     } catch (error) {
