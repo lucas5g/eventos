@@ -10,14 +10,14 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-enum Unity {
-    BH
-    Contagem
-    EPSA
-    Gutierrez
-    NovaLima
-    SIC
-}
+// enum Unity {
+//     BH
+//     Contagem
+//     EPSA
+//     Gutierrez
+//     NovaLima
+//     SIC
+// }
 
 enum Profile {
     Admin
@@ -35,7 +35,7 @@ model User {
     name        String
     email       String        @unique
     password    String
-    unity       Unity
+    unity       String
     profile     Profile       @default(Operador)
     GuestInvite GuestInvite[]
     createdAt   DateTime      @default(now())
@@ -52,7 +52,7 @@ model Guest {
     studentEmail String
     course       String
     ra           String   @unique
-    unity        Unity
+    unity        String
     alumni       Alumni
     createdAt    DateTime @default(now())
     updatedAt    DateTime @default(now()) @updatedAt
@@ -65,7 +65,7 @@ model GuestInvite {
     numberGuests Int
     kgFood       Int
     students     Json
-    unity        Unity
+    unity        String
     user         User     @relation(fields: [userId], references: [id])
     userId       Int
     comments     String?  @db.Text

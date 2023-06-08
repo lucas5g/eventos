@@ -1,7 +1,7 @@
 import { prisma } from "../libs/prisma";
 
 export class GuestRepository {
-  static async findMany({profile, unity}:{profile?:string, unity?:"BH" | "Contagem" | "EPSA" | "Gutierrez" | "NovaLima" | "SIC"}) {
+  static async findMany({profile, unity}:{profile?:string, unity?:string}) {
     if(profile === 'Admin'){
       return await prisma.guest.findMany()    
     }
