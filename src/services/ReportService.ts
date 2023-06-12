@@ -34,7 +34,7 @@ export class ReportService {
       queryReportSIC, 
       {
         sumKgFood: Number(queryReportBH.sumKgFood) + Number(queryReportContagem.sumKgFood) + Number(queryReportNovaLima.sumKgFood) + Number(queryReportGutierrez.sumKgFood),
-        sumNumberGuests: Number(queryReportBH.sumNumberGuests) + Number(queryReportContagem.sumNumberGuests) + Number(queryReportNovaLima.sumNumberGuests) + queryReportGutierrez.sumNumberGuests,
+        sumNumberGuests: Number(queryReportBH.sumNumberGuests) + Number(queryReportContagem.sumNumberGuests) + Number(queryReportNovaLima.sumNumberGuests) + Number(queryReportGutierrez.sumNumberGuests),
         unity: 'Total',
       }
     ]
